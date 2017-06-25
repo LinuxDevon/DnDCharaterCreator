@@ -58,11 +58,14 @@ public class ApplicationGUI {
 	
 	private NewCharacterWindow dialog;
 	private JTable table_2;
+	
+	private FileIO fileManager;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -87,6 +90,7 @@ public class ApplicationGUI {
 	 */
 	
 	public void initializeOptionPanel(){
+		
 		String characterName;
 		int xpAmount;
 		HashMap<String, Integer> abilityScores = new HashMap<>();
@@ -172,6 +176,12 @@ public class ApplicationGUI {
 	 */
 	private void initialize() {
 		
+		// Verify that the correct folders and files are in place.
+		fileManager = new FileIO();
+		
+		fileManager.check();
+		
+		// Create the app
 		frame = new JFrame();
 		
 		initializeOptionPanel();
