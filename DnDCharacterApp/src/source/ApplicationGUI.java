@@ -53,6 +53,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextPane;
+import javax.swing.JRadioButton;
 
 public class ApplicationGUI {
 	
@@ -99,8 +100,8 @@ public class ApplicationGUI {
 	 */
 	public ApplicationGUI() {
 //		this.player = new Character("", 0, null);
-		initialize(player);
-//		initializeOptionPanel();
+//		initialize(player);
+		initializeOptionPanel();
 	}
 	
 	/**
@@ -281,7 +282,7 @@ public class ApplicationGUI {
 		JLabel lblSpecies = new JLabel("Species: " + this.player.getData("species"));
 		panel.add(lblSpecies, "cell 1 1,alignx center");
 		
-		JLabel lblMutLvl = new JLabel("MUT LVL / HUM VARIANT");
+		JLabel lblMutLvl = new JLabel("MUT LVL / HUM VARIANT: " + this.player.getData("variant"));
 		panel.add(lblMutLvl, "cell 2 1,alignx center");
 		
 		JLabel lblAgentNumber = new JLabel("Agent Number: " + this.player.getData("AgentNumber") );
@@ -323,7 +324,7 @@ public class ApplicationGUI {
 		// Left side with ability score, saving throws, and skills
 		JPanel panel_3 = new JPanel();
 		frame.getContentPane().add(panel_3, BorderLayout.WEST);
-		MigLayout layout = new MigLayout("", "[65px,center][65px,center][65px,center][20px][200px][20px][175px]", "[30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center]");
+		MigLayout layout = new MigLayout("", "[65px,center][65px,center][65px,center][20px][200px][20px][175px]", "[30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][25px,center][25px,center][25px,center]");
 		
 		panel_3.setLayout(layout);
 		
@@ -342,6 +343,9 @@ public class ApplicationGUI {
 		
 		JLabel lblInspiration = new JLabel(": Inspiration");
 		panel_3.add(lblInspiration, "cell 4 0,alignx right");
+		
+		JRadioButton rdbtnAcrrad = new JRadioButton("AcrRad");
+		panel_3.add(rdbtnAcrrad, "cell 5 0");
 		
 		JLabel lblNewLabel_4 = new JLabel(": Acrobatics (DEX)");
 		panel_3.add(lblNewLabel_4, "cell 6 0,alignx right");
@@ -362,6 +366,9 @@ public class ApplicationGUI {
 		JLabel lblProficiencyBonus = new JLabel(": Proficiency bonus");
 		panel_3.add(lblProficiencyBonus, "cell 4 1,alignx right");
 		
+		JRadioButton rdbtnAnihanrad = new JRadioButton("AniHanRad");
+		panel_3.add(rdbtnAnihanrad, "cell 5 1");
+		
 		JLabel lblAnimalHandling = new JLabel(": Animal Handling (WIS)");
 		panel_3.add(lblAnimalHandling, "cell 6 1,alignx right");
 		
@@ -377,8 +384,14 @@ public class ApplicationGUI {
 		JLabel lblDexmod = new JLabel(this.player.getData("dexterityMod"));
 		panel_3.add(lblDexmod, "cell 2 2");
 		
+		JRadioButton rdbtnStrrad = new JRadioButton();
+		panel_3.add(rdbtnStrrad, "cell 3 2");
+		
 		JLabel lblStrength_1 = new JLabel(": Strength");
 		panel_3.add(lblStrength_1, "cell 4 2,alignx right");
+		
+		JRadioButton rdbtnAthrad = new JRadioButton("AthRad");
+		panel_3.add(rdbtnAthrad, "cell 5 2");
 		
 		JLabel lblAthleticsstr = new JLabel(": ATHLETICS (STR)");
 		panel_3.add(lblAthleticsstr, "cell 6 2,alignx right");
@@ -392,8 +405,15 @@ public class ApplicationGUI {
 		JLabel lblConmod = new JLabel(this.player.getData("consititutionMod"));
 		panel_3.add(lblConmod, "cell 2 3");
 		
+		JRadioButton rdbtnDexrad = new JRadioButton();
+		panel_3.add(rdbtnDexrad, "cell 3 3");
+		
 		JLabel lblDexterity_1 = new JLabel(": Dexterity");
 		panel_3.add(lblDexterity_1, "cell 4 3,alignx right");
+		
+		JRadioButton rdbtnDecrad = new JRadioButton("DecRad");
+		panel_3.add(rdbtnDecrad, "cell 5 3");
+		
 		
 		JLabel lblDeceptioncha = new JLabel(": Deception (CHA)");
 		panel_3.add(lblDeceptioncha, "cell 6 3,alignx right");
@@ -407,8 +427,14 @@ public class ApplicationGUI {
 		JLabel lblIntmod = new JLabel(this.player.getData("intelligenceMod"));
 		panel_3.add(lblIntmod, "cell 2 4");
 		
+		JRadioButton rdbtnConrad = new JRadioButton();
+		panel_3.add(rdbtnConrad, "cell 3 4");
+		
 		JLabel lblConsititution = new JLabel(": Consititution");
 		panel_3.add(lblConsititution, "cell 4 4,alignx right");
+		
+		JRadioButton rdbtnHisrad = new JRadioButton("HisRad");
+		panel_3.add(rdbtnHisrad, "cell 5 4");
 		
 		JLabel lblHistoryint = new JLabel(": History (INT)");
 		panel_3.add(lblHistoryint, "cell 6 4,alignx right");
@@ -422,8 +448,14 @@ public class ApplicationGUI {
 		JLabel lblWismod = new JLabel(this.player.getData("wisdomMod"));
 		panel_3.add(lblWismod, "cell 2 5");
 		
+		JRadioButton rdbtnWisrad = new JRadioButton();
+		panel_3.add(rdbtnWisrad, "cell 3 5");
+		
 		JLabel lblWisdom_1 = new JLabel(": Wisdom");
 		panel_3.add(lblWisdom_1, "cell 4 5,alignx right");
+		
+		JRadioButton rdbtnInsrad = new JRadioButton("InsRad");
+		panel_3.add(rdbtnInsrad, "cell 5 5");
 		
 		JLabel lblInsightwis = new JLabel(": Insight (WIS)");
 		panel_3.add(lblInsightwis, "cell 6 5,alignx right");
@@ -437,8 +469,14 @@ public class ApplicationGUI {
 		JLabel lblIntermod = new JLabel(this.player.getData("interfacingMod"));
 		panel_3.add(lblIntermod, "cell 2 6");
 		
+		JRadioButton rdbtnIntrad = new JRadioButton();
+		panel_3.add(rdbtnIntrad, "cell 3 6");
+		
 		JLabel lblInterfacing_1 = new JLabel(": Interfacing");
 		panel_3.add(lblInterfacing_1, "cell 4 6,alignx right");
+		
+		JRadioButton rdbtnIntrad_1 = new JRadioButton("IntRad");
+		panel_3.add(rdbtnIntrad_1, "cell 5 6");
 		
 		JLabel lblIntimidationcha = new JLabel(": Intimidation (CHA)");
 		panel_3.add(lblIntimidationcha, "cell 6 6,alignx right");
@@ -452,8 +490,14 @@ public class ApplicationGUI {
 		JLabel lblChrmod = new JLabel(this.player.getData("charismaMod"));
 		panel_3.add(lblChrmod, "cell 2 7");
 		
+		JRadioButton rdbtnCharad = new JRadioButton();
+		panel_3.add(rdbtnCharad, "cell 3 7");
+		
 		JLabel lblCharisma_1 = new JLabel(": Charisma");
 		panel_3.add(lblCharisma_1, "cell 4 7,alignx right");
+		
+		JRadioButton rdbtnInvrad = new JRadioButton("InvRad");
+		panel_3.add(rdbtnInvrad, "cell 5 7");
 		
 		JLabel lblInvestigationint = new JLabel(": Investigation (INT)");
 		panel_3.add(lblInvestigationint, "cell 6 7,alignx right");
@@ -461,44 +505,83 @@ public class ApplicationGUI {
 		JLabel lblSavingThrows = new JLabel("SAVING THROWS");
 		panel_3.add(lblSavingThrows, "cell 4 8,alignx center");
 		
+		JRadioButton rdbtnMecrad = new JRadioButton("MecRad");
+		panel_3.add(rdbtnMecrad, "cell 5 8");
+		
 		JLabel lblMechanicsinf = new JLabel(": Mechanics (INF)");
 		panel_3.add(lblMechanicsinf, "cell 6 8,alignx right");
+		
+		JRadioButton rdbtnMedrad = new JRadioButton("MedRad");
+		panel_3.add(rdbtnMedrad, "cell 5 9");
 		
 		JLabel lblMedicinewis = new JLabel(": Medicine (WIS)");
 		panel_3.add(lblMedicinewis, "cell 6 9,alignx right");
 		
+		JRadioButton rdbtnNatrad = new JRadioButton("NatRad");
+		panel_3.add(rdbtnNatrad, "cell 5 10");
+		
 		JLabel lblNatureint = new JLabel(": Nature (INT)");
 		panel_3.add(lblNatureint, "cell 6 10,alignx right");
+		
+		JRadioButton rdbtnPerrad = new JRadioButton("PerRad");
+		panel_3.add(rdbtnPerrad, "cell 5 11");
 		
 		JLabel lblPerceptionwis = new JLabel(": Perception (WIS)");
 		panel_3.add(lblPerceptionwis, "cell 6 11,alignx right");
 		
+		JRadioButton rdbtnPerfrad = new JRadioButton("PerfRad");
+		panel_3.add(rdbtnPerfrad, "cell 5 12");
+		
 		JLabel lblPerformancecha = new JLabel(": Performance (CHA)");
 		panel_3.add(lblPerformancecha, "cell 6 12,alignx right");
+		
+		JRadioButton rdbtnPersrad = new JRadioButton("PersRad");
+		panel_3.add(rdbtnPersrad, "cell 5 13");
 		
 		JLabel lblNewLabel_5 = new JLabel(": Persuasion (CHA)");
 		panel_3.add(lblNewLabel_5, "cell 6 13,alignx right");
 		
+		JRadioButton rdbtnSterad = new JRadioButton("SteRad");
+		panel_3.add(rdbtnSterad, "cell 3 14");
+		
+		JLabel lblStealthdex = new JLabel(": Stealth (DEX)");
+		panel_3.add(lblStealthdex, "cell 4 14,alignx right");
+		
+		JRadioButton rdbtnProrad = new JRadioButton("ProRad");
+		panel_3.add(rdbtnProrad, "cell 5 14");
+		
 		JLabel lblProgramminginf = new JLabel(": Programming (INF)");
 		panel_3.add(lblProgramminginf, "cell 6 14,alignx right");
+		
+		JRadioButton rdbtnSurvrad = new JRadioButton("SurvRad");
+		panel_3.add(rdbtnSurvrad, "cell 3 15");
+		
+		JLabel lblSurvivalwis = new JLabel(": Survival (WIS)");
+		panel_3.add(lblSurvivalwis, "cell 4 15,alignx right");
+		
+		JRadioButton rdbtnRelrad = new JRadioButton("RelRad");
+		panel_3.add(rdbtnRelrad, "cell 5 15");
 		
 		JLabel lblReligionint = new JLabel(": Religion (INT)");
 		panel_3.add(lblReligionint, "cell 6 15,alignx right");
 		
+		JRadioButton rdbtnVehrad = new JRadioButton("VehRad");
+		panel_3.add(rdbtnVehrad, "cell 3 16");
+		
+		JLabel lblVehicleHandling = new JLabel(": Vehicle Handling (INF)");
+		panel_3.add(lblVehicleHandling, "cell 4 16,alignx right");
+		
+		JRadioButton rdbtnSlerad = new JRadioButton("SleRad");
+		panel_3.add(rdbtnSlerad, "cell 5 16");
+		
 		JLabel lblSleightOf = new JLabel(": Sleight of Hand (DEX)");
 		panel_3.add(lblSleightOf, "cell 6 16,alignx right");
 		
-		JLabel lblStealthdex = new JLabel(": Stealth (DEX)");
-		panel_3.add(lblStealthdex, "cell 6 17,alignx right");
-		
-		JLabel lblSurvivalwis = new JLabel(": Survival (WIS)");
-		panel_3.add(lblSurvivalwis, "cell 6 18,alignx right");
-		
-		JLabel lblVehicleHandling = new JLabel(": Vehicle Handling (INF)");
-		panel_3.add(lblVehicleHandling, "cell 6 19,alignx right");
+		JLabel label = new JLabel("SKILLS");
+		panel_3.add(label, "cell 4 17,alignx center");
 		
 		JLabel lblSkills = new JLabel("SKILLS");
-		panel_3.add(lblSkills, "cell 6 20,alignx center");
+		panel_3.add(lblSkills, "cell 6 17,alignx center");
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setPreferredSize(new Dimension(100,300));
