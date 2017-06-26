@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -47,6 +48,11 @@ public class NewCharacterWindow extends JDialog {
 	private JLabel lblChamod;
 	private JLabel lblCharisma;
 	private JLabel lblIntmod_1;
+	private JLabel lblStrmod;
+	private JLabel lblDexmod;
+	private JLabel lblConmod;
+	private JLabel lblIntmod;
+	private JLabel lblWismod;
 	// Need to create array list of of the fields to pass to the Document Listener
 	/**
 	 * Launch the application.
@@ -180,7 +186,7 @@ public class NewCharacterWindow extends JDialog {
 			txtStrength.setColumns(10);
 		}
 		{
-			JLabel lblStrmod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtStrength.getText()))));
+			lblStrmod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtStrength.getText()))));
 			contentPanel.add(lblStrmod, "cell 2 5,alignx center");
 		}
 		{
@@ -194,7 +200,7 @@ public class NewCharacterWindow extends JDialog {
 			txtDexterity.setColumns(10);
 		}
 		{
-			JLabel lblDexmod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtDexterity.getText()))));
+			lblDexmod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtDexterity.getText()))));
 			contentPanel.add(lblDexmod, "cell 2 6,alignx center");
 		}
 		{
@@ -208,7 +214,7 @@ public class NewCharacterWindow extends JDialog {
 			txtConstitution.setColumns(10);
 		}
 		{
-			JLabel lblConmod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtConstitution.getText()))));
+			lblConmod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtConstitution.getText()))));
 			contentPanel.add(lblConmod, "cell 2 7,alignx center");
 		}
 		{
@@ -222,7 +228,7 @@ public class NewCharacterWindow extends JDialog {
 			txtIntelligence.setColumns(10);
 		}
 		{
-			JLabel lblIntmod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtIntelligence.getText()))));
+			lblIntmod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtIntelligence.getText()))));
 			contentPanel.add(lblIntmod, "cell 2 8,alignx center");
 		}
 		{
@@ -236,7 +242,7 @@ public class NewCharacterWindow extends JDialog {
 			txtWisdom.setColumns(10);
 		}
 		{
-			JLabel lblWismod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtWisdom.getText()))));
+			lblWismod = new JLabel(String.valueOf(modifierCalc(Integer.parseInt(txtWisdom.getText()))));
 			contentPanel.add(lblWismod, "cell 2 9,alignx center");
 		}
 		{
@@ -298,12 +304,37 @@ public class NewCharacterWindow extends JDialog {
 				okButton.addActionListener(new ActionListener(){
 
 					private Character player;
+					HashMap<String, String> data = new HashMap<>();
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						// save here with xml maybe
 						//exit this app and focus the main one
-						this.player = new Character(frmtdtxtfldCharacterinput.getText(), Integer.valueOf(formattedStartingXP.getText()), null, txtMoney.getText(), txtClass.getText(), txtRank.getText(), txtSpecies.getText(), txtVariant.getText(), txtAgentnum.getText());
+						data.put("strengthAbility", txtStrength.getText());
+						data.put("dexterityAbility", txtDexterity.getText());
+						data.put("constitutionAbility", txtConstitution.getText());
+						data.put("intelligenceAbility", txtIntelligence.getText());
+						data.put("wisdomAbility", txtWisdom.getText());
+						data.put("interfacingAbility", txtInterfacing.getText());
+						data.put("charismaAbility", txtCharisma.getText());
+						
+						data.put("strengthMod", lblStrmod.toString());
+						data.put("dexterityMod", lblDexmod.toString());
+						data.put("consititutionMod", lblConmod.toString());
+						data.put("intelligenceMod", lblIntmod.toString());
+						data.put("wisdomMod", lblWismod.toString());
+						data.put("interfacingMod", lblIntmod_1.toString());
+						data.put("charismaAbility", lblChamod.toString());
+						
+						data.put("name", frmtdtxtfldCharacterinput.getText());
+						data.put("money", txtMoney.getText());
+						data.put("class", txtClass.getText());
+						data.put("rank", txtRank.getText());
+						data.put("species", txtSpecies.getText());
+						data.put("variant", txtVariant.getText());
+						data.put("agentNumber", txtAgentnum.getText());	
+						
+						this.player = new Character(Integer.valueOf(formattedStartingXP.getText()), data);
 //						modifierCalc(5);
 //						final character = null;
 						

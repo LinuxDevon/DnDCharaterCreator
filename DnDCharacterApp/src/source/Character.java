@@ -5,8 +5,8 @@ public class Character {
 //	private String name;
 	private int xp;
 	
-	private HashMap<String, Integer> abilityScores;
-	private HashMap<String, Integer> modScores;
+	private HashMap<String, String> data;
+//	private HashMap<String, Integer> modScores;
 //	private String agentNum;
 //	private String variant;
 //	private String species;
@@ -14,38 +14,48 @@ public class Character {
 //	private String charClass;
 //	private String money;
 	
-	private HashMap<String, String> variableMap;
+//	private HashMap<String, String> variableMap;
 	
-	public Character(String name, int amount, HashMap<String, Integer> abilityScores, String money, String charClass, String rank, String species, String variant, String agentNum){
-//		this.name = name;
-		this.xp = amount;
-		this.abilityScores = abilityScores;
-//		this.money = money;
-//		this.charClass = charClass;
-//		this.rank = rank;
-//		this.species = species;
-//		this.variant = variant;
-//		this.agentNum = agentNum;
-		
-		this.variableMap = new HashMap<>();
-		
-		
-		this.variableMap.put("name", name);
-		this.variableMap.put("money", money);
-		this.variableMap.put("class", charClass);
-		this.variableMap.put("rank", rank);
-		this.variableMap.put("species", species);
-		this.variableMap.put("variant", variant);
-		this.variableMap.put("agentNumber", agentNum);		
-	}
+	// old constructor incase the new one didn't work
+//	public Character(String name, int amount, HashMap<String, String> data, String money, String charClass, String rank, String species, String variant, String agentNum){
+////		this.name = name;
+//		this.xp = amount;
+//		this.data = data;
+////		this.money = money;
+////		this.charClass = charClass;
+////		this.rank = rank;
+////		this.species = species;
+////		this.variant = variant;
+////		this.agentNum = agentNum;
+//		
+//		this.variableMap = new HashMap<>();
+//		
+////		for(String key: abilityScores.keySet()){
+////			this.variableMap.put(key, abilityScores.get(key));
+////			System.out.println(this.variableMap);
+////		}
+//		this.variableMap.put("name", name);
+//		this.variableMap.put("money", money);
+//		this.variableMap.put("class", charClass);
+//		this.variableMap.put("rank", rank);
+//		this.variableMap.put("species", species);
+//		this.variableMap.put("variant", variant);
+//		this.variableMap.put("agentNumber", agentNum);		
+//	}
 
 	
+	public Character(Integer xp, HashMap<String, String> data) {
+		this.xp = xp;
+		this.data = data;
+	}
+
+
 	public String getAbilityScore(String name){
-		return abilityScores.get(name).toString();
+		return this.data.get(name);
 	}
 	
 	public String getName(){
-		return this.variableMap.get("name");
+		return this.data.get("name");
 	}
 	
 	public int getXP(){
@@ -53,7 +63,7 @@ public class Character {
 	}
 	
 	public String getData(String variable){
-		return this.variableMap.get(variable);
+		return this.data.get(variable);
 	}
 	
 	

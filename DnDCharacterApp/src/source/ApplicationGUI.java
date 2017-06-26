@@ -111,7 +111,7 @@ public class ApplicationGUI {
 		
 		String characterName;
 		int xpAmount;
-		HashMap<String, Integer> abilityScores = new HashMap<>();
+		HashMap<String, String> data = new HashMap<>();
 		
 		if (JOptionPane.showConfirmDialog(null, "Do you want to create a new character?", "New Character?",
 		        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -126,10 +126,33 @@ public class ApplicationGUI {
 			
 			
 		} else {
-			characterName = "";
+			// need to make a template and load it when the load feature is implemented
 			xpAmount = 0;
-			abilityScores = null;
-			Character player = new Character(characterName, xpAmount, abilityScores, "", "", "", "", "", "");
+			data.put("strengthAbility", "8");
+			data.put("dexterityAbility","8");
+			data.put("constitutionAbility", "8");
+			data.put("intelligenceAbility", "8");
+			data.put("wisdomAbility", "8");
+			data.put("interfacingAbility", "8");
+			data.put("charismaAbility", "8");
+			
+			data.put("strengthMod", "-1");
+			data.put("dexterityMod", "-1");
+			data.put("consititutionMod", "-1");
+			data.put("intelligenceMod","-1");
+			data.put("wisdomMod", "-1");
+			data.put("interfacingMod", "-1");
+			data.put("charismaMod", "-1");
+			
+			data.put("name", "");
+			data.put("money", "");
+			data.put("class", "");
+			data.put("rank", "");
+			data.put("species", "");
+			data.put("variant", "");
+			data.put("agentNumber","");	
+//			Character player = new Character(characterName, xpAmount, abilityScores, "", "", "", "", "", "");
+			Character player = new Character(xpAmount, data);
 			this.player = player;
 			initialize(player);
 			
@@ -237,8 +260,8 @@ public class ApplicationGUI {
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new MigLayout("", "[144px,grow][75px,grow][150px,grow][100px,grow][]", "[30px][30px][30px]"));
 		
-		String characterName = null;
-		String className = null;
+//		String characterName = null;
+//		String className = null;
 		
 		/////////////////////////////////////////////////////////////////////////
 		// Header of the APP
@@ -300,7 +323,7 @@ public class ApplicationGUI {
 		// Left side with ability score, saving throws, and skills
 		JPanel panel_3 = new JPanel();
 		frame.getContentPane().add(panel_3, BorderLayout.WEST);
-		MigLayout layout = new MigLayout("", "[65px,center][65px,center][65px,center][200px][175px]", "[30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center]");
+		MigLayout layout = new MigLayout("", "[65px,center][65px,center][65px,center][20px][200px][20px][175px]", "[30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center][30px,center]");
 		
 		panel_3.setLayout(layout);
 		
@@ -314,27 +337,33 @@ public class ApplicationGUI {
 		panel_3.add(lblModifier, "cell 2 0");
 		
 		txtInspirationtextbox = new JTextField();
-		panel_3.add(txtInspirationtextbox, "flowx,cell 3 0,alignx right");
+		panel_3.add(txtInspirationtextbox, "flowx,cell 4 0,alignx right");
 		txtInspirationtextbox.setColumns(10);
 		
 		JLabel lblInspiration = new JLabel(": Inspiration");
-		panel_3.add(lblInspiration, "cell 3 0,alignx right");
+		panel_3.add(lblInspiration, "cell 4 0,alignx right");
 		
 		JLabel lblNewLabel_4 = new JLabel(": Acrobatics (DEX)");
-		panel_3.add(lblNewLabel_4, "cell 4 0,alignx right");
+		panel_3.add(lblNewLabel_4, "cell 6 0,alignx right");
 		
 		JLabel lblStrength = new JLabel("Strength: ");
 		panel_3.add(lblStrength, "cell 0 1");
 		
+		JLabel lblStrscr = new JLabel(this.player.getData("strengthAbility"));
+		panel_3.add(lblStrscr, "cell 1 1");
+		
+		JLabel lblStrmod = new JLabel(this.player.getData("strengthMod"));
+		panel_3.add(lblStrmod, "cell 2 1,alignx center");
+		
 		txtProficiencybonustextbox = new JTextField();
-		panel_3.add(txtProficiencybonustextbox, "flowx,cell 3 1,alignx right");
+		panel_3.add(txtProficiencybonustextbox, "flowx,cell 4 1,alignx right");
 		txtProficiencybonustextbox.setColumns(10);
 		
 		JLabel lblProficiencyBonus = new JLabel(": Proficiency bonus");
-		panel_3.add(lblProficiencyBonus, "cell 3 1,alignx right");
+		panel_3.add(lblProficiencyBonus, "cell 4 1,alignx right");
 		
 		JLabel lblAnimalHandling = new JLabel(": Animal Handling (WIS)");
-		panel_3.add(lblAnimalHandling, "cell 4 1,alignx right");
+		panel_3.add(lblAnimalHandling, "cell 6 1,alignx right");
 		
 //		JLabel lblStrScore = new JLabel(this.player.getAbilityScore("strength"));
 //		panel_3.add(lblStrScore, "cell 1 1");
@@ -342,98 +371,134 @@ public class ApplicationGUI {
 		JLabel lblDexterity = new JLabel("Dexterity:");
 		panel_3.add(lblDexterity, "cell 0 2");
 		
+		JLabel lblDexscr = new JLabel(this.player.getData("dexterityAbility"));
+		panel_3.add(lblDexscr, "cell 1 2");
+		
+		JLabel lblDexmod = new JLabel(this.player.getData("dexterityMod"));
+		panel_3.add(lblDexmod, "cell 2 2");
+		
 		JLabel lblStrength_1 = new JLabel(": Strength");
-		panel_3.add(lblStrength_1, "cell 3 2,alignx right");
+		panel_3.add(lblStrength_1, "cell 4 2,alignx right");
 		
 		JLabel lblAthleticsstr = new JLabel(": ATHLETICS (STR)");
-		panel_3.add(lblAthleticsstr, "cell 4 2,alignx right");
+		panel_3.add(lblAthleticsstr, "cell 6 2,alignx right");
 		
 		JLabel lblConstitution = new JLabel("Constitution:");
 		panel_3.add(lblConstitution, "cell 0 3");
 		
+		JLabel lblConscr = new JLabel(this.player.getData("constitutionAbility"));
+		panel_3.add(lblConscr, "cell 1 3");
+		
+		JLabel lblConmod = new JLabel(this.player.getData("consititutionMod"));
+		panel_3.add(lblConmod, "cell 2 3");
+		
 		JLabel lblDexterity_1 = new JLabel(": Dexterity");
-		panel_3.add(lblDexterity_1, "cell 3 3,alignx right");
+		panel_3.add(lblDexterity_1, "cell 4 3,alignx right");
 		
 		JLabel lblDeceptioncha = new JLabel(": Deception (CHA)");
-		panel_3.add(lblDeceptioncha, "cell 4 3,alignx right");
+		panel_3.add(lblDeceptioncha, "cell 6 3,alignx right");
 		
 		JLabel lblIntelligence = new JLabel("Intelligence:");
 		panel_3.add(lblIntelligence, "cell 0 4");
 		
+		JLabel lblIntscr = new JLabel(this.player.getData("intelligenceAbility"));
+		panel_3.add(lblIntscr, "cell 1 4");
+		
+		JLabel lblIntmod = new JLabel(this.player.getData("intelligenceMod"));
+		panel_3.add(lblIntmod, "cell 2 4");
+		
 		JLabel lblConsititution = new JLabel(": Consititution");
-		panel_3.add(lblConsititution, "cell 3 4,alignx right");
+		panel_3.add(lblConsititution, "cell 4 4,alignx right");
 		
 		JLabel lblHistoryint = new JLabel(": History (INT)");
-		panel_3.add(lblHistoryint, "cell 4 4,alignx right");
+		panel_3.add(lblHistoryint, "cell 6 4,alignx right");
 		
 		JLabel lblWisdom = new JLabel("Wisdom:");
 		panel_3.add(lblWisdom, "cell 0 5");
 		
+		JLabel lblWisscr = new JLabel(this.player.getData("wisdomAbility"));
+		panel_3.add(lblWisscr, "cell 1 5");
+		
+		JLabel lblWismod = new JLabel(this.player.getData("wisdomMod"));
+		panel_3.add(lblWismod, "cell 2 5");
+		
 		JLabel lblWisdom_1 = new JLabel(": Wisdom");
-		panel_3.add(lblWisdom_1, "cell 3 5,alignx right");
+		panel_3.add(lblWisdom_1, "cell 4 5,alignx right");
 		
 		JLabel lblInsightwis = new JLabel(": Insight (WIS)");
-		panel_3.add(lblInsightwis, "cell 4 5,alignx right");
+		panel_3.add(lblInsightwis, "cell 6 5,alignx right");
 		
 		JLabel lblInterfacing = new JLabel("Interfacing:");
 		panel_3.add(lblInterfacing, "cell 0 6");
 		
+		JLabel lblInterscr = new JLabel(this.player.getData("interfacingAbility"));
+		panel_3.add(lblInterscr, "cell 1 6");
+		
+		JLabel lblIntermod = new JLabel(this.player.getData("interfacingMod"));
+		panel_3.add(lblIntermod, "cell 2 6");
+		
 		JLabel lblInterfacing_1 = new JLabel(": Interfacing");
-		panel_3.add(lblInterfacing_1, "cell 3 6,alignx right");
+		panel_3.add(lblInterfacing_1, "cell 4 6,alignx right");
 		
 		JLabel lblIntimidationcha = new JLabel(": Intimidation (CHA)");
-		panel_3.add(lblIntimidationcha, "cell 4 6,alignx right");
+		panel_3.add(lblIntimidationcha, "cell 6 6,alignx right");
 		
 		JLabel lblCharisma = new JLabel("Charisma:");
 		panel_3.add(lblCharisma, "cell 0 7");
 		
+		JLabel lblChrscr = new JLabel(this.player.getData("charismaAbility"));
+		panel_3.add(lblChrscr, "cell 1 7");
+		
+		JLabel lblChrmod = new JLabel(this.player.getData("charismaMod"));
+		panel_3.add(lblChrmod, "cell 2 7");
+		
 		JLabel lblCharisma_1 = new JLabel(": Charisma");
-		panel_3.add(lblCharisma_1, "cell 3 7,alignx right");
+		panel_3.add(lblCharisma_1, "cell 4 7,alignx right");
 		
 		JLabel lblInvestigationint = new JLabel(": Investigation (INT)");
-		panel_3.add(lblInvestigationint, "cell 4 7,alignx right");
+		panel_3.add(lblInvestigationint, "cell 6 7,alignx right");
 		
 		JLabel lblSavingThrows = new JLabel("SAVING THROWS");
-		panel_3.add(lblSavingThrows, "cell 3 8,alignx center");
+		panel_3.add(lblSavingThrows, "cell 4 8,alignx center");
 		
 		JLabel lblMechanicsinf = new JLabel(": Mechanics (INF)");
-		panel_3.add(lblMechanicsinf, "cell 4 8,alignx right");
+		panel_3.add(lblMechanicsinf, "cell 6 8,alignx right");
 		
 		JLabel lblMedicinewis = new JLabel(": Medicine (WIS)");
-		panel_3.add(lblMedicinewis, "cell 4 9,alignx right");
+		panel_3.add(lblMedicinewis, "cell 6 9,alignx right");
 		
 		JLabel lblNatureint = new JLabel(": Nature (INT)");
-		panel_3.add(lblNatureint, "cell 4 10,alignx right");
+		panel_3.add(lblNatureint, "cell 6 10,alignx right");
 		
 		JLabel lblPerceptionwis = new JLabel(": Perception (WIS)");
-		panel_3.add(lblPerceptionwis, "cell 4 11,alignx right");
+		panel_3.add(lblPerceptionwis, "cell 6 11,alignx right");
 		
 		JLabel lblPerformancecha = new JLabel(": Performance (CHA)");
-		panel_3.add(lblPerformancecha, "cell 4 12,alignx right");
+		panel_3.add(lblPerformancecha, "cell 6 12,alignx right");
 		
 		JLabel lblNewLabel_5 = new JLabel(": Persuasion (CHA)");
-		panel_3.add(lblNewLabel_5, "cell 4 13,alignx right");
+		panel_3.add(lblNewLabel_5, "cell 6 13,alignx right");
 		
 		JLabel lblProgramminginf = new JLabel(": Programming (INF)");
-		panel_3.add(lblProgramminginf, "cell 4 14,alignx right");
+		panel_3.add(lblProgramminginf, "cell 6 14,alignx right");
 		
 		JLabel lblReligionint = new JLabel(": Religion (INT)");
-		panel_3.add(lblReligionint, "cell 4 15,alignx right");
+		panel_3.add(lblReligionint, "cell 6 15,alignx right");
 		
 		JLabel lblSleightOf = new JLabel(": Sleight of Hand (DEX)");
-		panel_3.add(lblSleightOf, "cell 4 16,alignx right");
+		panel_3.add(lblSleightOf, "cell 6 16,alignx right");
 		
 		JLabel lblStealthdex = new JLabel(": Stealth (DEX)");
-		panel_3.add(lblStealthdex, "cell 4 17,alignx right");
+		panel_3.add(lblStealthdex, "cell 6 17,alignx right");
 		
 		JLabel lblSurvivalwis = new JLabel(": Survival (WIS)");
-		panel_3.add(lblSurvivalwis, "cell 4 18,alignx right");
+		panel_3.add(lblSurvivalwis, "cell 6 18,alignx right");
 		
 		JLabel lblVehicleHandling = new JLabel(": Vehicle Handling (INF)");
-		panel_3.add(lblVehicleHandling, "cell 4 19,alignx right");
+		panel_3.add(lblVehicleHandling, "cell 6 19,alignx right");
 		
 		JLabel lblSkills = new JLabel("SKILLS");
-		panel_3.add(lblSkills, "cell 4 20,alignx center");
+		panel_3.add(lblSkills, "cell 6 20,alignx center");
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setPreferredSize(new Dimension(100,300));
