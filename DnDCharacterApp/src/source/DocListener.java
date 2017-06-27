@@ -20,11 +20,11 @@ public class DocListener implements DocumentListener {
 	
 	private int lastNumberInField;
 
-	public DocListener(JTextField txtCharisma, JLabel labelToChange, JLabel modNumber){
-		this.textField = txtCharisma;
+	public DocListener(JTextField textBox, JLabel labelToChange, JLabel modNumber){
+		this.textField = textBox;
 		this.totalPoints = labelToChange;
 		this.modNumber = modNumber;
-		this.lastNumberInField = Integer.parseInt(txtCharisma.getText());
+		this.lastNumberInField = Integer.parseInt(textBox.getText());
 		
 	}
 
@@ -35,7 +35,7 @@ public class DocListener implements DocumentListener {
 			this.lastNumberInField = textNumber;
 			this.totalPoints.setText(""+(Integer.parseInt(this.totalPoints.getText())-Integer.parseInt(this.textField.getText())));
 			this.modNumber.setText(""  + modifierCalc(textNumber));
-			this.modNumber.repaint();
+//			this.modNumber.repaint();
 		} catch(java.lang.NumberFormatException e){
 			System.out.println("Invalid entry"); // don't eat exception!
 			
@@ -52,8 +52,16 @@ public class DocListener implements DocumentListener {
 	@Override
 	public void removeUpdate(DocumentEvent arg0) {
 		try{
+			int textNumber;
+			if(this.textField.getText().equals("")){
+				textNumber = 0;
+			}else{
+				textNumber = Integer.parseInt(this.textField.getText());
+			}
 			this.totalPoints.setText(""+(Integer.parseInt(this.totalPoints.getText())+this.lastNumberInField));
+			this.modNumber.setText(""  + modifierCalc(textNumber));
 			this.lastNumberInField = Integer.parseInt(this.textField.getText());
+			
 
 		} catch(java.lang.NumberFormatException e){
 			System.out.println("Invalid entry");

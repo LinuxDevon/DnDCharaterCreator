@@ -29,6 +29,9 @@ import javax.swing.Box;
 import javax.swing.JDesktopPane;
 import javax.swing.JDialog;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -54,7 +57,19 @@ import javax.swing.JTextArea;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextPane;
 import javax.swing.JRadioButton;
+import javax.swing.JList;
+import javax.swing.JComboBox;
 
+/**
+ * 
+ * @author Devon Adair
+ *
+ *
+ *
+ * Changes eventually:
+ * 
+ * make method in character to handle this: this.player.getData(variable)": Strength"
+ */
 public class ApplicationGUI {
 	
 	public static final String VERSION = "Beta 1.0";
@@ -75,24 +90,10 @@ public class ApplicationGUI {
 	private JTextField txtProficiencybonustextbox;
 	private JTextField txtInspirationtextbox;
 	
+	private HashMap<JLabel, JRadioButton> buttonMap = new HashMap<>();
+	private JTextField txtCurrenthittext;
+	private JTextField txtMaxhittext;
 
-	/**
-	 * Launch the application.
-	 * @wbp.parser.entryPoint
-	 */
-	public static void main(String[] args) {
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ApplicationGUI window = new ApplicationGUI();
-//					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -173,8 +174,8 @@ public class ApplicationGUI {
 		// Verify that the correct folders and files are in place.
 		fileManager = new FileIO();
 		
-//		fileManager.check();
-		fileManager.saveCharacter();
+		fileManager.check();
+		fileManager.saveCharacter("temp");
 		
 		// Create the app
 		frame = new JFrame();
@@ -202,6 +203,14 @@ public class ApplicationGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Saving");
 				
+				// need to add file checking to make sure there is no overwriting
+				
+//				while(true){
+					String fileName = (String) JOptionPane.showInputDialog(frame,"Please enter the file name you wish to save.");
+//					try{
+						fileManager.saveCharacter(fileName);
+//					}
+//				}
 				
 			}});
 		
@@ -297,7 +306,7 @@ public class ApplicationGUI {
 		JLabel lblAc = new JLabel("AC:");
 		panel.add(lblAc, "flowx,cell 1 2,alignx center");
 		
-		JLabel lblInitiative = new JLabel("INITIATIVE: ");
+		JLabel lblInitiative = new JLabel("INITIATIVE: " + this.player.getData("dexterityMod"));
 		panel.add(lblInitiative, "cell 2 2,alignx center");
 		
 		JLabel lblSpeed = new JLabel("SPEED:");
@@ -341,14 +350,16 @@ public class ApplicationGUI {
 		panel_3.add(txtInspirationtextbox, "flowx,cell 4 0,alignx right");
 		txtInspirationtextbox.setColumns(10);
 		
-		JLabel lblInspiration = new JLabel(": Inspiration");
+		JLabel lblInspiration = new JLabel(" : Inspiration");
 		panel_3.add(lblInspiration, "cell 4 0,alignx right");
 		
-		JRadioButton rdbtnAcrrad = new JRadioButton("AcrRad");
+		JRadioButton rdbtnAcrrad = new JRadioButton();
 		panel_3.add(rdbtnAcrrad, "cell 5 0");
 		
-		JLabel lblNewLabel_4 = new JLabel(": Acrobatics (DEX)");
-		panel_3.add(lblNewLabel_4, "cell 6 0,alignx right");
+		JLabel lblAcrobatics = new JLabel(this.player.getData("dexterityMod") + " : Acrobatics (DEX)");
+		panel_3.add(lblAcrobatics, "cell 6 0,alignx right");
+		
+		buttonMap.put(lblAcrobatics, rdbtnAcrrad);
 		
 		JLabel lblStrength = new JLabel("Strength: ");
 		panel_3.add(lblStrength, "cell 0 1");
@@ -356,24 +367,17 @@ public class ApplicationGUI {
 		JLabel lblStrscr = new JLabel(this.player.getData("strengthAbility"));
 		panel_3.add(lblStrscr, "cell 1 1");
 		
+//		System.out.println(this.player.getData("strengthMod"));
 		JLabel lblStrmod = new JLabel(this.player.getData("strengthMod"));
 		panel_3.add(lblStrmod, "cell 2 1,alignx center");
 		
-		txtProficiencybonustextbox = new JTextField();
-		panel_3.add(txtProficiencybonustextbox, "flowx,cell 4 1,alignx right");
-		txtProficiencybonustextbox.setColumns(10);
-		
-		JLabel lblProficiencyBonus = new JLabel(": Proficiency bonus");
-		panel_3.add(lblProficiencyBonus, "cell 4 1,alignx right");
-		
-		JRadioButton rdbtnAnihanrad = new JRadioButton("AniHanRad");
+		JRadioButton rdbtnAnihanrad = new JRadioButton();
 		panel_3.add(rdbtnAnihanrad, "cell 5 1");
 		
-		JLabel lblAnimalHandling = new JLabel(": Animal Handling (WIS)");
+		JLabel lblAnimalHandling = new JLabel(this.player.getData("wisdomMod") + " : Animal Handling (WIS)");
 		panel_3.add(lblAnimalHandling, "cell 6 1,alignx right");
 		
-//		JLabel lblStrScore = new JLabel(this.player.getAbilityScore("strength"));
-//		panel_3.add(lblStrScore, "cell 1 1");
+		buttonMap.put(lblAnimalHandling, rdbtnAnihanrad);
 		
 		JLabel lblDexterity = new JLabel("Dexterity:");
 		panel_3.add(lblDexterity, "cell 0 2");
@@ -387,14 +391,19 @@ public class ApplicationGUI {
 		JRadioButton rdbtnStrrad = new JRadioButton();
 		panel_3.add(rdbtnStrrad, "cell 3 2");
 		
-		JLabel lblStrength_1 = new JLabel(": Strength");
+		JLabel lblStrength_1 = new JLabel(this.player.modLabelCreator("strength"));
 		panel_3.add(lblStrength_1, "cell 4 2,alignx right");
 		
-		JRadioButton rdbtnAthrad = new JRadioButton("AthRad");
+		buttonMap.put(lblStrength_1, rdbtnStrrad);
+		
+		
+		JRadioButton rdbtnAthrad = new JRadioButton();
 		panel_3.add(rdbtnAthrad, "cell 5 2");
 		
-		JLabel lblAthleticsstr = new JLabel(": ATHLETICS (STR)");
+		JLabel lblAthleticsstr = new JLabel(this.player.getData("strengthMod") + " : ATHLETICS (STR)");
 		panel_3.add(lblAthleticsstr, "cell 6 2,alignx right");
+		
+		buttonMap.put(lblAthleticsstr, rdbtnAthrad);
 		
 		JLabel lblConstitution = new JLabel("Constitution:");
 		panel_3.add(lblConstitution, "cell 0 3");
@@ -408,15 +417,19 @@ public class ApplicationGUI {
 		JRadioButton rdbtnDexrad = new JRadioButton();
 		panel_3.add(rdbtnDexrad, "cell 3 3");
 		
-		JLabel lblDexterity_1 = new JLabel(": Dexterity");
+		JLabel lblDexterity_1 = new JLabel(this.player.modLabelCreator("dexterity"));
 		panel_3.add(lblDexterity_1, "cell 4 3,alignx right");
 		
-		JRadioButton rdbtnDecrad = new JRadioButton("DecRad");
+		buttonMap.put(lblDexterity_1, rdbtnDexrad);
+		
+		JRadioButton rdbtnDecrad = new JRadioButton();
 		panel_3.add(rdbtnDecrad, "cell 5 3");
 		
 		
-		JLabel lblDeceptioncha = new JLabel(": Deception (CHA)");
-		panel_3.add(lblDeceptioncha, "cell 6 3,alignx right");
+		JLabel lblDeception = new JLabel(this.player.getData("charismaMod") + " : Deception (CHA)");
+		panel_3.add(lblDeception, "cell 6 3,alignx right");
+		
+		buttonMap.put(lblDeception, rdbtnDecrad);
 		
 		JLabel lblIntelligence = new JLabel("Intelligence:");
 		panel_3.add(lblIntelligence, "cell 0 4");
@@ -430,14 +443,18 @@ public class ApplicationGUI {
 		JRadioButton rdbtnConrad = new JRadioButton();
 		panel_3.add(rdbtnConrad, "cell 3 4");
 		
-		JLabel lblConsititution = new JLabel(": Consititution");
+		JLabel lblConsititution = new JLabel(this.player.modLabelCreator("consititution"));
 		panel_3.add(lblConsititution, "cell 4 4,alignx right");
 		
-		JRadioButton rdbtnHisrad = new JRadioButton("HisRad");
+		buttonMap.put(lblConsititution, rdbtnConrad);
+		
+		JRadioButton rdbtnHisrad = new JRadioButton();
 		panel_3.add(rdbtnHisrad, "cell 5 4");
 		
-		JLabel lblHistoryint = new JLabel(": History (INT)");
+		JLabel lblHistoryint = new JLabel(this.player.getData("intelligenceMod") + " : History (INT)");
 		panel_3.add(lblHistoryint, "cell 6 4,alignx right");
+		
+		buttonMap.put(lblHistoryint, rdbtnHisrad);
 		
 		JLabel lblWisdom = new JLabel("Wisdom:");
 		panel_3.add(lblWisdom, "cell 0 5");
@@ -451,14 +468,18 @@ public class ApplicationGUI {
 		JRadioButton rdbtnWisrad = new JRadioButton();
 		panel_3.add(rdbtnWisrad, "cell 3 5");
 		
-		JLabel lblWisdom_1 = new JLabel(": Wisdom");
+		JLabel lblWisdom_1 = new JLabel(this.player.modLabelCreator("wisdom"));
 		panel_3.add(lblWisdom_1, "cell 4 5,alignx right");
 		
-		JRadioButton rdbtnInsrad = new JRadioButton("InsRad");
+		buttonMap.put(lblWisdom_1, rdbtnWisrad);
+		
+		JRadioButton rdbtnInsrad = new JRadioButton();
 		panel_3.add(rdbtnInsrad, "cell 5 5");
 		
-		JLabel lblInsightwis = new JLabel(": Insight (WIS)");
+		JLabel lblInsightwis = new JLabel(this.player.getData("wisdomMod") + " : Insight (WIS)");
 		panel_3.add(lblInsightwis, "cell 6 5,alignx right");
+		
+		buttonMap.put(lblInsightwis, rdbtnInsrad);
 		
 		JLabel lblInterfacing = new JLabel("Interfacing:");
 		panel_3.add(lblInterfacing, "cell 0 6");
@@ -472,14 +493,18 @@ public class ApplicationGUI {
 		JRadioButton rdbtnIntrad = new JRadioButton();
 		panel_3.add(rdbtnIntrad, "cell 3 6");
 		
-		JLabel lblInterfacing_1 = new JLabel(": Interfacing");
+		JLabel lblInterfacing_1 = new JLabel(this.player.modLabelCreator("interfacing"));
 		panel_3.add(lblInterfacing_1, "cell 4 6,alignx right");
 		
-		JRadioButton rdbtnIntrad_1 = new JRadioButton("IntRad");
+		buttonMap.put(lblInterfacing_1, rdbtnIntrad);
+		
+		JRadioButton rdbtnIntrad_1 = new JRadioButton();
 		panel_3.add(rdbtnIntrad_1, "cell 5 6");
 		
-		JLabel lblIntimidationcha = new JLabel(": Intimidation (CHA)");
+		JLabel lblIntimidationcha = new JLabel(this.player.getData("charismaMod") + " : Intimidation (CHA)");
 		panel_3.add(lblIntimidationcha, "cell 6 6,alignx right");
+		
+		buttonMap.put(lblIntimidationcha, rdbtnIntrad_1);
 		
 		JLabel lblCharisma = new JLabel("Charisma:");
 		panel_3.add(lblCharisma, "cell 0 7");
@@ -493,89 +518,117 @@ public class ApplicationGUI {
 		JRadioButton rdbtnCharad = new JRadioButton();
 		panel_3.add(rdbtnCharad, "cell 3 7");
 		
-		JLabel lblCharisma_1 = new JLabel(": Charisma");
+		JLabel lblCharisma_1 = new JLabel(this.player.modLabelCreator("charisma"));
 		panel_3.add(lblCharisma_1, "cell 4 7,alignx right");
 		
-		JRadioButton rdbtnInvrad = new JRadioButton("InvRad");
+		buttonMap.put(lblCharisma_1, rdbtnCharad);
+		
+		JRadioButton rdbtnInvrad = new JRadioButton();
 		panel_3.add(rdbtnInvrad, "cell 5 7");
 		
-		JLabel lblInvestigationint = new JLabel(": Investigation (INT)");
+		JLabel lblInvestigationint = new JLabel(this.player.getData("intelligenceMod") + " : Investigation (INT)");
 		panel_3.add(lblInvestigationint, "cell 6 7,alignx right");
+		
+		buttonMap.put(lblInvestigationint, rdbtnInvrad);
 		
 		JLabel lblSavingThrows = new JLabel("SAVING THROWS");
 		panel_3.add(lblSavingThrows, "cell 4 8,alignx center");
 		
-		JRadioButton rdbtnMecrad = new JRadioButton("MecRad");
+		JRadioButton rdbtnMecrad = new JRadioButton();
 		panel_3.add(rdbtnMecrad, "cell 5 8");
 		
-		JLabel lblMechanicsinf = new JLabel(": Mechanics (INF)");
+		JLabel lblMechanicsinf = new JLabel(this.player.getData("interfacingMod") + " : Mechanics (INF)");
 		panel_3.add(lblMechanicsinf, "cell 6 8,alignx right");
 		
-		JRadioButton rdbtnMedrad = new JRadioButton("MedRad");
+		buttonMap.put(lblMechanicsinf, rdbtnMecrad);
+		
+		JRadioButton rdbtnMedrad = new JRadioButton();
 		panel_3.add(rdbtnMedrad, "cell 5 9");
 		
-		JLabel lblMedicinewis = new JLabel(": Medicine (WIS)");
+		JLabel lblMedicinewis = new JLabel(this.player.getData("wisdomMod") + " : Medicine (WIS)");
 		panel_3.add(lblMedicinewis, "cell 6 9,alignx right");
 		
-		JRadioButton rdbtnNatrad = new JRadioButton("NatRad");
+		buttonMap.put(lblMedicinewis, rdbtnMedrad);
+		
+		JRadioButton rdbtnNatrad = new JRadioButton();
 		panel_3.add(rdbtnNatrad, "cell 5 10");
 		
-		JLabel lblNatureint = new JLabel(": Nature (INT)");
+		JLabel lblNatureint = new JLabel(this.player.getData("intelligenceMod") + " : Nature (INT)");
 		panel_3.add(lblNatureint, "cell 6 10,alignx right");
 		
-		JRadioButton rdbtnPerrad = new JRadioButton("PerRad");
+		buttonMap.put(lblNatureint, rdbtnNatrad);
+		
+		JRadioButton rdbtnPerrad = new JRadioButton();
 		panel_3.add(rdbtnPerrad, "cell 5 11");
 		
-		JLabel lblPerceptionwis = new JLabel(": Perception (WIS)");
+		JLabel lblPerceptionwis = new JLabel(this.player.getData("wisdomMod") + " : Perception (WIS)");
 		panel_3.add(lblPerceptionwis, "cell 6 11,alignx right");
 		
-		JRadioButton rdbtnPerfrad = new JRadioButton("PerfRad");
+		buttonMap.put(lblPerceptionwis, rdbtnPerrad);
+		
+		JRadioButton rdbtnPerfrad = new JRadioButton();
 		panel_3.add(rdbtnPerfrad, "cell 5 12");
 		
-		JLabel lblPerformancecha = new JLabel(": Performance (CHA)");
+		JLabel lblPerformancecha = new JLabel(this.player.getData("charismaMod") + " : Performance (CHA)");
 		panel_3.add(lblPerformancecha, "cell 6 12,alignx right");
 		
-		JRadioButton rdbtnPersrad = new JRadioButton("PersRad");
+		buttonMap.put(lblPerformancecha, rdbtnPerfrad);
+		
+		JRadioButton rdbtnPersrad = new JRadioButton();
 		panel_3.add(rdbtnPersrad, "cell 5 13");
 		
-		JLabel lblNewLabel_5 = new JLabel(": Persuasion (CHA)");
-		panel_3.add(lblNewLabel_5, "cell 6 13,alignx right");
+		JLabel lblPersuasioncha = new JLabel(this.player.getData("charismaMod") + " : Persuasion (CHA)");
+		panel_3.add(lblPersuasioncha, "cell 6 13,alignx right");
 		
-		JRadioButton rdbtnSterad = new JRadioButton("SteRad");
+		buttonMap.put(lblPersuasioncha, rdbtnPersrad);
+		
+		JRadioButton rdbtnSterad = new JRadioButton();
 		panel_3.add(rdbtnSterad, "cell 3 14");
 		
-		JLabel lblStealthdex = new JLabel(": Stealth (DEX)");
+		JLabel lblStealthdex = new JLabel(this.player.getData("dexterityMod") + " : Stealth (DEX)");
 		panel_3.add(lblStealthdex, "cell 4 14,alignx right");
 		
-		JRadioButton rdbtnProrad = new JRadioButton("ProRad");
+		buttonMap.put(lblStealthdex, rdbtnSterad);
+		
+		JRadioButton rdbtnProrad = new JRadioButton();
 		panel_3.add(rdbtnProrad, "cell 5 14");
 		
-		JLabel lblProgramminginf = new JLabel(": Programming (INF)");
+		JLabel lblProgramminginf = new JLabel(this.player.getData("interfacingMod") + " : Programming (INF)");
 		panel_3.add(lblProgramminginf, "cell 6 14,alignx right");
 		
-		JRadioButton rdbtnSurvrad = new JRadioButton("SurvRad");
+		buttonMap.put(lblProgramminginf, rdbtnProrad);
+		
+		JRadioButton rdbtnSurvrad = new JRadioButton();
 		panel_3.add(rdbtnSurvrad, "cell 3 15");
 		
-		JLabel lblSurvivalwis = new JLabel(": Survival (WIS)");
+		JLabel lblSurvivalwis = new JLabel(this.player.getData("wisdomMod") + " : Survival (WIS)");
 		panel_3.add(lblSurvivalwis, "cell 4 15,alignx right");
 		
-		JRadioButton rdbtnRelrad = new JRadioButton("RelRad");
+		buttonMap.put(lblSurvivalwis, rdbtnSurvrad);
+		
+		JRadioButton rdbtnRelrad = new JRadioButton();
 		panel_3.add(rdbtnRelrad, "cell 5 15");
 		
-		JLabel lblReligionint = new JLabel(": Religion (INT)");
+		JLabel lblReligionint = new JLabel(this.player.getData("intelligenceMod") + " : Religion (INT)");
 		panel_3.add(lblReligionint, "cell 6 15,alignx right");
 		
-		JRadioButton rdbtnVehrad = new JRadioButton("VehRad");
+		buttonMap.put(lblReligionint, rdbtnRelrad);
+		
+		JRadioButton rdbtnVehrad = new JRadioButton();
 		panel_3.add(rdbtnVehrad, "cell 3 16");
 		
-		JLabel lblVehicleHandling = new JLabel(": Vehicle Handling (INF)");
+		JLabel lblVehicleHandling = new JLabel(this.player.getData("interfacingMod") + " : Vehicle Handling (INF)");
 		panel_3.add(lblVehicleHandling, "cell 4 16,alignx right");
 		
-		JRadioButton rdbtnSlerad = new JRadioButton("SleRad");
+		buttonMap.put(lblVehicleHandling, rdbtnVehrad);
+		
+		JRadioButton rdbtnSlerad = new JRadioButton();
 		panel_3.add(rdbtnSlerad, "cell 5 16");
 		
-		JLabel lblSleightOf = new JLabel(": Sleight of Hand (DEX)");
+		JLabel lblSleightOf = new JLabel(this.player.getData("dexterityMod") + " : Sleight of Hand (DEX)");
 		panel_3.add(lblSleightOf, "cell 6 16,alignx right");
+		
+		buttonMap.put(lblSleightOf, rdbtnSlerad);
 		
 		JLabel label = new JLabel("SKILLS");
 		panel_3.add(label, "cell 4 17,alignx center");
@@ -586,7 +639,7 @@ public class ApplicationGUI {
 		JPanel panel_4 = new JPanel();
 		panel_4.setPreferredSize(new Dimension(100,300));
 		frame.getContentPane().add(panel_4, BorderLayout.SOUTH);
-		panel_4.setLayout(new MigLayout("", "[:10px:300px,grow,left]", "[][10px,grow]"));
+		panel_4.setLayout(new MigLayout("", "[:10px:300px,grow,left][grow]", "[][10px,grow]"));
 		
 		JLabel lblNewLabel = new JLabel("Proficencies");
 		panel_4.add(lblNewLabel, "cell 0 0,alignx center");
@@ -597,6 +650,40 @@ public class ApplicationGUI {
 		JTextArea textArea_2 = new JTextArea();
 		textArea_2.setLineWrap(true);
 		scrollPane.setViewportView(textArea_2);
+		
+		JPanel panel_2 = new JPanel();
+		panel_4.add(panel_2, "cell 1 1,grow");
+		panel_2.setLayout(new MigLayout("", "[60px][200px]", "[40px][40px][40px][]"));
+		
+		JLabel lblHitDice = new JLabel("Hit Dice");
+		panel_2.add(lblHitDice, "cell 0 0,alignx center");
+		
+		// List of Item in Hit Dice Box
+		String[] diceChoices = { "D4" , "D6", "D8" , "D10", "D12"};
+		
+		JLabel lblCurrentHitPoints = new JLabel("Current Hit Points: ");
+		panel_2.add(lblCurrentHitPoints, "flowx,cell 1 0");
+		JComboBox comboBox = new JComboBox(diceChoices);
+		panel_2.add(comboBox, "cell 0 1,growx");
+		
+		JLabel lblMaxHitPoints = new JLabel("Max Hit Points:");
+		panel_2.add(lblMaxHitPoints, "flowx,cell 1 1");
+		
+		JLabel lblHitTotal = new JLabel("Hit Total: ");
+		panel_2.add(lblHitTotal, "cell 0 2");
+		
+		JLabel label_1 = new JLabel("");
+		panel_2.add(label_1, "cell 0 3");
+		
+		txtCurrenthittext = new JTextField();
+//		txtCurrenthittext.setText("CurrentHitText");
+		panel_2.add(txtCurrenthittext, "cell 1 0");
+		txtCurrenthittext.setColumns(10);
+		
+		txtMaxhittext = new JTextField();
+//		txtMaxhittext.setText("MaxHitText");
+		panel_2.add(txtMaxhittext, "cell 1 1");
+		txtMaxhittext.setColumns(10);
 		
 		JPanel panel_5 = new JPanel();
 		frame.getContentPane().add(panel_5, BorderLayout.CENTER);
@@ -657,24 +744,111 @@ public class ApplicationGUI {
 		textPane_1.setLineWrap(true);
 		scrollPane_3.setViewportView(textPane_1);
 		
+		txtProficiencybonustextbox = new JTextField();
+		panel_3.add(txtProficiencybonustextbox, "flowx,cell 4 1,alignx right");
+		txtProficiencybonustextbox.setColumns(10);
+		
+		txtProficiencybonustextbox.getDocument().addDocumentListener(new DocumentListener(){
+
+			int lastNumber;
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			// Remove this code duplication eventually
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				String bonus = txtProficiencybonustextbox.getText();
+				
+				for(JLabel key: buttonMap.keySet()){
+					if(buttonMap.get(key).isSelected()){
+						String txt = key.getText();
+						String num = txt.replaceAll("[\\D]", "");
+						if(txt.startsWith("-")){
+							num = "-" + num;
+						}
+						String newTxt = txt.replaceAll(num, "");
+
+						int numberConverted = Integer.parseInt(num);
+						
+						int bonusNum;
+						try{
+							bonusNum = Integer.parseInt(bonus);
+						}catch(NumberFormatException exp){
+							JOptionPane.showMessageDialog(frame, "Please make sure that the Proficency Bonus text box is a valid int!");
+							return;
+						}
+
+						
+						
+						key.setText((numberConverted + bonusNum) + newTxt);
+
+					}
+				
+				}
+				lastNumber = Integer.parseInt(bonus);
+				System.out.println(lastNumber);
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				String bonus = txtProficiencybonustextbox.getText();
+				int numberConverted;
+				for(JLabel key: buttonMap.keySet()){
+					
+					if(buttonMap.get(key).isSelected()){
+						String txt = key.getText();
+						String num = txt.replaceAll("[\\D]", "");
+						if(txt.startsWith("-")){
+							num = "-" + num;
+						}
+		
+						numberConverted = Integer.parseInt(num);
+	
+						String newTxt = txt.replaceAll(num, "");
+						
+						int bonusNum;
+						try{
+							if(bonus.equals("")){
+								bonusNum = lastNumber;
+								System.out.println(bonusNum);
+							}else{
+								bonusNum = Integer.parseInt(bonus);
+							}
+							
+						}catch(NumberFormatException exp){
+							JOptionPane.showMessageDialog(frame, "Please make sure that the Proficency Bonus text box is a valid int!");
+							return;
+						}
+
+	
+						key.setText((numberConverted - bonusNum) + newTxt);
+
+					}
+				
+			}
+
+				
+			}});
+		
+		JLabel lblProficiencyBonus = new JLabel(" : Proficiency bonus");
+		panel_3.add(lblProficiencyBonus, "cell 4 1,alignx right");
+		
+		for(JLabel key: buttonMap.keySet()){
+			buttonMap.get(key).addActionListener(new RadioListener(key, txtProficiencybonustextbox, buttonMap.get(key), this.frame));
+		}
+		
 		
 		frame.setVisible(true);
-		// Buttons that might be in edit character page.
-//		for(int i = 0; i < 7; i++){
-//			JButton btnUp_i = new JButton("up");
-//			panel_3.add(btnUp_i, "cell 3 " + (i + 1));
-//		}
-//		
-//		for(int i = 0; i < 7; i++){
-//			JButton btnUp_i = new JButton("down");
-//			panel_3.add(btnUp_i, "cell 4 " + (i + 1));
-//		}
-		
 	
 		
 	}
+	public void initLabels(){
+		
+	}
 }
-
 
 
 //this.frame.setVisible(false);

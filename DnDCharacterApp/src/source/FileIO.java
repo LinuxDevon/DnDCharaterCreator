@@ -1,7 +1,10 @@
 package source;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -30,28 +33,44 @@ import org.w3c.dom.Element;
  */
 public class FileIO {
 	
+	String decodedPath;
+	
+	public FileIO(){
+		// Get the Current Location of File
+        String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        
+        try {
+			decodedPath = URLDecoder.decode(path, "UTF-8");
+			System.out.println(decodedPath);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Checks to make sure that
 	 */
 	public void check() {
-		Path path = null; 
-		try {
-			path = Paths.get(ApplicationGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-			JFrame frame = new JFrame();
-			JLabel label = new JLabel(String.valueOf(path));
-			frame.setSize(100, 100);
-			frame.add(label);
-			frame.setVisible(true);
-			
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		File characterFile = new File(path + "Character");
+//		Path path = null; 
+//		try {
+//			path = Paths.get(ApplicationGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+//			JFrame frame = new JFrame();
+//			JLabel label = new JLabel(String.valueOf(path));
+//			frame.setSize(100, 100);
+//			frame.add(label);
+//			frame.setVisible(true);
+//			
+//		} catch (URISyntaxException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+		File characterFile = new File(decodedPath + "/Character");
 		if(!characterFile.exists()){
 			characterFile.mkdirs();
 		}
+
 		
 	}
 	
@@ -59,8 +78,17 @@ public class FileIO {
 		
 	}
 	
-	public boolean saveCharacter(){
+	public boolean saveCharacter(String location){
+
+        
+        String filePath = decodedPath + "/Character/" + location + ".xml";
+//        String filePath = "C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + location + ".char";
+
+        
 		try {
+
+			
+			File savingFile = new File(filePath);
 
 	        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -101,12 +129,24 @@ public class FileIO {
 	        Element salary = doc.createElement("salary");
 	        salary.appendChild(doc.createTextNode("100000"));
 	        staff.appendChild(salary);
-
+	        
+//	        // Get the Current Location of File
+//	        String path = FileIO.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+//	        String decodedPath;
+//	        try {
+//				decodedPath = URLDecoder.decode(path, "UTF-8");
+//				System.out.println(decodedPath);
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//				return false;
+//			}
+//	        
 	        // write the content into xml file
 	        TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	        Transformer transformer = transformerFactory.newTransformer();
 	        DOMSource source = new DOMSource(doc);
-	        StreamResult result = new StreamResult(new File("file.xml"));
+	        StreamResult result = new StreamResult(filePath);
 
 	        // Output to console for testing
 	        // StreamResult result = new StreamResult(System.out);

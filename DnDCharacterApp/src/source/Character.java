@@ -66,5 +66,10 @@ public class Character {
 		return this.data.get(variable);
 	}
 	
+	public String modLabelCreator(String key){
+//		this.player.getData(variable)": Strength"
+		System.out.println(getData(key) + ": " + key);
+		return getData(key + "Mod") + " : " + key;
+	}
 	
 }
