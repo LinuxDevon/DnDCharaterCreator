@@ -20,7 +20,11 @@ import javax.swing.JPasswordField;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.JLabel;
@@ -94,6 +98,12 @@ public class ApplicationGUI {
 	private JTextField txtCurrenthittext;
 	private JTextField txtMaxhittext;
 
+	private ArrayList<Integer> lvlExp = new ArrayList<>();
+	private JTextField txtStaminaPoints;
+	private JTextField txtMaxStaminaPoints;
+	private JTextField txtSpellcastingability;
+	private JTextField txtRevoabilitysavedc;
+	private JTextField txtRevoabilityattackmod;
 
 	/**
 	 * Create the application.
@@ -102,7 +112,10 @@ public class ApplicationGUI {
 	public ApplicationGUI() {
 //		this.player = new Character("", 0, null);
 //		initialize(player);
-		initializeOptionPanel();
+		// Set up the levels for the level list
+		lvlExp.addAll(Arrays.asList(0,300,900,2700,6500,14000,23000,34000,48000,64000,85000,100000,120000,140000,165000,195000,225000,265000,305000,355000));
+		
+		initializeOptionPanel(); // Ask if they want a new character
 	}
 	
 	/**
@@ -234,6 +247,12 @@ public class ApplicationGUI {
 		JMenuItem spellBook = new JMenuItem("Spell Book Website");
 		mnReference.add(spellBook);
 		
+		JMenuItem dndBook = new JMenuItem("Player Manual");
+		mnReference.add(dndBook);
+		
+		JMenuItem playerHandGuide = new JMenuItem("Re-evolution Manual");
+		mnReference.add(playerHandGuide);
+		
 		// Adds the spell book git hub website
 		spellBook.addActionListener(new ActionListener(){
 
@@ -244,6 +263,36 @@ public class ApplicationGUI {
 			    } catch (Exception e) {
 			        e.printStackTrace();
 			    }
+				
+			}});
+		
+		dndBook.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (Desktop.isDesktopSupported()) {
+				    try {
+				        File myFile = new File("References/DnD 5e Player's Handbook.pdf");
+				        Desktop.getDesktop().open(myFile);
+				    } catch (IOException ex) {
+				        // no application registered for PDFs
+				    }
+				}
+				
+			}});
+		
+		playerHandGuide.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (Desktop.isDesktopSupported()) {
+				    try {
+				        File myFile = new File("References/Re-Evolution Players Handbook (1st Edition) v1.2.1.pdf");
+				        Desktop.getDesktop().open(myFile);
+				    } catch (IOException ex) {
+				        // no application registered for PDFs
+				    }
+				}
 				
 			}});
 		JMenu mnSettings = new JMenu("Settings");
@@ -269,6 +318,21 @@ public class ApplicationGUI {
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new MigLayout("", "[144px,grow][75px,grow][150px,grow][100px,grow][]", "[30px][30px][30px]"));
+		
+		JMenu mnSpells = new JMenu("Spells Window");
+		menuBar.add(mnSpells);
+		
+		JMenuItem spellWindow = new JMenuItem("spells");
+		mnSpells.add(spellWindow);
+		
+		spellWindow.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SpellWindow spellFrame = new SpellWindow();
+				spellFrame.setVisible(true);
+				
+			}});
 		
 //		String characterName = null;
 //		String className = null;
@@ -316,7 +380,7 @@ public class ApplicationGUI {
 		frmtdtxtfldXp.setPreferredSize(new Dimension(100, 20));
 		frmtdtxtfldXp.setText("" + this.player.getXP());
 		panel.add(frmtdtxtfldXp, "cell 3 0");
-		
+
 		txtActextbox = new JTextField();
 		panel.add(txtActextbox, "cell 1 2");
 		txtActextbox.setColumns(10);
@@ -325,9 +389,36 @@ public class ApplicationGUI {
 		panel.add(txtSpeedtextbox, "cell 3 2");
 		txtSpeedtextbox.setColumns(10);
 		
-		JLabel lblLevel = new JLabel("Level:");
+		// add a catch for bad xp data...
+		JLabel lblLevel = new JLabel("Level: " + this.lvlCalc(Integer.parseInt(frmtdtxtfldXp.getText())));
 		panel.add(lblLevel, "cell 3 0");
 		
+		frmtdtxtfldXp.getDocument().addDocumentListener(new DocumentListener(){
+
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				if(!frmtdtxtfldXp.getText().equals("")){
+					int lvl = lvlCalc(Integer.parseInt(frmtdtxtfldXp.getText()));
+					lblLevel.setText("Level: " + lvl);
+				}
+
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				if(!frmtdtxtfldXp.getText().equals("")){
+					int lvl = lvlCalc(Integer.parseInt(frmtdtxtfldXp.getText()));
+					lblLevel.setText("Level: " + lvl);
+				}
+
+				
+			}});
 		
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Left side with ability score, saving throws, and skills
@@ -582,14 +673,6 @@ public class ApplicationGUI {
 		
 		buttonMap.put(lblPersuasioncha, rdbtnPersrad);
 		
-		JRadioButton rdbtnSterad = new JRadioButton();
-		panel_3.add(rdbtnSterad, "cell 3 14");
-		
-		JLabel lblStealthdex = new JLabel(this.player.getData("dexterityMod") + " : Stealth (DEX)");
-		panel_3.add(lblStealthdex, "cell 4 14,alignx right");
-		
-		buttonMap.put(lblStealthdex, rdbtnSterad);
-		
 		JRadioButton rdbtnProrad = new JRadioButton();
 		panel_3.add(rdbtnProrad, "cell 5 14");
 		
@@ -597,14 +680,6 @@ public class ApplicationGUI {
 		panel_3.add(lblProgramminginf, "cell 6 14,alignx right");
 		
 		buttonMap.put(lblProgramminginf, rdbtnProrad);
-		
-		JRadioButton rdbtnSurvrad = new JRadioButton();
-		panel_3.add(rdbtnSurvrad, "cell 3 15");
-		
-		JLabel lblSurvivalwis = new JLabel(this.player.getData("wisdomMod") + " : Survival (WIS)");
-		panel_3.add(lblSurvivalwis, "cell 4 15,alignx right");
-		
-		buttonMap.put(lblSurvivalwis, rdbtnSurvrad);
 		
 		JRadioButton rdbtnRelrad = new JRadioButton();
 		panel_3.add(rdbtnRelrad, "cell 5 15");
@@ -614,14 +689,6 @@ public class ApplicationGUI {
 		
 		buttonMap.put(lblReligionint, rdbtnRelrad);
 		
-		JRadioButton rdbtnVehrad = new JRadioButton();
-		panel_3.add(rdbtnVehrad, "cell 3 16");
-		
-		JLabel lblVehicleHandling = new JLabel(this.player.getData("interfacingMod") + " : Vehicle Handling (INF)");
-		panel_3.add(lblVehicleHandling, "cell 4 16,alignx right");
-		
-		buttonMap.put(lblVehicleHandling, rdbtnVehrad);
-		
 		JRadioButton rdbtnSlerad = new JRadioButton();
 		panel_3.add(rdbtnSlerad, "cell 5 16");
 		
@@ -630,16 +697,10 @@ public class ApplicationGUI {
 		
 		buttonMap.put(lblSleightOf, rdbtnSlerad);
 		
-		JLabel label = new JLabel("SKILLS");
-		panel_3.add(label, "cell 4 17,alignx center");
-		
-		JLabel lblSkills = new JLabel("SKILLS");
-		panel_3.add(lblSkills, "cell 6 17,alignx center");
-		
 		JPanel panel_4 = new JPanel();
-		panel_4.setPreferredSize(new Dimension(100,300));
+		panel_4.setPreferredSize(new Dimension(100,250));
 		frame.getContentPane().add(panel_4, BorderLayout.SOUTH);
-		panel_4.setLayout(new MigLayout("", "[:10px:300px,grow,left][grow]", "[][10px,grow]"));
+		panel_4.setLayout(new MigLayout("", "[:10px:300px,grow,left][grow]", "[][grow]"));
 		
 		JLabel lblNewLabel = new JLabel("Proficencies");
 		panel_4.add(lblNewLabel, "cell 0 0,alignx center");
@@ -649,11 +710,12 @@ public class ApplicationGUI {
 		
 		JTextArea textArea_2 = new JTextArea();
 		textArea_2.setLineWrap(true);
+//		textArea_2.setPreferredSize(new Dimension(100, 175));
 		scrollPane.setViewportView(textArea_2);
 		
 		JPanel panel_2 = new JPanel();
 		panel_4.add(panel_2, "cell 1 1,grow");
-		panel_2.setLayout(new MigLayout("", "[60px][200px]", "[40px][40px][40px][]"));
+		panel_2.setLayout(new MigLayout("", "[60px][200px][][250px][100px][25px][25px][25px]", "[40px][40px][40px][40px][40px]"));
 		
 		JLabel lblHitDice = new JLabel("Hit Dice");
 		panel_2.add(lblHitDice, "cell 0 0,alignx center");
@@ -663,14 +725,35 @@ public class ApplicationGUI {
 		
 		JLabel lblCurrentHitPoints = new JLabel("Current Hit Points: ");
 		panel_2.add(lblCurrentHitPoints, "flowx,cell 1 0");
+		
+		JProgressBar healthBar = new JProgressBar();
+		panel_2.add(healthBar, "cell 2 0");
+		
+		JLabel lblSpellcastingAbility = new JLabel("SpellCasting Ability: ");
+		panel_2.add(lblSpellcastingAbility, "flowx,cell 3 0");
+		
+		JLabel lblDeathSave = new JLabel("Death Saves");
+		panel_2.add(lblDeathSave, "cell 4 0");
 		JComboBox comboBox = new JComboBox(diceChoices);
 		panel_2.add(comboBox, "cell 0 1,growx");
 		
 		JLabel lblMaxHitPoints = new JLabel("Max Hit Points:");
 		panel_2.add(lblMaxHitPoints, "flowx,cell 1 1");
 		
+		JLabel lblRevoAbilitySave = new JLabel("Revo Ability Save DC:");
+		panel_2.add(lblRevoAbilitySave, "flowx,cell 3 1");
+		
+		JLabel lblSuccess = new JLabel("Success:");
+		panel_2.add(lblSuccess, "flowx,cell 4 1");
+		
 		JLabel lblHitTotal = new JLabel("Hit Total: ");
 		panel_2.add(lblHitTotal, "cell 0 2");
+		
+		JLabel lblRevoAbilityAttack = new JLabel("Revo Ability Attack Mod:");
+		panel_2.add(lblRevoAbilityAttack, "flowx,cell 3 2");
+		
+		JLabel lblFailure = new JLabel("Failure:");
+		panel_2.add(lblFailure, "flowx,cell 4 2,alignx trailing");
 		
 		JLabel label_1 = new JLabel("");
 		panel_2.add(label_1, "cell 0 3");
@@ -684,6 +767,58 @@ public class ApplicationGUI {
 //		txtMaxhittext.setText("MaxHitText");
 		panel_2.add(txtMaxhittext, "cell 1 1");
 		txtMaxhittext.setColumns(10);
+		
+		JLabel lblCurrentStaminaPoints = new JLabel("Current Stamina Points:");
+		panel_2.add(lblCurrentStaminaPoints, "flowx,cell 1 3");
+		
+		txtStaminaPoints = new JTextField();
+//		txtStaminaPoints.setText("Stamina Points");
+		panel_2.add(txtStaminaPoints, "cell 1 3");
+		txtStaminaPoints.setColumns(10);
+		
+		JProgressBar staminaBar = new JProgressBar();
+		panel_2.add(staminaBar, "cell 2 3");
+		
+		JLabel lblMaxStaminaPoints = new JLabel("Max Stamina Points:");
+		panel_2.add(lblMaxStaminaPoints, "flowx,cell 1 4");
+		
+		txtMaxStaminaPoints = new JTextField();
+//		txtMaxStaminaPoints.setText("Max Stamina Points");
+		panel_2.add(txtMaxStaminaPoints, "cell 1 4");
+		txtMaxStaminaPoints.setColumns(10);
+		
+		txtSpellcastingability = new JTextField();
+//		txtSpellcastingability.setText("spellCastingAbility");
+		panel_2.add(txtSpellcastingability, "cell 3 0");
+		txtSpellcastingability.setColumns(10);
+		
+		txtRevoabilitysavedc = new JTextField();
+//		txtRevoabilitysavedc.setText("revoAbilitySaveDC");
+		panel_2.add(txtRevoabilitysavedc, "cell 3 1");
+		txtRevoabilitysavedc.setColumns(10);
+		
+		txtRevoabilityattackmod = new JTextField();
+//		txtRevoabilityattackmod.setText("revoAbilityAttackMod");
+		panel_2.add(txtRevoabilityattackmod, "cell 3 2");
+		txtRevoabilityattackmod.setColumns(10);
+		
+		JRadioButton rdbtnSuccess = new JRadioButton();
+		panel_2.add(rdbtnSuccess, "cell 4 1");
+		
+		JRadioButton rdbtnSuccess_1 = new JRadioButton();
+		panel_2.add(rdbtnSuccess_1, "cell 4 1");
+		
+		JRadioButton rdbtnSuccess_2 = new JRadioButton();
+		panel_2.add(rdbtnSuccess_2, "cell 4 1");
+		
+		JRadioButton rdbtnFailure = new JRadioButton();
+		panel_2.add(rdbtnFailure, "cell 4 2,alignx trailing");
+		
+		JRadioButton rdbtnFailure_1 = new JRadioButton();
+		panel_2.add(rdbtnFailure_1, "cell 4 2,alignx trailing");
+		
+		JRadioButton rdbtnFailure_2 = new JRadioButton();
+		panel_2.add(rdbtnFailure_2, "cell 4 2,alignx trailing");
 		
 		JPanel panel_5 = new JPanel();
 		frame.getContentPane().add(panel_5, BorderLayout.CENTER);
@@ -836,6 +971,39 @@ public class ApplicationGUI {
 		JLabel lblProficiencyBonus = new JLabel(" : Proficiency bonus");
 		panel_3.add(lblProficiencyBonus, "cell 4 1,alignx right");
 		
+		JRadioButton rdbtnSterad = new JRadioButton();
+		panel_3.add(rdbtnSterad, "cell 5 17");
+		
+		
+		
+		JLabel lblStealthdex = new JLabel(this.player.getData("dexterityMod") + " : Stealth (DEX)");
+		panel_3.add(lblStealthdex, "cell 6 17,alignx right");
+		
+		buttonMap.put(lblStealthdex, rdbtnSterad);
+		
+		JRadioButton rdbtnSurvrad = new JRadioButton();
+		panel_3.add(rdbtnSurvrad, "cell 5 18");
+		
+		
+		
+		JLabel lblSurvivalwis = new JLabel(this.player.getData("wisdomMod") + " : Survival (WIS)");
+		panel_3.add(lblSurvivalwis, "cell 6 18,alignx right");
+		
+		buttonMap.put(lblSurvivalwis, rdbtnSurvrad);
+		
+		JRadioButton rdbtnVehrad = new JRadioButton();
+		panel_3.add(rdbtnVehrad, "cell 5 19");
+		
+		
+		
+		JLabel lblVehicleHandling = new JLabel(this.player.getData("interfacingMod") + " : Vehicle Handling (INF)");
+		panel_3.add(lblVehicleHandling, "cell 6 19,alignx right");
+		
+		buttonMap.put(lblVehicleHandling, rdbtnVehrad);
+		
+		JLabel lblSkills = new JLabel("SKILLS");
+		panel_3.add(lblSkills, "cell 6 20,alignx center");
+		
 		for(JLabel key: buttonMap.keySet()){
 			buttonMap.get(key).addActionListener(new RadioListener(key, txtProficiencybonustextbox, buttonMap.get(key), this.frame));
 		}
@@ -847,6 +1015,17 @@ public class ApplicationGUI {
 	}
 	public void initLabels(){
 		
+	}
+	
+	public int lvlCalc(int xpAmount){
+		int lvl = 0;
+		for(int i = this.lvlExp.size(); i <= 0; i--){
+			if(xpAmount >= this.lvlExp.get(i) && xpAmount < this.lvlExp.get(i + 1)){
+				lvl = i + 1;
+			}
+			System.out.println("level " + i + "=" + this.lvlExp.get(i));
+		}
+		return lvl;
 	}
 }
 
@@ -907,3 +1086,5 @@ public class ApplicationGUI {
 //	abilityScores.put("interfacing", Integer.parseInt(inter.getText()));
 //	abilityScores.put("charisma", Integer.parseInt(cha.getText()));
 //}
+
+
