@@ -10,10 +10,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /**
- * This listener is used for buttons to modify the labels associated with the radio buttons and changes the vaule based on 
+ * This listener is used for buttons to modify the labels associated with the radio buttons and changes the value based on 
  * weather is is clicked or not.
  * 
- * @author dachi
+ * @author Devon Adair
+ * 
+ * TODO Comment Code
  *
  */
 public class RadioListener implements ActionListener {

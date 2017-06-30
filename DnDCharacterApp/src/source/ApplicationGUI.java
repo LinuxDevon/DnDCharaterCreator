@@ -65,14 +65,21 @@ import javax.swing.JList;
 import javax.swing.JComboBox;
 
 /**
+ * This is the main window of the application. A lot of it is labels and layout. It creates the dialog window which is the new character window if the user
+ * selects yes then the this main page pops up. 
  * 
  * @author Devon Adair
  *
- *
- *
  * Changes eventually:
  * 
- * make method in character to handle this: this.player.getData(variable)": Strength"
+ * TODO add comments
+ * TODO make either maps or arraylist of data so it makes the code look nicer
+ * TODO general code cleanup
+ * TODO add in save and load features
+ * 
+ * BUGS:
+ * TODO find the radio bug error and fix it.
+ * TODO fix the xp crashing/ lvl calc
  */
 public class ApplicationGUI {
 	
@@ -130,15 +137,11 @@ public class ApplicationGUI {
 		
 		if (JOptionPane.showConfirmDialog(null, "Do you want to create a new character?", "New Character?",
 		        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			
-
 			dialog = new NewCharacterWindow(this.frame, this.player, this);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			dialog.setAutoRequestFocus(true);
-			dialog.setAlwaysOnTop(true);
-
-			
+			dialog.setAlwaysOnTop(true);	
 			
 		} else {
 			// need to make a template and load it when the load feature is implemented
@@ -253,6 +256,24 @@ public class ApplicationGUI {
 		JMenuItem playerHandGuide = new JMenuItem("Re-evolution Manual");
 		mnReference.add(playerHandGuide);
 		
+		JMenuItem characterSheet = new JMenuItem("Character Sheet");
+		mnReference.add(characterSheet);
+		
+		characterSheet.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (Desktop.isDesktopSupported()) {
+				    try {
+				        File myFile = new File("References/Reference Page.pdf");
+				        Desktop.getDesktop().open(myFile);
+				    } catch (IOException ex) {
+				        // no application registered for PDFs
+				    }
+				}
+				
+			}});
+		
 		// Adds the spell book git hub website
 		spellBook.addActionListener(new ActionListener(){
 
@@ -337,6 +358,8 @@ public class ApplicationGUI {
 //		String characterName = null;
 //		String className = null;
 		
+		// TODO find a way to clean up the code with maybe a generic function 
+		// 		to make the labels.
 		/////////////////////////////////////////////////////////////////////////
 		// Header of the APP
 		JLabel lblNewLabel_3 = new JLabel("Class: " + this.player.getData("class"));
@@ -397,7 +420,7 @@ public class ApplicationGUI {
 
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 
@@ -883,12 +906,13 @@ public class ApplicationGUI {
 		panel_3.add(txtProficiencybonustextbox, "flowx,cell 4 1,alignx right");
 		txtProficiencybonustextbox.setColumns(10);
 		
+		// TODO fix this duplicate code.
 		txtProficiencybonustextbox.getDocument().addDocumentListener(new DocumentListener(){
 
 			int lastNumber;
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 
@@ -1013,10 +1037,14 @@ public class ApplicationGUI {
 	
 		
 	}
+	
+	// TODO maybe make this the generic method to make labels
 	public void initLabels(){
 		
 	}
 	
+	// TODO fix the bug in lvl that craps out when you type to long of a number
+	//		there is an index out of bounds error somewhere
 	public int lvlCalc(int xpAmount){
 		int lvl = 0;
 		for(int i = this.lvlExp.size(); i <= 0; i--){
@@ -1028,63 +1056,4 @@ public class ApplicationGUI {
 		return lvl;
 	}
 }
-
-
-//this.frame.setVisible(false);
-
-// Add some try in case mistype the input!!!!
-//
-//
-//characterName = JOptionPane.showInputDialog(frame,
-//        "What is your name?", null);
-//xpAmount = Integer.parseInt(JOptionPane.showInputDialog(frame,
-//        "How much XP do you start with?", null));
-//
-//JTextField str = new JTextField(5);
-//JTextField dex = new JTextField(5);
-//JTextField con = new JTextField(5);
-//JTextField intel = new JTextField(5);
-//JTextField wis = new JTextField(5);
-//JTextField inter = new JTextField(5);
-//JTextField cha = new JTextField(5);
-//
-//JPanel myPanel = new JPanel();
-//myPanel.add(new JLabel("Strength:"));
-//myPanel.add(str);
-//myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//myPanel.add(new JLabel("Dexterity:"));
-//myPanel.add(dex);
-//
-//myPanel.add(new JLabel("Constitution:"));
-//myPanel.add(con);
-//myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//
-//myPanel.add(new JLabel("Intelligence:"));
-//myPanel.add(intel);
-//myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//
-//myPanel.add(new JLabel("Wisdom:"));
-//myPanel.add(wis);
-//myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//
-//myPanel.add(new JLabel("Interfacing:"));
-//myPanel.add(inter);
-//myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//
-//myPanel.add(new JLabel("Charisma:"));
-//myPanel.add(cha);
-//myPanel.add(Box.createVerticalStrut(15)); // a spacer
-//
-//int result = JOptionPane.showConfirmDialog(null, myPanel,
-//    "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
-//if (result == JOptionPane.OK_OPTION) {
-//	abilityScores.put("strength", Integer.parseInt(str.getText()));
-//	abilityScores.put("dexterity", Integer.parseInt(dex.getText()));
-//	abilityScores.put("constitution", Integer.parseInt(con.getText()));
-//	abilityScores.put("intelligence", Integer.parseInt(intel.getText()));
-//	abilityScores.put("wisdom", Integer.parseInt(wis.getText()));
-//	abilityScores.put("interfacing", Integer.parseInt(inter.getText()));
-//	abilityScores.put("charisma", Integer.parseInt(cha.getText()));
-//}
-
 

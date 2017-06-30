@@ -18,6 +18,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
+/**
+ * 
+ * @author Devon Adair
+ *
+ *
+ *	TODO Allow it so that it saves the text so when reopened the spells appear. Maybe put in character some how.
+ *	TODO Comment Code
+ */
 public class SpellWindow extends JFrame {
 
 	private JPanel contentPane;
@@ -61,7 +69,8 @@ public class SpellWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public SpellWindow() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.dispose());
+		this.setTitle("Spell Window");
 		setBounds(100, 100, 944, 928);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -91,7 +100,7 @@ public class SpellWindow extends JFrame {
 		scrollPane_3 = new JScrollPane();
 		contentPane.add(scrollPane_3, "cell 1 0,grow");
 		
-		column = new String[]{"Level 1"};
+		column = new String[]{"Level 3"};
 		
 		table_1 = new JTable(data, column);
 		scrollPane_3.setViewportView(table_1);
@@ -99,7 +108,7 @@ public class SpellWindow extends JFrame {
 		JScrollPane scrollPane_2 = new JScrollPane();
 		contentPane.add(scrollPane_2, "cell 2 0,grow");
 		
-		column = new String[]{"Level 1"};
+		column = new String[]{"Level 6"};
 		
 		table_2 = new JTable(data, column);
 		scrollPane_2.setViewportView(table_2);
@@ -107,7 +116,7 @@ public class SpellWindow extends JFrame {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		contentPane.add(scrollPane_1, "cell 0 1,grow");
 		
-		column = new String[]{"Level 3"};
+		column = new String[]{"Level 1"};
 		
 		table_3 = new JTable(data, column);
 		scrollPane_1.setViewportView(table_3);
@@ -123,7 +132,7 @@ public class SpellWindow extends JFrame {
 		scrollPane_5 = new JScrollPane();
 		contentPane.add(scrollPane_5, "cell 2 1,grow");
 		
-		column = new String[]{"Level 5"};
+		column = new String[]{"Level 7"};
 		
 		table_5 = new JTable(data, column);
 		scrollPane_5.setViewportView(table_5);
@@ -131,7 +140,7 @@ public class SpellWindow extends JFrame {
 		scrollPane_6 = new JScrollPane();
 		contentPane.add(scrollPane_6, "cell 0 2,grow");
 		
-		column = new String[]{"Level 6"};
+		column = new String[]{"Level 2"};
 		
 		table_6 = new JTable(data, column);
 		scrollPane_6.setViewportView(table_6);
@@ -139,7 +148,7 @@ public class SpellWindow extends JFrame {
 		scrollPane_7 = new JScrollPane();
 		contentPane.add(scrollPane_7, "cell 1 2,grow");
 		
-		column = new String[]{"Level 7"};
+		column = new String[]{"Level 5"};
 		
 		table_7 = new JTable(data, column);
 		scrollPane_7.setViewportView(table_7);
@@ -152,7 +161,7 @@ public class SpellWindow extends JFrame {
 		table_8 = new JTable(data, column);
 		scrollPane_8.setViewportView(table_8);
 		
-		ImageIcon imageIcon = new ImageIcon("Stamina Cost Table.jpg"); // load the image to a imageIcon
+		ImageIcon imageIcon = new ImageIcon("Images/Stamina Cost Table.jpg"); // load the image to a imageIcon
 		Image image = imageIcon.getImage(); // transform it 
 		Image newimg = image.getScaledInstance(250, 250,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);  // transform it back
