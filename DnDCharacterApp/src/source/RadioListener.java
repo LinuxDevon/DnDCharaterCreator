@@ -26,6 +26,8 @@ public class RadioListener implements ActionListener {
 	private JFrame frame;
 	
 	private int lastNum;
+	private boolean firstRun;
+	private int originalNumber;
 	
 	public RadioListener(JLabel label, JTextField txtProficiencybonustextbox, JRadioButton rdbtnStrrad, JFrame frame){
 		this.label = label;
@@ -33,26 +35,40 @@ public class RadioListener implements ActionListener {
 		this.button = rdbtnStrrad;
 		this.frame = frame;
 		
+		this.firstRun = true;
+		this.originalNumber = 0;
+		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Parse the string to get the integer and recombine into a string
-		String txt = this.label.getText();
+		String txt = this.label.getText(); 
 		String num = txt.replaceAll("[\\D]", "");
 		if(txt.startsWith("-")){
 			num = "-" + num;
 		}
 		String newTxt = txt.replaceAll(num, "");
+//		System.out.println(num);
 
 		int numberConverted = Integer.parseInt(num);
 		
+		if(firstRun){
+			this.originalNumber = numberConverted;
+			this.firstRun = false;
+		}
+		
 		int bonusNum;
-		try{
+//		try{
+//			bonusNum = Integer.parseInt(this.bonus.getText());
+//		}catch(NumberFormatException exp){
+//			JOptionPane.showMessageDialog(this.frame, "Please make sure that the Proficency Bonus text box is a valid int!");
+//			return;
+//		}
+		if(this.bonus.getText().equals("")){
+			bonusNum = 0;
+		}else{
 			bonusNum = Integer.parseInt(this.bonus.getText());
-		}catch(NumberFormatException exp){
-			JOptionPane.showMessageDialog(this.frame, "Please make sure that the Proficency Bonus text box is a valid int!");
-			return;
 		}
 
 		if(this.button.isSelected()){
@@ -63,13 +79,14 @@ public class RadioListener implements ActionListener {
 //			}
 			
 		}else{
-			this.label.setText((numberConverted - bonusNum) + newTxt);
+//			this.label.setText((numberConverted - bonusNum) + newTxt);
+			this.label.setText(this.originalNumber + newTxt);
 		}
+//		System.out.println(bonusNum);
 		lastNum = Integer.parseInt(this.bonus.getText());
 		
 		
 	}
-
 
 
 }

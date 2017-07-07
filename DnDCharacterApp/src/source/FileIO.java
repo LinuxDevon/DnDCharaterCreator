@@ -1,27 +1,16 @@
 package source;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 /**
  * This is to save and load character files. It also verifies all the locations need are created.
@@ -33,9 +22,11 @@ import org.w3c.dom.Element;
  */
 public class FileIO {
 	
-	String decodedPath;
+	private String decodedPath;
+	private	JFrame frame;
+	private ApplicationGUI applicationGUI;
 	
-	public FileIO(){
+	public FileIO(JFrame frame2, ApplicationGUI applicationGUI){
 		// Get the Current Location of File
         String path = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         
@@ -46,126 +37,90 @@ public class FileIO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        this.frame = frame2;
+        this.applicationGUI = applicationGUI;
 	}
 	
 	/**
 	 * Checks to make sure that
+	 * TODO finish checking files
 	 */
 	public void check() {
-//		Path path = null; 
-//		try {
-//			path = Paths.get(ApplicationGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-//			JFrame frame = new JFrame();
-//			JLabel label = new JLabel(String.valueOf(path));
-//			frame.setSize(100, 100);
-//			frame.add(label);
-//			frame.setVisible(true);
-//			
-//		} catch (URISyntaxException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
 		File characterFile = new File(decodedPath + "/Character");
 		if(!characterFile.exists()){
 			characterFile.mkdirs();
 		}
 
-		
 	}
 	
 	public void createCharacter(){
 		
 	}
 	
-	public boolean saveCharacter(String location){
+	public boolean saveCharacter(String location, Character player){
 
-        
-        String filePath = decodedPath + "/Character/" + location + ".xml";
-//        String filePath = "C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + location + ".char";
-
-        
-		try {
-
+		  try {
+			File file = getFile(true);
+//			File file = new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + location + ".char");
 			
-			File savingFile = new File(filePath);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-	        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-	        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			// output pretty printed
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-	        // root elements
-	        Document doc = docBuilder.newDocument();
-	        Element rootElement = doc.createElement("company");
-	        doc.appendChild(rootElement);
+			jaxbMarshaller.marshal(player, file);
+			jaxbMarshaller.marshal(player, System.out);
 
-	        // staff elements
-	        Element staff = doc.createElement("Staff");
-	        rootElement.appendChild(staff);
-
-	        // set attribute to staff element
-	        Attr attr = doc.createAttribute("id");
-	        attr.setValue("1");
-	        staff.setAttributeNode(attr);
-
-	        // shorten way
-	        // staff.setAttribute("id", "1");
-
-	        // firstname elements
-	        Element firstname = doc.createElement("firstname");
-	        firstname.appendChild(doc.createTextNode("yong"));
-	        staff.appendChild(firstname);
-
-	        // lastname elements
-	        Element lastname = doc.createElement("lastname");
-	        lastname.appendChild(doc.createTextNode("mook kim"));
-	        staff.appendChild(lastname);
-
-	        // nickname elements
-	        Element nickname = doc.createElement("nickname");
-	        nickname.appendChild(doc.createTextNode("mkyong"));
-	        staff.appendChild(nickname);
-
-	        // salary elements
-	        Element salary = doc.createElement("salary");
-	        salary.appendChild(doc.createTextNode("100000"));
-	        staff.appendChild(salary);
-	        
-//	        // Get the Current Location of File
-//	        String path = FileIO.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-//	        String decodedPath;
-//	        try {
-//				decodedPath = URLDecoder.decode(path, "UTF-8");
-//				System.out.println(decodedPath);
-//			} catch (UnsupportedEncodingException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				return false;
-//			}
-//	        
-	        // write the content into xml file
-	        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-	        Transformer transformer = transformerFactory.newTransformer();
-	        DOMSource source = new DOMSource(doc);
-	        StreamResult result = new StreamResult(filePath);
-
-	        // Output to console for testing
-	        // StreamResult result = new StreamResult(System.out);
-
-	        transformer.transform(source, result);
-
-	        System.out.println("File saved!");
-
-	      } catch (ParserConfigurationException pce) {
-	        pce.printStackTrace();
-	      } catch (TransformerException tfe) {
-	        tfe.printStackTrace();
-	      }
-		
-		return true;
+		      } catch (JAXBException e) { //TODO fix eating exception
+		    	  e.printStackTrace();
+		      }
+	return true;
 	}
 	
 	public boolean loadCharacter(){
+		 try {
+			 	
+			 	File file = getFile(false);
+//				File file = new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + "test" + ".char");
+				JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
+		
+				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+				Character playerLoaded = (Character) jaxbUnmarshaller.unmarshal(file);
+				System.out.println(playerLoaded.getName());
+				
+				this.frame.dispose();
+//				this.frame.initialize();
+				this.applicationGUI.initialize(playerLoaded);
+		
+			  } catch (JAXBException e) {
+				e.printStackTrace();
+			  }
+
 		return true;
 	}
 	
+	public File getFile(boolean save){
+		JFileChooser chooser = new JFileChooser();
+		//TODO change back to decoded path
+		chooser.setCurrentDirectory(new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" ));
+		//TODO figure out how to filter only characters
+//		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+//		        "char"); // filter only character files
+//		chooser.setFileFilter(filter);
+		
+		int returnVal = chooser.showOpenDialog(this.frame);
+		//TODO fix this so it saves with .char
+		if(!chooser.getTypeDescription(chooser.getSelectedFile()).equals(".char") && save){
+			chooser.getSelectedFile().renameTo(new File(chooser.getSelectedFile().getAbsolutePath()
+												+ chooser.getName() + ".char"));
+			System.out.println(chooser.getSelectedFile().getAbsolutePath()
+												+ chooser.getName() + ".char");
+		}
+		if(returnVal == JFileChooser.APPROVE_OPTION) {
+		       System.out.println("You chose to open this file: " +
+		            chooser.getSelectedFile().getName());
+		    }
+		return chooser.getSelectedFile();
+	}
 }

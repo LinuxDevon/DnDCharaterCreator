@@ -1,10 +1,26 @@
 package source;
 import java.util.HashMap;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+//import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(propOrder = {'xp'});
 public class Character {
-//	private String name;
+//	@XmlElement
+	@XmlElement(name = "name")
+	private String name;
+	
+	@XmlElement(name = "xp")
 	private int xp;
 	
+	@XmlElementWrapper(name = "dataList")
+	@XmlElement(name = "entry")
 	private HashMap<String, String> data;
 //	private HashMap<String, Integer> modScores;
 //	private String agentNum;
@@ -43,6 +59,9 @@ public class Character {
 //		this.variableMap.put("agentNumber", agentNum);		
 //	}
 
+	public Character(){
+		
+	}
 	
 	public Character(Integer xp, HashMap<String, String> data) {
 		this.xp = xp;
@@ -53,9 +72,10 @@ public class Character {
 	public String getAbilityScore(String name){
 		return this.data.get(name);
 	}
-	
+
 	public String getName(){
 		return this.data.get("name");
+//		return this.name);
 	}
 	
 	public int getXP(){
@@ -68,8 +88,18 @@ public class Character {
 	
 	public String modLabelCreator(String key){
 //		this.player.getData(variable)": Strength"
-		System.out.println(getData(key) + ": " + key);
+//		System.out.println(getData(key) + ": " + key);
 		return getData(key + "Mod") + " : " + key;
+	}
+	
+//	@XmlElement
+	public void setName(String name){
+		this.name = getName();
+	}
+	
+
+	public void setData(){
+		this.data = this.data;
 	}
 	
 }

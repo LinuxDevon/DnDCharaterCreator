@@ -386,7 +386,7 @@ public class NewCharacterWindow extends JDialog {
 	
 	public int modifierCalc(int abilityScore){
 		double abilityMod;
-		System.out.println((((double) abilityScore -10)/2));
+//		System.out.println((((double) abilityScore -10)/2));
 		abilityMod = Math.floor((((double) abilityScore -10)/2));
 		return (int) abilityMod;
 	}

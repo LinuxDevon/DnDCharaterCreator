@@ -21,7 +21,9 @@ import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -187,11 +189,7 @@ public class ApplicationGUI {
 		
 		this.player = player2;
 //		System.out.println(this.player.getXP());
-		// Verify that the correct folders and files are in place.
-		fileManager = new FileIO();
-		
-		fileManager.check();
-		fileManager.saveCharacter("temp");
+
 		
 		// Create the app
 		frame = new JFrame();
@@ -224,7 +222,9 @@ public class ApplicationGUI {
 //				while(true){
 					String fileName = (String) JOptionPane.showInputDialog(frame,"Please enter the file name you wish to save.");
 //					try{
-						fileManager.saveCharacter(fileName);
+					fileManager.saveCharacter(fileName, player);
+//					FileOutputStream saveFile = new FileOutputStream("hello.sav");
+//					ObjectOutputStream save = ObjectOutputStream(saveFile);
 //					}
 //				}
 				
@@ -238,6 +238,7 @@ public class ApplicationGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Loading");
+				fileManager.loadCharacter();
 				
 			}});
 		
@@ -948,7 +949,7 @@ public class ApplicationGUI {
 				
 				}
 				lastNumber = Integer.parseInt(bonus);
-				System.out.println(lastNumber);
+//				System.out.println(lastNumber);
 			}
 
 			@Override
@@ -972,7 +973,7 @@ public class ApplicationGUI {
 						try{
 							if(bonus.equals("")){
 								bonusNum = lastNumber;
-								System.out.println(bonusNum);
+//								System.out.println(bonusNum);
 							}else{
 								bonusNum = Integer.parseInt(bonus);
 							}
@@ -1034,6 +1035,12 @@ public class ApplicationGUI {
 		
 		
 		frame.setVisible(true);
+		
+		// Verify that the correct folders and files are in place.
+		fileManager = new FileIO(this.frame, this);
+		
+//		fileManager.check();
+//		fileManager.saveCharacter("temp");
 	
 		
 	}
@@ -1051,7 +1058,7 @@ public class ApplicationGUI {
 			if(xpAmount >= this.lvlExp.get(i) && xpAmount < this.lvlExp.get(i + 1)){
 				lvl = i + 1;
 			}
-			System.out.println("level " + i + "=" + this.lvlExp.get(i));
+//			System.out.println("level " + i + "=" + this.lvlExp.get(i));
 		}
 		return lvl;
 	}
