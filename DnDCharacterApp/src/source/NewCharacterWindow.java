@@ -52,27 +52,13 @@ public class NewCharacterWindow extends JDialog {
 //	private JLabel lblConmod;
 //	private JLabel lblIntmod;
 //	private JLabel lblWismod;
-	// Need to create array list of of the fields to pass to the Document Listener
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		try {
-//			NewCharacterWindow dialog = new NewCharacterWindow(null, null, null);
-//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//			dialog.setVisible(true);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-
 
 	/**
 	 * Create the dialog.
 	 * @param frame 
 	 * @param window 
 	 */
-	public NewCharacterWindow(JFrame frame, Character character, ApplicationGUI window) {
+	public NewCharacterWindow(JFrame frame, Character character, ApplicationGUI window, boolean newCharacter) {
 		
 		
 		setBounds(100, 100, 720, 504);
@@ -357,12 +343,22 @@ public class NewCharacterWindow extends JDialog {
 						data.put("variant", txtVariant.getText());
 						data.put("agentNumber", txtAgentnum.getText());	
 						
+						if(formattedStartingXP.getText().equals("")){
+							formattedStartingXP.setText("0");
+						}
 						this.player = new Character(Integer.valueOf(formattedStartingXP.getText()), data);
 //						modifierCalc(5);
 //						final character = null;
 						
 						dispose(); // kill the frame
+//						if(newCharacter){
+						
 						window.initialize(this.player);
+						
+//						}else{
+//							frame.
+//						}
+						
 						
 					}});
 				buttonPane.add(okButton);
@@ -380,6 +376,17 @@ public class NewCharacterWindow extends JDialog {
 					}});
 				buttonPane.add(cancelButton);
 			}
+		}
+		if(!newCharacter){
+			txtClass.setText(character.getData(Character.CLASS));
+			txtRank.setText(character.getData(Character.RANK));
+			txtMoney.setText(character.getData(Character.MONEY));
+			txtSpecies.setText(character.getData(Character.SPECIES));
+			txtVariant.setText(character.getData(Character.VARIANT));
+			txtAgentnum.setText(character.getData(Character.AGENTNUM));
+			frmtdtxtfldCharacterinput.setText(character.getData(Character.NAME));
+			formattedStartingXP.setText("" + character.getXP());
+			
 		}
 		
 	}

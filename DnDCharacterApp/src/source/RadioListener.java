@@ -83,7 +83,7 @@ public class RadioListener implements ActionListener {
 			this.label.setText(this.originalNumber + newTxt);
 		}
 //		System.out.println(bonusNum);
-		lastNum = Integer.parseInt(this.bonus.getText());
+		lastNum = bonusNum;
 		
 		
 	}

@@ -37,6 +37,9 @@ import javax.swing.JDialog;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
@@ -83,6 +86,9 @@ import javax.swing.JComboBox;
  * TODO find the radio bug error and fix it.
  * TODO fix the xp crashing/ lvl calc
  */
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ApplicationGUI {
 	
 	public static final String VERSION = "Beta 1.0";
@@ -113,12 +119,18 @@ public class ApplicationGUI {
 	private JTextField txtSpellcastingability;
 	private JTextField txtRevoabilitysavedc;
 	private JTextField txtRevoabilityattackmod;
+	
+	private SpellWindow spellFrame;
+	
+	private boolean newCharacter; // used for edit and new character
 
 	/**
 	 * Create the application.
 	 * @wbp.parser.entryPoint
 	 */
 	public ApplicationGUI() {
+		this.newCharacter = true;
+		spellFrame = new SpellWindow(this.player);
 //		this.player = new Character("", 0, null);
 //		initialize(player);
 		// Set up the levels for the level list
@@ -133,17 +145,23 @@ public class ApplicationGUI {
 	
 	public void initializeOptionPanel(){
 		
-		String characterName;
 		int xpAmount;
 		HashMap<String, String> data = new HashMap<>();
-		
-		if (JOptionPane.showConfirmDialog(null, "Do you want to create a new character?", "New Character?",
-		        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-			dialog = new NewCharacterWindow(this.frame, this.player, this);
+		if(!this.newCharacter){
+			dialog = new NewCharacterWindow(this.frame, this.player, this, this.newCharacter);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			dialog.setAutoRequestFocus(true);
-			dialog.setAlwaysOnTop(true);	
+			dialog.setAlwaysOnTop(true);
+			return;
+		}
+		if (JOptionPane.showConfirmDialog(null, "Do you want to create a new character?", "New Character?",
+		        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			dialog = new NewCharacterWindow(this.frame, this.player, this, this.newCharacter);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			dialog.setAutoRequestFocus(true);
+			dialog.setAlwaysOnTop(true);
 			
 		} else {
 			// need to make a template and load it when the load feature is implemented
@@ -177,187 +195,30 @@ public class ApplicationGUI {
 			initialize(player);
 			
 		}
-
-		
-		
 	}
 	/**
 	 * Initialize the contents of the frame.
-	 * @param player2 
+	 * @param player2 - the Character to add to the GUI
 	 */
 	public void initialize(Character player2) {
 		
-		this.player = player2;
-//		System.out.println(this.player.getXP());
-
+		// init the player
+		this.player = player2;	
 		
 		// Create the app
-		frame = new JFrame();
-		
-//		initializeOptionPanel();
-		
-		
+//		if(this.newCharacter){
+			frame = new JFrame();
+//		}
+
 		frame.setBounds(100, 100, 1547, 1027);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		/////////////////////////////////////////////////////////////////////////
-		// Menu Bar
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-		
-		JMenu mnFile = new JMenu("File");
-		menuBar.add(mnFile);
-		
-		JMenuItem save = new JMenuItem("Save");
-		mnFile.add(save);
-		
-		save.addActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Saving");
-				
-				// need to add file checking to make sure there is no overwriting
-				
-//				while(true){
-					String fileName = (String) JOptionPane.showInputDialog(frame,"Please enter the file name you wish to save.");
-//					try{
-					fileManager.saveCharacter(fileName, player);
-//					FileOutputStream saveFile = new FileOutputStream("hello.sav");
-//					ObjectOutputStream save = ObjectOutputStream(saveFile);
-//					}
-//				}
-				
-			}});
-		
-		JMenuItem load = new JMenuItem("Load");
-		mnFile.add(load);
-		
-		load.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Loading");
-				fileManager.loadCharacter();
-				
-			}});
-		
-		JMenuItem newChar = new JMenuItem("New Character");
-		mnFile.add(newChar);
-		
-		JMenu mnReference = new JMenu("Reference");
-		menuBar.add(mnReference);
-		
-		JMenuItem spellBook = new JMenuItem("Spell Book Website");
-		mnReference.add(spellBook);
-		
-		JMenuItem dndBook = new JMenuItem("Player Manual");
-		mnReference.add(dndBook);
-		
-		JMenuItem playerHandGuide = new JMenuItem("Re-evolution Manual");
-		mnReference.add(playerHandGuide);
-		
-		JMenuItem characterSheet = new JMenuItem("Character Sheet");
-		mnReference.add(characterSheet);
-		
-		characterSheet.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (Desktop.isDesktopSupported()) {
-				    try {
-				        File myFile = new File("References/Reference Page.pdf");
-				        Desktop.getDesktop().open(myFile);
-				    } catch (IOException ex) {
-				        // no application registered for PDFs
-				    }
-				}
-				
-			}});
-		
-		// Adds the spell book git hub website
-		spellBook.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-			    try {
-			        Desktop.getDesktop().browse(new URL("http://thebombzen.github.io/grimoire/").toURI());
-			    } catch (Exception e) {
-			        e.printStackTrace();
-			    }
-				
-			}});
-		
-		dndBook.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (Desktop.isDesktopSupported()) {
-				    try {
-				        File myFile = new File("References/DnD 5e Player's Handbook.pdf");
-				        Desktop.getDesktop().open(myFile);
-				    } catch (IOException ex) {
-				        // no application registered for PDFs
-				    }
-				}
-				
-			}});
-		
-		playerHandGuide.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (Desktop.isDesktopSupported()) {
-				    try {
-				        File myFile = new File("References/Re-Evolution Players Handbook (1st Edition) v1.2.1.pdf");
-				        Desktop.getDesktop().open(myFile);
-				    } catch (IOException ex) {
-				        // no application registered for PDFs
-				    }
-				}
-				
-			}});
-		JMenu mnSettings = new JMenu("Settings");
-		menuBar.add(mnSettings);
-		
-		JMenu mnEditCharacter = new JMenu("Edit Character");
-		menuBar.add(mnEditCharacter);
-		
-		JMenu mnUpdate = new JMenu("Update");
-		menuBar.add(mnUpdate);
-		
-		JMenuItem version = new JMenuItem("version");
-		mnUpdate.add(version);
-		
-		version.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frame, VERSION);
-				
-			}});
-		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.NORTH);
 		panel.setLayout(new MigLayout("", "[144px,grow][75px,grow][150px,grow][100px,grow][]", "[30px][30px][30px]"));
-		
-		JMenu mnSpells = new JMenu("Spells Window");
-		menuBar.add(mnSpells);
-		
-		JMenuItem spellWindow = new JMenuItem("spells");
-		mnSpells.add(spellWindow);
-		
-		spellWindow.addActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				SpellWindow spellFrame = new SpellWindow();
-				spellFrame.setVisible(true);
-				
-			}});
-		
-//		String characterName = null;
-//		String className = null;
+		// MENU
+		initMenu();
 		
 		// TODO find a way to clean up the code with maybe a generic function 
 		// 		to make the labels.
@@ -373,7 +234,7 @@ public class ApplicationGUI {
 		JLabel lblXp = new JLabel("XP: ");
 		panel.add(lblXp, "flowx,cell 3 0,alignx center");
 		
-		JLabel lblMoney = new JLabel("Money: " );
+		JLabel lblMoney = new JLabel("Money: ");
 		panel.add(lblMoney, "flowx,cell 0 1");
 		
 		JLabel lblSpecies = new JLabel("Species: " + this.player.getData("species"));
@@ -382,14 +243,14 @@ public class ApplicationGUI {
 		JLabel lblMutLvl = new JLabel("MUT LVL / HUM VARIANT: " + this.player.getData("variant"));
 		panel.add(lblMutLvl, "cell 2 1,alignx center");
 		
-		JLabel lblAgentNumber = new JLabel("Agent Number: " + this.player.getData("AgentNumber") );
+		JLabel lblAgentNumber = new JLabel("Agent Number: " + this.player.getData("agentNumber") );
 		panel.add(lblAgentNumber, "cell 3 1,alignx center");
 		JLabel labelCharacterName = new JLabel("Character Name: " + this.player.getName() );
 		panel.add(labelCharacterName, "cell 0 0");
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setPreferredSize(new Dimension(80,20));
-		panel.add(formattedTextField, "cell 0 1,alignx center");
+		JFormattedTextField formattedTextFieldMoney = new JFormattedTextField(this.player.getData("money"));
+		formattedTextFieldMoney.setPreferredSize(new Dimension(80,20));
+		panel.add(formattedTextFieldMoney, "cell 0 1,alignx center");
 		
 		JLabel lblAc = new JLabel("AC:");
 		panel.add(lblAc, "flowx,cell 1 2,alignx center");
@@ -428,7 +289,14 @@ public class ApplicationGUI {
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
 				if(!frmtdtxtfldXp.getText().equals("")){
-					int lvl = lvlCalc(Integer.parseInt(frmtdtxtfldXp.getText()));
+					int lvl;
+					try {
+						lvl = lvlCalc(Integer.parseUnsignedInt(frmtdtxtfldXp.getText()));
+						
+					}catch (NumberFormatException e){
+						lvl = 19;
+					}
+					
 					lblLevel.setText("Level: " + lvl);
 				}
 
@@ -437,7 +305,13 @@ public class ApplicationGUI {
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
 				if(!frmtdtxtfldXp.getText().equals("")){
-					int lvl = lvlCalc(Integer.parseInt(frmtdtxtfldXp.getText()));
+					int lvl;
+					try {
+						lvl = lvlCalc(Integer.parseUnsignedInt(frmtdtxtfldXp.getText()));
+					}catch (NumberFormatException e){
+						lvl = 19;
+					}
+//					int lvl = lvlCalc(Integer.parseInt(frmtdtxtfldXp.getText()));
 					lblLevel.setText("Level: " + lvl);
 				}
 
@@ -1039,8 +913,34 @@ public class ApplicationGUI {
 		// Verify that the correct folders and files are in place.
 		fileManager = new FileIO(this.frame, this);
 		
+		
+//		this.player.setButtonMap(this.buttonMap);
+		if(!this.newCharacter){
+			
+			HashMap<String, Integer> tempButtonMap = this.player.getButtonMap();
+			ArrayList<String> labelNames = new ArrayList<>();
+			ArrayList<Integer> buttonOn = new ArrayList<>();
+			
+			for(String label: tempButtonMap.keySet()){
+				labelNames.add(label);
+				buttonOn.add(tempButtonMap.get(label));
+			}
+			System.out.println(buttonMap.size());
+			for(JLabel key: this.buttonMap.keySet()){
+				key.setText(labelNames.get(0));
+				labelNames.remove(0);
+				if(buttonOn.get(0) == 1){
+					this.buttonMap.get(key).setSelected(true);
+				}else{
+					this.buttonMap.get(key).setSelected(false);
+				}
+				buttonOn.remove(0);
+			}
+		}
+		this.newCharacter = false;
 //		fileManager.check();
 //		fileManager.saveCharacter("temp");
+		
 	
 		
 	}
@@ -1054,13 +954,196 @@ public class ApplicationGUI {
 	//		there is an index out of bounds error somewhere
 	public int lvlCalc(int xpAmount){
 		int lvl = 0;
-		for(int i = this.lvlExp.size(); i <= 0; i--){
+		
+		for(int i = 0; i <= this.lvlExp.size() - 1; i++){
+//			System.out.println("xp = "  + this.lvlExp.get(i) + " i = " + i);
+			if((i + 1) == 20){ // check the end
+				lvl = i;
+				return lvl;
+			}
 			if(xpAmount >= this.lvlExp.get(i) && xpAmount < this.lvlExp.get(i + 1)){
 				lvl = i + 1;
+				return lvl;
 			}
-//			System.out.println("level " + i + "=" + this.lvlExp.get(i));
 		}
 		return lvl;
+	}
+	
+	public void initMenu(){
+		
+		
+		/////////////////////////////////////////////////////////////////////////
+		// Menu Bar
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
+		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+		
+		JMenuItem save = new JMenuItem("Save");
+		mnFile.add(save);
+		
+		save.addActionListener(new ActionListener(){
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("Saving");
+			
+			// need to add file checking to make sure there is no overwriting
+			
+//			while(true){
+//			String fileName = (String) JOptionPane.showInputDialog(frame,"Please enter the file name you wish to save.");
+			//try{
+			player.setButtonMap(buttonMap);
+			String fileName = "";
+			fileManager.saveCharacter(fileName, player, spellFrame);
+			//FileOutputStream saveFile = new FileOutputStream("hello.sav");
+			//ObjectOutputStream save = ObjectOutputStream(saveFile);
+			//}
+			//}
+		
+		}});
+		
+		JMenuItem load = new JMenuItem("Load");
+		mnFile.add(load);
+		
+		load.addActionListener(new ActionListener(){
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Loading");
+			fileManager.loadCharacter();
+		
+		}});
+		
+		JMenuItem newChar = new JMenuItem("New Character");
+		mnFile.add(newChar);
+		
+		newChar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				newCharacter = true;
+				initializeOptionPanel();
+				frame.dispose();
+				
+			}});
+		
+		JMenuItem mnEditCharacter = new JMenuItem("Edit Character");
+		mnFile.add(mnEditCharacter);
+		
+		mnEditCharacter.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				newCharacter = false;
+				initializeOptionPanel();
+//				frame.dispose();
+				
+			}});
+		
+		JMenu mnReference = new JMenu("Reference");
+		menuBar.add(mnReference);
+		
+		JMenuItem spellBook = new JMenuItem("Spell Book Website");
+		mnReference.add(spellBook);
+		
+		JMenuItem dndBook = new JMenuItem("Player Manual");
+		mnReference.add(dndBook);
+		
+		JMenuItem playerHandGuide = new JMenuItem("Re-evolution Manual");
+		mnReference.add(playerHandGuide);
+		
+		JMenuItem characterSheet = new JMenuItem("Character Sheet");
+		mnReference.add(characterSheet);
+		
+		characterSheet.addActionListener(new ActionListener(){
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (Desktop.isDesktopSupported()) {
+				try {
+				File myFile = new File("References/Reference Page.pdf");
+				Desktop.getDesktop().open(myFile);
+				} catch (IOException ex) {
+				// no application registered for PDFs
+				}
+		}
+		
+		}});
+		
+		// Adds the spell book git hub website
+		spellBook.addActionListener(new ActionListener(){
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+			Desktop.getDesktop().browse(new URL("http://thebombzen.github.io/grimoire/").toURI());
+			} catch (Exception e) {
+			e.printStackTrace();
+			}	
+		
+		}});
+		
+		dndBook.addActionListener(new ActionListener(){
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (Desktop.isDesktopSupported()) {
+				try {
+				File myFile = new File("References/DnD 5e Player's Handbook.pdf");
+				Desktop.getDesktop().open(myFile);
+				} catch (IOException ex) {
+				// no application registered for PDFs
+				}
+			}	
+		
+		}});
+		
+		playerHandGuide.addActionListener(new ActionListener(){
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (Desktop.isDesktopSupported()) {
+				try {
+				File myFile = new File("References/Re-Evolution Players Handbook (1st Edition) v1.2.1.pdf");
+				Desktop.getDesktop().open(myFile);
+				} catch (IOException ex) {
+				// no application registered for PDFs
+				}
+			}
+		
+		}});
+		JMenu mnSettings = new JMenu("Settings");
+		menuBar.add(mnSettings);
+	
+		
+		JMenu mnUpdate = new JMenu("Update");
+		menuBar.add(mnUpdate);
+		
+		JMenuItem version = new JMenuItem("version");
+		mnUpdate.add(version);
+		
+		version.addActionListener(new ActionListener(){
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(frame, VERSION);
+		
+		}});
+		JMenu mnSpells = new JMenu("Spells Window");
+		menuBar.add(mnSpells);
+		
+		JMenuItem spellWindow = new JMenuItem("spells");
+		mnSpells.add(spellWindow);
+		
+		spellWindow.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				spellFrame.getFrame().setVisible(true);
+				
+			}});
 	}
 }
 

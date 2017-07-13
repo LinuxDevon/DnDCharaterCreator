@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<character>
-    <xp>1561</xp>
+<save>
+    <xp>561</xp>
     <dataList>
         <entry>
             <key>charismaAbility</key>
@@ -8,11 +8,11 @@
         </entry>
         <entry>
             <key>wisdomMod</key>
-            <value>-1</value>
+            <value>2</value>
         </entry>
         <entry>
             <key>agentNumber</key>
-            <value>651</value>
+            <value></value>
         </entry>
         <entry>
             <key>consititutionMod</key>
@@ -28,7 +28,7 @@
         </entry>
         <entry>
             <key>wisdomAbility</key>
-            <value>8</value>
+            <value>14</value>
         </entry>
         <entry>
             <key>dexterityAbility</key>
@@ -44,11 +44,11 @@
         </entry>
         <entry>
             <key>money</key>
-            <value>56156</value>
+            <value>561</value>
         </entry>
         <entry>
             <key>species</key>
-            <value>156</value>
+            <value></value>
         </entry>
         <entry>
             <key>strengthMod</key>
@@ -56,15 +56,15 @@
         </entry>
         <entry>
             <key>name</key>
-            <value>hoo</value>
+            <value>min</value>
         </entry>
         <entry>
             <key>variant</key>
-            <value>1651</value>
+            <value></value>
         </entry>
         <entry>
             <key>rank</key>
-            <value>651</value>
+            <value>561</value>
         </entry>
         <entry>
             <key>charismaMod</key>
@@ -80,11 +80,117 @@
         </entry>
         <entry>
             <key>class</key>
-            <value>5165</value>
+            <value>12651561</value>
         </entry>
         <entry>
             <key>strengthAbility</key>
             <value>8</value>
         </entry>
     </dataList>
-</character>
+    <buttons>
+        <entry>
+            <key>-1 : Acrobatics (DEX)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Investigation (INT)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>2 : Insight (WIS)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Deception (CHA)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>59 : consititution</key>
+            <value>1</value>
+        </entry>
+        <entry>
+            <key>-1 : Performance (CHA)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : ATHLETICS (STR)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Programming (INF)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : History (INT)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : dexterity</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Religion (INT)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>2 : Survival (WIS)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : interfacing</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Nature (INT)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : charisma</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Intimidation (CHA)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Sleight of Hand (DEX)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>2 : Perception (WIS)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Stealth (DEX)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>2 : Animal Handling (WIS)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>2 : wisdom</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>2 : Medicine (WIS)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Mechanics (INF)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Persuasion (CHA)</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : strength</key>
+            <value>0</value>
+        </entry>
+        <entry>
+            <key>-1 : Vehicle Handling (INF)</key>
+            <value>0</value>
+        </entry>
+    </buttons>
+</save>

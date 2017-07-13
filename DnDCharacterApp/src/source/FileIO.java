@@ -2,6 +2,7 @@ package source;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLDecoder;
 
 import javax.swing.JFileChooser;
@@ -25,6 +26,7 @@ public class FileIO {
 	private String decodedPath;
 	private	JFrame frame;
 	private ApplicationGUI applicationGUI;
+	private File saveFile;
 	
 	public FileIO(JFrame frame2, ApplicationGUI applicationGUI){
 		// Get the Current Location of File
@@ -57,20 +59,25 @@ public class FileIO {
 		
 	}
 	
-	public boolean saveCharacter(String location, Character player){
+	public boolean saveCharacter(String location, Character player, SpellWindow spells){
 
 		  try {
-			File file = getFile(true);
+			saveFile = getFile(true);
+			
 //			File file = new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + location + ".char");
 			
+//			Class[] list = new Class[]{Character.class, SpellWindow.class};
 			JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
 			// output pretty printed
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-			jaxbMarshaller.marshal(player, file);
-			jaxbMarshaller.marshal(player, System.out);
+			
+			jaxbMarshaller.marshal(player, saveFile);
+//			jaxbMarshaller.marshal(spells, saveFile);
+//			jaxbMarshaller.marshal(spells, System.out);
+//			jaxbMarshaller.marshal(player, System.out);
 
 		      } catch (JAXBException e) { //TODO fix eating exception
 		    	  e.printStackTrace();
@@ -81,12 +88,36 @@ public class FileIO {
 	public boolean loadCharacter(){
 		 try {
 			 	
-			 	File file = getFile(false);
+			 	File loadFile = getFile(false);
+//				File file = new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + "test" + ".char");
+			 	if(loadFile == null){
+			 		return false;
+			 	}
+				JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
+		
+				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+				Character playerLoaded = (Character) jaxbUnmarshaller.unmarshal(loadFile);
+				System.out.println(playerLoaded.getName());
+				
+				this.frame.dispose();
+//				this.frame.initialize();
+				this.applicationGUI.initialize(playerLoaded);
+		
+			  } catch (JAXBException e) {
+				e.printStackTrace();
+			  }
+
+		return true;
+	}
+	
+	public boolean loadSpells(){
+		 try {
+			 
 //				File file = new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + "test" + ".char");
 				JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
 		
 				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-				Character playerLoaded = (Character) jaxbUnmarshaller.unmarshal(file);
+				Character playerLoaded = (Character) jaxbUnmarshaller.unmarshal(saveFile);
 				System.out.println(playerLoaded.getName());
 				
 				this.frame.dispose();
@@ -103,20 +134,22 @@ public class FileIO {
 	public File getFile(boolean save){
 		JFileChooser chooser = new JFileChooser();
 		//TODO change back to decoded path
-		chooser.setCurrentDirectory(new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" ));
+		//C:\Users\adairdg\git\DnDCharaterCreator\DnDCharacterApp\Character
+		chooser.setCurrentDirectory(new File("C:/Users/adairdg/git/DnDCharaterCreator/DnDCharacterApp/Character" ));
 		//TODO figure out how to filter only characters
 //		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 //		        "char"); // filter only character files
 //		chooser.setFileFilter(filter);
 		
 		int returnVal = chooser.showOpenDialog(this.frame);
+		System.out.println(returnVal);
 		//TODO fix this so it saves with .char
-		if(!chooser.getTypeDescription(chooser.getSelectedFile()).equals(".char") && save){
-			chooser.getSelectedFile().renameTo(new File(chooser.getSelectedFile().getAbsolutePath()
-												+ chooser.getName() + ".char"));
-			System.out.println(chooser.getSelectedFile().getAbsolutePath()
-												+ chooser.getName() + ".char");
-		}
+//		if(!chooser.getTypeDescription(chooser.getSelectedFile()).equals(".char") && save){
+//			chooser.getSelectedFile().renameTo(new File(chooser.getSelectedFile().getAbsolutePath()
+//												+ chooser.getName() + ".char"));
+//			System.out.println(chooser.getSelectedFile().getAbsolutePath()
+//												+ chooser.getName() + ".char");
+//		}
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
 		       System.out.println("You chose to open this file: " +
 		            chooser.getSelectedFile().getName());
