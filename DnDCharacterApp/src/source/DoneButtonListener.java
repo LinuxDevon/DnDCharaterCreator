@@ -11,6 +11,10 @@ public class DoneButtonListener implements ActionListener {
 	private NewCharacterWindow characterwindow;
 	private JFormattedTextField xp;
 	private JFormattedTextField name;
+	
+	public DoneButtonListener(){
+		
+	}
 
 	public DoneButtonListener(Character player, ApplicationGUI window, NewCharacterWindow newCharacterWindow, JFormattedTextField formattedStartingXP, JFormattedTextField frmtdtxtfldCharacterinput) {
 //		this.player = player;

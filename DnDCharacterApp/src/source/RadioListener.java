@@ -2,10 +2,10 @@ package source;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -15,11 +15,15 @@ import javax.swing.JTextField;
  * 
  * @author Devon Adair
  * 
- * TODO Comment Code
  *
  */
-public class RadioListener implements ActionListener {
+public class RadioListener implements ActionListener, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6585677725460067454L;
+	
 	private JLabel label;
 	private JTextField bonus;
 	private JRadioButton button;
@@ -28,6 +32,10 @@ public class RadioListener implements ActionListener {
 	private int lastNum;
 	private boolean firstRun;
 	private int originalNumber;
+	
+	public RadioListener(){
+		
+	}
 	
 	public RadioListener(JLabel label, JTextField txtProficiencybonustextbox, JRadioButton rdbtnStrrad, JFrame frame){
 		this.label = label;
@@ -48,9 +56,10 @@ public class RadioListener implements ActionListener {
 		if(txt.startsWith("-")){
 			num = "-" + num;
 		}
+		// The original string from the label w/out the number
 		String newTxt = txt.replaceAll(num, "");
-//		System.out.println(num);
 
+		// number from the label
 		int numberConverted = Integer.parseInt(num);
 		
 		if(firstRun){
@@ -58,35 +67,26 @@ public class RadioListener implements ActionListener {
 			this.firstRun = false;
 		}
 		
-		int bonusNum;
-//		try{
-//			bonusNum = Integer.parseInt(this.bonus.getText());
-//		}catch(NumberFormatException exp){
-//			JOptionPane.showMessageDialog(this.frame, "Please make sure that the Proficency Bonus text box is a valid int!");
-//			return;
-//		}
+		// amount to add to the number in the label
+		int bonusNum; 
+
+		// check for nothing in the proficency text box
 		if(this.bonus.getText().equals("")){
-			bonusNum = 0;
+			bonusNum = 0; 	// set to 0 if empty otherwise get the number to add
 		}else{
 			bonusNum = Integer.parseInt(this.bonus.getText());
 		}
 
+		// check if button is selected and add if it is
 		if(this.button.isSelected()){
-//			if(this.lastNum != bonusNum){
-//				this.label.setText((numberConverted + bonusNum) + newTxt);
-//			}else{
 			this.label.setText((numberConverted + bonusNum) + newTxt);
-//			}
-			
 		}else{
-//			this.label.setText((numberConverted - bonusNum) + newTxt);
 			this.label.setText(this.originalNumber + newTxt);
 		}
-//		System.out.println(bonusNum);
-		lastNum = bonusNum;
-		
-		
-	}
 
+		// a defense to fix a bug
+		lastNum = bonusNum;
+
+	}
 
 }

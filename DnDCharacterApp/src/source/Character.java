@@ -1,4 +1,5 @@
 package source;
+import java.io.Serializable;
 import java.util.HashMap;
 
 import javax.swing.JLabel;
@@ -11,8 +12,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 //import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+/**
+ * A character contains information that the main window uses. See fields for more info.
+ * 
+ * @author Devon Adair
+ * 
+ * CHANGE LIST:
+ * 
+ * TODO fix the this data class.
+ * TODO make it so that it has subclasses for the different classes in DnD.
+ *
+ */
 @XmlRootElement(name = "save")
-//@XmlSeeAlso({SpellWindow.class})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Character {
 	
@@ -52,7 +63,6 @@ public class Character {
 	@XmlElementWrapper(name = "buttons")
 	@XmlElement(name = "radioButtons")
 	private HashMap<String, Integer> buttonMap;
-	
 
 	public Character(){
 		// Here because something needs this
@@ -85,17 +95,21 @@ public class Character {
 		return this.data.get(variable);
 	}
 	
+	/**
+	 * Helper function to create the strings for the mod labels on the main app.
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public String modLabelCreator(String key){
 		return getData(key + "Mod") + " : " + key;
 	}
 	
-//	public String[][] setTableData(int row, int col){
-//		
-//	}
-//	
-//	public String[][] getTableData(){
-//		
-//	}
+
+	/**
+	 * Used currently as a way to store radio buttons info but will move to config files
+	 * @param buttonMap2
+	 */
 	public void setButtonMap(HashMap<JLabel, JRadioButton> buttonMap2){
 		for(JLabel button: buttonMap2.keySet()){
 //			this.buttonMap.add(buttonMap2.get(i))

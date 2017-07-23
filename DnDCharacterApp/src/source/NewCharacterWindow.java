@@ -22,37 +22,25 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-
-
+/**
+ * This window is used to create a new character. It pulls up text boxes to fill out for the initial character creation.
+ * 
+ * @author Devon Adair
+ *
+ * CHANGE LIST:
+ * 
+ * TODO make it not extend JDialog
+ */
 public class NewCharacterWindow extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	
 	private JLabel lblTotalPoints;
-	
-	private HashMap<JLabel, JTextField> abilityFields = new HashMap<>();
-//	private ArrayList<JTextField> textboxList = new ArrayList<>();
 	private ArrayList<JLabel> scrLabelList	= new ArrayList<>();
 	private ArrayList<JLabel> modLabelList	= new ArrayList<>();
-//	private final Character character;
-	
-//	private JFormattedTextField frmtdtxtfldCharacterinput;
-//	private JFormattedTextField formattedStartingXP;
-//	private JTextField txtMoney;
-//	private JTextField txtClass;
-//	private JTextField txtRank;
-//	private JTextField txtSpecies;
-//	private JTextField txtVariant;
-//	private JTextField txtAgentnum;
-//	private JLabel lblChamod;
-//	private JLabel lblCharisma;
-//	private JLabel lblIntmod_1;
-//	private JLabel lblStrmod;
-//	private JLabel lblDexmod;
-//	private JLabel lblConmod;
-//	private JLabel lblIntmod;
-//	private JLabel lblWismod;
 
+	public NewCharacterWindow(){
+		
+	}
 	/**
 	 * Create the dialog.
 	 * @param frame 
@@ -67,74 +55,57 @@ public class NewCharacterWindow extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new MigLayout("", "[100px][150px][100px][75px][75px][150px][150px]", "[][20px][20px][][20px][20px][20px][20px][20px][20px][20px][20px][20px]"));
 		
+		///////////////////////////////////////////////////////////////////////
+		// LABELS ---- Text Fields
+		//////////////////////////////////////////////////////////////////////
 		JLabel lblClass = new JLabel("Class:");
 		contentPanel.add(lblClass, "cell 5 0,alignx trailing");
 	
-	
 		JTextField txtClass = new JTextField();
-//			txtClass.setText("Class");
 		contentPanel.add(txtClass, "cell 6 0,growx");
 		txtClass.setColumns(10);
 	
 		JLabel lblRank = new JLabel("Rank:");
 		contentPanel.add(lblRank, "cell 5 1,alignx trailing");
 	
-	
 		JTextField txtRank = new JTextField();
-//			txtRank.setText("Rank");
 		contentPanel.add(txtRank, "cell 6 1,growx");
 		txtRank.setColumns(10);
 	
 		JLabel lblStartingMoney = new JLabel("Starting Money:");
 		contentPanel.add(lblStartingMoney, "cell 0 2,alignx trailing");
 	
-	
 		JTextField txtMoney = new JTextField();
 		contentPanel.add(txtMoney, "cell 1 2,growx");
 		txtMoney.setColumns(10);
 	
-		
 		JLabel lblSpecies = new JLabel("Species:");
 		contentPanel.add(lblSpecies, "cell 5 2,alignx trailing");
 	
-	
 		JTextField txtSpecies = new JTextField();
-//			txtSpecies.setText("Species");
 		contentPanel.add(txtSpecies, "cell 6 2,growx");
 		txtSpecies.setColumns(10);
 	
-	
-		
 		JLabel lblMutLvl = new JLabel("MUT LVL / HUM Variant:");
 		contentPanel.add(lblMutLvl, "cell 5 3,alignx trailing");
 	
-	
 		JTextField txtVariant = new JTextField();
-//			txtVariant.setText("Variant");
 		contentPanel.add(txtVariant, "cell 6 3,growx");
 		txtVariant.setColumns(10);
-	
 	
 		JLabel lblAgentNumber = new JLabel("Agent Number:");
 		contentPanel.add(lblAgentNumber, "cell 5 4,alignx trailing");
 	
-	
 		JTextField txtAgentnum = new JTextField();
-//			txtAgentnum.setText("AgentNum");
 		contentPanel.add(txtAgentnum, "cell 6 4,growx");
 		txtAgentnum.setColumns(10);
 	
-
-	
 		JLabel lblCharacterName = new JLabel("Character Name:");
 		contentPanel.add(lblCharacterName, "cell 0 0,alignx trailing");
-	
-	
+
 		JFormattedTextField frmtdtxtfldCharacterinput = new JFormattedTextField();
 		frmtdtxtfldCharacterinput.setText("");
 		contentPanel.add(frmtdtxtfldCharacterinput, "cell 1 0,growx");
-		
-	
 	
 		JLabel lblStartingxp = new JLabel("StartingXP:");
 		contentPanel.add(lblStartingxp, "cell 0 1,alignx trailing");
@@ -236,18 +207,12 @@ public class NewCharacterWindow extends JDialog {
 
 		JLabel lblTotalRemaining = new JLabel("Total Remaining:");
 		contentPanel.add(lblTotalRemaining, "cell 0 12,alignx trailing");
-	
 		
-		// make for loop for doc listener eventually
-//		for(JLabel key: abilityFields.keySet()){
-//			textboxList.add(abilityFields.get(key));
-//			DocListener listener1 = new DocListener(abilityFields.get(key), lblTotalPoints, key, textboxList);
-//			abilityFields.get(key).getDocument().addDocumentListener(listener1);
-//		}
-//		DocListener listener1 = new DocListener(txtCharisma, lblTotalPoints, lblChamod);
-//		txtCharisma.getDocument().addDocumentListener(listener1);
+		///////////////////////////////////////////////////////////////////////////
+		// BUTTONS
+		//////////////////////////////////////////////////////////////////////////
 		
-		// Buttons that might be in edit character page.
+		// Buttons that might be in edit character page. UP BUTTONs
 		for(int i = 0; i < 7; i++){
 			JButton btnUp_i = new JButton("up");
 			int index = i;
@@ -272,7 +237,7 @@ public class NewCharacterWindow extends JDialog {
 				}});
 			contentPanel.add(btnUp_i, "cell 3 " + (i + 5));
 		}
-		
+		// DOWN BUTTONS
 		for(int i = 0; i < 7; i++){
 			JButton btnUp_i = new JButton("down");
 			int index = i;
@@ -290,94 +255,75 @@ public class NewCharacterWindow extends JDialog {
 						return;
 					}
 					label.setText("" + (labelNumber - 1));
-//					label = scrLabelList.get(index);
 					labelNumber = Integer.parseInt(label.getText());
-					
 					modLabelList.get(index).setText("" + modifierCalc(labelNumber));
-//					System.out.println(modLabelList.get(index).getText());
 					lblTotalPoints.setText("" + (Integer.parseInt(lblTotalPoints.getText()) + 1));
 				}});
 			contentPanel.add(btnUp_i, "cell 4 " + (i + 5));
 		}
 		
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 		
+		JButton okButton = new JButton("DONE");
 		
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("DONE");
-//				okButton.setActionCommand("OK");
-//				okButton.addActionListener(new DoneButtonListener(character, window , this, formattedStartingXP, frmtdtxtfldCharacterinput));
-				okButton.addActionListener(new ActionListener(){
+		// creates the player and brings up the main application 
+		okButton.addActionListener(new ActionListener(){
+			private Character player;
+			HashMap<String, String> data = new HashMap<>();
 
-					private Character player;
-					HashMap<String, String> data = new HashMap<>();
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				data.put("strengthAbility", scrLabelList.get(0).getText());
+				data.put("dexterityAbility", scrLabelList.get(1).getText());
+				data.put("constitutionAbility", scrLabelList.get(2).getText());
+				data.put("intelligenceAbility", scrLabelList.get(3).getText());
+				data.put("wisdomAbility", scrLabelList.get(4).getText());
+				data.put("interfacingAbility", scrLabelList.get(5).getText());
+				data.put("charismaAbility", scrLabelList.get(6).getText());
+				
+				data.put("strengthMod", lblStrmod.getText());
+				data.put("dexterityMod", lblDexmod.getText());
+				data.put("consititutionMod", lblConmod.getText());
+				data.put("intelligenceMod", lblIntmod.getText());
+				data.put("wisdomMod", lblWismod.getText());
+				data.put("interfacingMod", lblIntmod_1.getText());
+				data.put("charismaMod", lblChamod.getText());
+				
+				data.put("name", frmtdtxtfldCharacterinput.getText());
+				data.put("money", txtMoney.getText());
+				data.put("class", txtClass.getText());
+				data.put("rank", txtRank.getText());
+				data.put("species", txtSpecies.getText());
+				data.put("variant", txtVariant.getText());
+				data.put("agentNumber", txtAgentnum.getText());	
+				
+				// verify that the xp contains an integer
+				if(formattedStartingXP.getText().equals("")){  
+					formattedStartingXP.setText("0");
+				}
+				this.player = new Character(Integer.valueOf(formattedStartingXP.getText()), data);
+				dispose(); // kill the frame{
+				window.initialize(this.player);
+				
+			}});
+		buttonPane.add(okButton);
+		getRootPane().setDefaultButton(okButton);
+	
+	
+		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener(){
 
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						// save here with xml maybe
-						//exit this app and focus the main one
-						data.put("strengthAbility", scrLabelList.get(0).getText());
-						data.put("dexterityAbility", scrLabelList.get(1).getText());
-						data.put("constitutionAbility", scrLabelList.get(2).getText());
-						data.put("intelligenceAbility", scrLabelList.get(3).getText());
-						data.put("wisdomAbility", scrLabelList.get(4).getText());
-						data.put("interfacingAbility", scrLabelList.get(5).getText());
-						data.put("charismaAbility", scrLabelList.get(6).getText());
-						
-						data.put("strengthMod", lblStrmod.getText());
-						data.put("dexterityMod", lblDexmod.getText());
-						data.put("consititutionMod", lblConmod.getText());
-						data.put("intelligenceMod", lblIntmod.getText());
-						data.put("wisdomMod", lblWismod.getText());
-						data.put("interfacingMod", lblIntmod_1.getText());
-						data.put("charismaMod", lblChamod.getText());
-						
-						data.put("name", frmtdtxtfldCharacterinput.getText());
-						data.put("money", txtMoney.getText());
-						data.put("class", txtClass.getText());
-						data.put("rank", txtRank.getText());
-						data.put("species", txtSpecies.getText());
-						data.put("variant", txtVariant.getText());
-						data.put("agentNumber", txtAgentnum.getText());	
-						
-						if(formattedStartingXP.getText().equals("")){
-							formattedStartingXP.setText("0");
-						}
-						this.player = new Character(Integer.valueOf(formattedStartingXP.getText()), data);
-//						modifierCalc(5);
-//						final character = null;
-						
-						dispose(); // kill the frame
-//						if(newCharacter){
-						
-						window.initialize(this.player);
-						
-//						}else{
-//							frame.
-//						}
-						
-						
-					}});
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-//				cancelButton.setActionCommand("Cancel");
-				cancelButton.addActionListener(new ActionListener(){
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						dispose();
-						
-					}});
-				buttonPane.add(cancelButton);
-			}
-		}
-		if(!newCharacter){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				
+			}});
+		buttonPane.add(cancelButton);
+		
+		// Used for editing a character and loading in the data
+		if(!newCharacter){ 													
 			txtClass.setText(character.getData(Character.CLASS));
 			txtRank.setText(character.getData(Character.RANK));
 			txtMoney.setText(character.getData(Character.MONEY));
@@ -391,9 +337,14 @@ public class NewCharacterWindow extends JDialog {
 		
 	}
 	
+	/**
+	 * Calculation used to calculate the modifier score.
+	 * 
+	 * @param abilityScore - total score
+	 * @return the modifer score as an int
+	 */
 	public int modifierCalc(int abilityScore){
 		double abilityMod;
-//		System.out.println((((double) abilityScore -10)/2));
 		abilityMod = Math.floor((((double) abilityScore -10)/2));
 		return (int) abilityMod;
 	}

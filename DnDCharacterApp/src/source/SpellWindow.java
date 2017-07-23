@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -42,69 +43,16 @@ import javax.swing.JButton;
  *	TODO Allow it so that it saves the text so when reopened the spells appear. Maybe put in character some how.
  *	TODO Comment Code
  */
-//@XmlElement(name = "spells");
-//@XmlSeeAlso({Character.class})
-@XmlRootElement(name = "spells")
-@XmlAccessorType(XmlAccessType.FIELD)
-//@XmlJavaTypeAdapter()
-public class SpellWindow{
 
-//	private JPanel contentPane;
-////	@XmlElement(name = "level0Table")
-//	private JTable table;
-////	@XmlElement(name = "level1Table")
-//	private JTable table_1;
-////	@XmlElement(name = "level2Table")
-//	private JTable table_2;
-////	@XmlElement(name = "level3Table")
-//	private JTable table_3;
-////	@XmlElement(name = "level4Table")
-//	private JTable table_4;
-////	@XmlElement(name = "level5Table")
-//	private JTable table_5;
-////	@XmlElement(name = "level6Table")
-//	private JTable table_6;
-////	@XmlElement(name = "level7Table")
-//	private JTable table_7;
-////	@XmlElement(name = "level8Table")
-//	private JTable table_8;
-////	@XmlElement(name = "level9Table")
-//	private JTable table_10;
-	
-//	private JScrollPane scrollPane_3;
-//	private JScrollPane scrollPane_4;
-//	private JScrollPane scrollPane_5;
-//	private JScrollPane scrollPane_6;
-//	private JScrollPane scrollPane_7;
-//	private JScrollPane scrollPane_8;
-//	private JScrollPane scrollPane_9;
-//	private JLabel lblImage;
-//	private JButton btnClose;
+public class SpellWindow implements Serializable{
 
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					SpellWindow frame = new SpellWindow();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-	@XmlElementWrapper(name = "columnData")
-	@XmlElement(name = "data")
 	private String[][] data;
 	
-	@XmlTransient
 	private JFrame frame;
 	
-//	@XmlElement(name = "table")
-//	private JTable table;
+	public SpellWindow(){
+		
+	}
 	/**
 	 * Create the frame.
 	 */

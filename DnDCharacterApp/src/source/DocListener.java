@@ -22,6 +22,10 @@ public class DocListener implements DocumentListener {
 	
 	private int lastNumberInField;
 	private ArrayList<JTextField> textboxes;
+	
+	public DocListener(){
+		
+	}
 
 	public DocListener(JTextField textBox, JLabel labelToChange, JLabel modNumber, ArrayList<JTextField> textBoxList){
 		this.textField = textBox;

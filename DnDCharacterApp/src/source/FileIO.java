@@ -1,9 +1,19 @@
 package source;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URLDecoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -27,6 +37,10 @@ public class FileIO {
 	private	JFrame frame;
 	private ApplicationGUI applicationGUI;
 	private File saveFile;
+	
+	public FileIO(){
+		
+	}
 	
 	public FileIO(JFrame frame2, ApplicationGUI applicationGUI){
 		// Get the Current Location of File
@@ -60,55 +74,119 @@ public class FileIO {
 	}
 	
 	public boolean saveCharacter(String location, Character player, SpellWindow spells){
-
-		  try {
-			saveFile = getFile(true);
-			
-//			File file = new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + location + ".char");
-			
-//			Class[] list = new Class[]{Character.class, SpellWindow.class};
-			JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
-			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-			// output pretty printed
-			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-			
-			jaxbMarshaller.marshal(player, saveFile);
-//			jaxbMarshaller.marshal(spells, saveFile);
-//			jaxbMarshaller.marshal(spells, System.out);
-//			jaxbMarshaller.marshal(player, System.out);
-
-		      } catch (JAXBException e) { //TODO fix eating exception
-		    	  e.printStackTrace();
-		      }
+//
+//		  try {
+//			saveFile = getFile(true);
+//			
+////			File file = new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + location + ".char");
+//			
+////			Class[] list = new Class[]{Character.class, SpellWindow.class};
+//			JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
+//			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+//
+//			// output pretty printed
+//			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//
+//			
+//			jaxbMarshaller.marshal(player, saveFile);
+////			jaxbMarshaller.marshal(spells, saveFile);
+////			jaxbMarshaller.marshal(spells, System.out);
+////			jaxbMarshaller.marshal(player, System.out);
+//
+//		      } catch (JAXBException e) { //TODO fix eating exception
+//		    	  e.printStackTrace();
+//		      }
+		  
+//		  try {
+//		      FileOutputStream fileOut =
+//		      new FileOutputStream("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/src/source/test.ser");
+//		      ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//		      out.writeObject(this.frame);
+//		      out.close();
+//		      fileOut.close();
+//		      System.out.printf("Serialized data is saved in ");
+//		   }catch(Exception i) {
+//			   i.printStackTrace();  
+//		   }
+		  
+	      try {
+	          FileOutputStream fileOut =
+	          new FileOutputStream("employee.ser");
+	          ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	          out.writeObject(this.frame);
+	          out.close();
+	          fileOut.close();
+	          System.out.printf("Serialized data is saved in /tmp/employee.ser");
+	       }catch(IOException i) {
+	          i.printStackTrace();
+	       }
+	      
 	return true;
 	}
 	
 	public boolean loadCharacter(){
-		 try {
-			 	
-			 	File loadFile = getFile(false);
-//				File file = new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + "test" + ".char");
-			 	if(loadFile == null){
-			 		return false;
-			 	}
-				JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
-		
-				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-				Character playerLoaded = (Character) jaxbUnmarshaller.unmarshal(loadFile);
-				System.out.println(playerLoaded.getName());
-				
-				this.frame.dispose();
-//				this.frame.initialize();
-				this.applicationGUI.initialize(playerLoaded);
-		
-			  } catch (JAXBException e) {
-				e.printStackTrace();
-			  }
 
+//		    try(
+//		    	      InputStream file = new FileInputStream("quarks.ser");
+//		    	      InputStream buffer = new BufferedInputStream(file);
+//		    	      ObjectInput input = new ObjectInputStream (buffer);
+//		    	    ){
+//		    	      //deserialize the List
+//		    	      JFrame recoveredQuarks = (JFrame) input.readObject();
+//		    	      this.frame.dispose();
+//		    	      this.frame = recoveredQuarks;
+//		    	      //display its data
+////		    	      for(String quark: recoveredQuarks){
+////		    	        System.out.println("Recovered Quark: " + quark);
+////		    	      }
+//		    	    }
+//		    	    catch(ClassNotFoundException ex){
+//		    	    
+//		    	    }
+//		    	    catch(IOException ex){
+//		    	     
+//		    	    }
+
+//			 try {
+//				 	
+//				 	File loadFile = getFile(false);
+////					File file = new File("C:/Users/dachi/git/DnDCharacterApp/DnDCharacterApp/Character/" + "test" + ".char");
+//				 	if(loadFile == null){
+//				 		return false;
+//				 	}
+//					JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
+//			
+//					Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+//					Character playerLoaded = (Character) jaxbUnmarshaller.unmarshal(loadFile);
+//					System.out.println(playerLoaded.getName());
+//					
+//					this.frame.dispose();
+////					this.frame.initialize();
+//					this.applicationGUI.initialize(playerLoaded);
+//			
+//				  } catch (JAXBException e) {
+//					e.printStackTrace();
+//				  }
+		this.frame.dispose();
+	      try {
+	          FileInputStream fileIn = new FileInputStream("employee.ser");
+	          ObjectInputStream in = new ObjectInputStream(fileIn);
+	          this.frame = (JFrame) in.readObject();
+	          in.close();
+	          fileIn.close();
+	       }catch(IOException i) {
+	          i.printStackTrace();
+	          return false;
+	       }catch(ClassNotFoundException c) {
+	          System.out.println("Employee class not found");
+	          c.printStackTrace();
+	          return false;
+	       }
+	      this.frame.setVisible(true);
+	      this.frame.repaint();
 		return true;
 	}
+	
 	
 	public boolean loadSpells(){
 		 try {
