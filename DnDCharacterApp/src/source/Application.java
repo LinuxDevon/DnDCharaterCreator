@@ -294,6 +294,7 @@ public class Application {
 						frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 						if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							spellFrame.closeWindow();
 							frame.dispose();
 						}
 						
@@ -440,7 +441,7 @@ public class Application {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spellFrame.getFrame().setVisible(true);
+				spellFrame.display();
 				
 			}});
 	}
