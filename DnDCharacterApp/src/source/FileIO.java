@@ -90,8 +90,8 @@ public class FileIO {
 			jaxbMarshaller.marshal(this.player, file);
 //			jaxbMarshaller.marshal(this.player, System.out);
 
-			JOptionPane.showMessageDialog(this.frame, this.fileName + " has saved "
-											+ "successfully!");
+//			JOptionPane.showMessageDialog(this.frame, this.fileName + " has saved "
+//											+ "successfully!");
 		} catch (JAXBException e) {
 			//TODO fix exception eating
 			e.printStackTrace();
@@ -145,8 +145,8 @@ public class FileIO {
 			this.frame = newFrame;
 			this.player = newCharacter;
 
-			JOptionPane.showMessageDialog(this.frame, this.fileName + " has loaded "
-					+ "successfully!");
+//			JOptionPane.showMessageDialog(this.frame, this.fileName + " has loaded "
+//					+ "successfully!");
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -169,5 +169,14 @@ public class FileIO {
 		String s = currentRelativePath.toAbsolutePath().toString();
 //		JOptionPane.showMessageDialog(this.frame, s);
 		return s;
+	}
+	
+	private void update(){
+		
+	}
+	
+	private String parseFileVersion(String fileName){
+		
+		return null;
 	}
 }

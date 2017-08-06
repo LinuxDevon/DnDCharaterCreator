@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class Application {
 	
-	public static final String VERSION = "OFFICIAL 1.0";
+	public static final String VERSION = "1.0";
 	public static final String AUTHOR  = "Devon Adair";
 	private static final String CONTACT = "If you need to report a bug or want to request a feature"
 										+ " please send an email to: adairdg@rose-hulman.edu. In the "
@@ -32,6 +32,10 @@ public class Application {
 										+ " screenshots if possible. Thanks from your friendly neighbor"
 										+ "hood programmer";
 
+	private static final String TITLE = "Re-Evolution: NRT Redacted © Official "
+											+ "Character Creation App v" + VERSION
+											+ " By - " + AUTHOR;
+	
 	private JFrame frame;
 	
 	private MainWindow mainWindow;
@@ -45,8 +49,10 @@ public class Application {
 	 * Create the application and decide if to create a new character or not.
 	 */
 	public Application() {
+		// TODO create method for creating frame
 		this.frame = new JFrame();
 		this.frame.setBounds(100, 100, 1547, 1027);
+		this.frame.setTitle(TITLE);
 //		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// TODO FIX DUP
 		this.frame.addWindowListener(new WindowListener(){
@@ -98,7 +104,8 @@ public class Application {
 		// Decide if they want a new character or not. 
 		// 0 = yes, 1 = no
 		int choice = JOptionPane.showConfirmDialog(null, 
-							"Do you want to create a new character?", "New Character?", 
+							"Do you want to create a new character?\n\n"
+							+ "Created By " + AUTHOR + "Re-Evolution: NRT Redacted © 2017" , "New Character?", 
 							JOptionPane.YES_NO_OPTION);
 		if(choice == 0){
 			initMenu();
@@ -119,6 +126,8 @@ public class Application {
 		this.frame = frame;
 		this.frame.setBounds(100, 100, 1547, 1027);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		this.frame.setTitle(TITLE);
 		
 		this.mainWindow = new MainWindow(frame, player);
 		this.player = player;
@@ -493,6 +502,21 @@ public class Application {
 				spellFrame.display();
 				
 			}});
-	}
+		
+		JMenu mnDonate = new JMenu("Donate");
+		menuBar.add(mnDonate);
+		
+		mnDonate.addActionListener(new ActionListener(){
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+//					Desktop.getDesktop().browse(new URL("http://thebombzen.github.io/grimoire/").toURI());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}	
+				
+			}});
+	}
+	
 }

@@ -47,8 +47,8 @@ public class CharacterWindow{
 								"Vehicle Handling (INF)"));
 	public static final ArrayList<String> savingThrowList = 
 						new ArrayList<String>(Arrays.asList(
-								"strength", "dexterity", "constitution", "intelligence",
-								"wisdom","interfacing","charaisma"));
+								"Strength", "Dexterity", "Constitution", "Intelligence",
+								"Wisdom","Interfacing","Charaisma"));
 
 	private JPanel contentPanel;
 	private JPanel buttonPane;
@@ -170,7 +170,7 @@ public class CharacterWindow{
 	 */
 	private void createLabels(){
 		
-		JLabel lblStartingMoney = new JLabel("Starting Wealth:");
+		JLabel lblStartingMoney = new JLabel("Starting Wealth (Dollars):");
 		this.contentPanel.add(lblStartingMoney, "cell 0 6,alignx trailing");
 		
 		JLabel lblClass = new JLabel("Class:");
@@ -188,7 +188,7 @@ public class CharacterWindow{
 		JLabel lblCharacterName = new JLabel("Character Name:");
 		this.contentPanel.add(lblCharacterName, "cell 0 0,alignx trailing");
 		
-		JLabel lblStartingxp = new JLabel("StartingXP:");
+		JLabel lblStartingxp = new JLabel("Starting XP:");
 		this.contentPanel.add(lblStartingxp, "cell 0 5,alignx trailing");
 
 		JLabel lblStatus = new JLabel("Wanted Status:");

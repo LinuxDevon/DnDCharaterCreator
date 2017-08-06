@@ -3,6 +3,7 @@ package source;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -233,6 +234,10 @@ public class MainWindow {
 		
 		JLabel lblFailure = new JLabel("Failure:");
 		bottomPanel.add(lblFailure, "flowx,cell 4 2,alignx trailing");
+		
+		JLabel lblCreator = new JLabel("Created By " + Application.AUTHOR + " for Re-Evolution: NRT Redacted © 2017" );
+		lblCreator.setFont(new Font("", Font.PLAIN, 10));
+		bottomPanel.add(lblCreator, "cell 8 4,alignx right");
 	}
 	
 	private void createTextFields(){
