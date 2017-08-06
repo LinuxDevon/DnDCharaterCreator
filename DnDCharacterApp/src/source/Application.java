@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class Application {
 	
-	public static final String VERSION = "Beta 2.0";
+	public static final String VERSION = "OFFICIAL 1.0";
 	public static final String AUTHOR  = "Devon Adair";
 	private static final String CONTACT = "If you need to report a bug or want to request a feature"
 										+ " please send an email to: adairdg@rose-hulman.edu. In the "
@@ -48,6 +48,7 @@ public class Application {
 		this.frame = new JFrame();
 		this.frame.setBounds(100, 100, 1547, 1027);
 //		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// TODO FIX DUP
 		this.frame.addWindowListener(new WindowListener(){
 
 			@Override
@@ -128,6 +129,8 @@ public class Application {
 		this.frame.setVisible(true);
 		
 		this.spellFrame = new SpellWindow(this.player);
+		
+		this.fileManager.saveTemp();
 	}
 
 	/**
@@ -136,7 +139,7 @@ public class Application {
 	public void initialize(Character player) {
 		
 		Character character = player;
-		
+		this.player = player;
 		this.mainWindow = new MainWindow(this.frame, character);
 		
 		initMenu();
@@ -145,6 +148,8 @@ public class Application {
 		this.frame.setVisible(true);
 		
 		this.spellFrame = new SpellWindow(character);
+		
+		this.fileManager.saveTemp();
 	}
 
 	/**
@@ -197,6 +202,50 @@ public class Application {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("\n Loading");
 				fileManager.load();
+				frame.addWindowListener(new WindowListener(){
+
+					@Override
+					public void windowActivated(WindowEvent arg0) {
+						
+					}
+
+					@Override
+					public void windowClosed(WindowEvent arg0) {
+						
+					}
+
+					@Override
+					public void windowClosing(WindowEvent arg0) {
+						frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+						if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							frame.dispose();
+						}
+						
+					}
+
+					@Override
+					public void windowDeactivated(WindowEvent arg0) {
+
+					}
+
+					@Override
+					public void windowDeiconified(WindowEvent arg0) {
+						
+					}
+
+					@Override
+					public void windowIconified(WindowEvent arg0) {
+						
+					}
+
+					@Override
+					public void windowOpened(WindowEvent arg0) { 
+						
+					}
+					
+				});
+				
 			
 		}});
 		

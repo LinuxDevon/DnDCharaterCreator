@@ -23,7 +23,6 @@ import javax.xml.bind.Unmarshaller;
 public class FileIO {
 
 	private static final String TESTFILE = "C:/Users/dachi/OneDrive/Documents/test.xml";
-	private static final String DEFAULTTEMP = "";
 	private static final String FILTERLIST = "xml";
 	
 	private JFrame frame;
@@ -34,6 +33,8 @@ public class FileIO {
 	private String fileName;
 	private String currentDirectory;
 	
+	private String defaultTemp;
+	
 	// TODO add in the file checker
 	public FileIO(Character player, JFrame frame, Application application){
 		this.player = player;
@@ -41,7 +42,8 @@ public class FileIO {
 		this.application = application;
 		this.currentDirectory = getCurrentDirectory();
 		
-		this.fileName = DEFAULTTEMP;
+		this.defaultTemp = this.currentDirectory + "/Saves/temp.xml";
+		this.fileName = this.defaultTemp;
 	}
 	
 	/**
@@ -69,7 +71,7 @@ public class FileIO {
 	 * Method to save to a file that is choosen by the user. 
 	 */
 	public void save(){
-		if(this.fileName.equals(this.DEFAULTTEMP)){
+		if(this.fileName.equals(this.defaultTemp)){
 			try {
 				fileChooser();
 			} catch (Exception e) {
@@ -90,6 +92,27 @@ public class FileIO {
 
 			JOptionPane.showMessageDialog(this.frame, this.fileName + " has saved "
 											+ "successfully!");
+		} catch (JAXBException e) {
+			//TODO fix exception eating
+			e.printStackTrace();
+		}
+
+			
+	}	/**
+	 * Method to save to a file that is choosen by the user. 
+	 */
+	public void saveTemp(){
+		try {
+			File file = new File(this.fileName);
+//			File file = new File(TESTFILE);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Character.class);
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+			// output pretty printed
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+			jaxbMarshaller.marshal(this.player, file);
+
 		} catch (JAXBException e) {
 			//TODO fix exception eating
 			e.printStackTrace();

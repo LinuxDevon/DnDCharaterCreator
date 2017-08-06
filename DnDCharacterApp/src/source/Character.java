@@ -22,10 +22,10 @@ public class Character {
 	public static final String NAME = "name";
 	public static final String MONEY = "money";
 	public static final String CLASS = "class";
-	public static final String RANK = "rank";
-	public static final String SPECIES = "species";
 	public static final String VARIANT = "variant";
-	public static final String AGENTNUM = "agentNumber";
+	public static final String SPECIES = "species";
+	public static final String AGE = "age";
+	public static final String STATUS = "status";
 	public static final String XP = "xp";
 	public static final String SPEED = "speed";
 	public static final String AC = "ac";
@@ -152,10 +152,10 @@ public class Character {
 		data.put("name", "");
 		data.put("money", "");
 		data.put("class", "");
-		data.put("rank", "");
+		data.put(VARIANT, "");
 		data.put("species", "");
-		data.put("variant", "");
-		data.put("agentNumber", "");
+		data.put(AGE, "");
+		data.put(STATUS, "");
 		data.put("xp", "");
 		data.put("speed", "");
 		data.put("ac", "");
@@ -357,7 +357,7 @@ public class Character {
 		
 		for(int i = 0; i <= this.LVLEXP.size() - 1; i++){
 			if((i + 1) == 20){ // check the end
-				lvl = i;
+				lvl = (i + 1);
 				return String.valueOf(lvl);
 			}
 			if(xpAmount >= this.LVLEXP.get(i) && xpAmount < this.LVLEXP.get(i + 1)){

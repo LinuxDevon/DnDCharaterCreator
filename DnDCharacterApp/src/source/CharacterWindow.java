@@ -170,29 +170,29 @@ public class CharacterWindow{
 	 */
 	private void createLabels(){
 		
-		JLabel lblStartingMoney = new JLabel("Starting Money:");
-		this.contentPanel.add(lblStartingMoney, "cell 0 2,alignx trailing");
+		JLabel lblStartingMoney = new JLabel("Starting Wealth:");
+		this.contentPanel.add(lblStartingMoney, "cell 0 6,alignx trailing");
 		
 		JLabel lblClass = new JLabel("Class:");
-		this.contentPanel.add(lblClass, "cell 0 3,alignx trailing");
+		this.contentPanel.add(lblClass, "cell 0 1,alignx trailing");
 
-		JLabel lblRank = new JLabel("Rank:");
-		this.contentPanel.add(lblRank, "cell 0 4,alignx trailing");
+		JLabel lblVariant = new JLabel("Variant:");
+		this.contentPanel.add(lblVariant, "cell 0 3,alignx trailing");
 		
 		JLabel lblSpecies = new JLabel("Species:");
-		this.contentPanel.add(lblSpecies, "cell 0 5,alignx trailing");
+		this.contentPanel.add(lblSpecies, "cell 0 2,alignx trailing");
 		
-		JLabel lblMutLvl = new JLabel("MUT LVL / HUM Variant:");
-		this.contentPanel.add(lblMutLvl, "cell 0 6,alignx trailing");
+		JLabel lblAge = new JLabel("Age:");
+		this.contentPanel.add(lblAge, "cell 0 4,alignx trailing");
 		
 		JLabel lblCharacterName = new JLabel("Character Name:");
 		this.contentPanel.add(lblCharacterName, "cell 0 0,alignx trailing");
 		
 		JLabel lblStartingxp = new JLabel("StartingXP:");
-		this.contentPanel.add(lblStartingxp, "cell 0 1,alignx trailing");
+		this.contentPanel.add(lblStartingxp, "cell 0 5,alignx trailing");
 
-		JLabel lblAgentNumber = new JLabel("Agent Number:");
-		this.contentPanel.add(lblAgentNumber, "cell 0 7,alignx trailing");
+		JLabel lblStatus = new JLabel("Wanted Status:");
+		this.contentPanel.add(lblStatus, "cell 0 7,alignx trailing");
 		
 		JLabel labelSpacer1 = new JLabel("---------------------------");
 		this.contentPanel.add(labelSpacer1, "cell 0 8");
@@ -346,8 +346,13 @@ public class CharacterWindow{
 					label.setText("" + (labelNumber + 1));
 					labelNumber = Integer.parseInt(label.getText());
 					modLabelList.get(index).setText("" + modifierCalc(labelNumber));
-					lblTotalPoints.setText("" + (Integer.parseInt(lblTotalPoints.getText()) - 1));
-					
+					int total = Integer.parseInt(lblTotalPoints.getText());
+					if(labelNumber >= 14){
+						lblTotalPoints.setText("" + (total - 2));
+					} else {
+						lblTotalPoints.setText("" + (total - 1));
+					}
+
 				}});
 			this.contentPanel.add(btnUp_i, "cell 3 " + (i + 10));
 		}
@@ -374,7 +379,13 @@ public class CharacterWindow{
 					label.setText("" + (labelNumber - 1));
 					labelNumber = Integer.parseInt(label.getText());
 					modLabelList.get(index).setText("" + modifierCalc(labelNumber));
-					lblTotalPoints.setText("" + (Integer.parseInt(lblTotalPoints.getText()) + 1));
+					int total = Integer.parseInt(lblTotalPoints.getText());
+					if(labelNumber >= 13){
+						lblTotalPoints.setText("" + (total + 2));
+					} else {
+						lblTotalPoints.setText("" + (total + 1));
+					}
+//					lblTotalPoints.setText("" + (Integer.parseInt(lblTotalPoints.getText()) + 1));
 				}});
 			this.contentPanel.add(btnUp_i, "cell 4 " + (i + 10));
 		}
@@ -391,42 +402,40 @@ public class CharacterWindow{
 		this.contentPanel.add(txtCharacterinput, "cell 1 0,growx");
 		this.labelMap.put("nameText", txtCharacterinput);
 		
-		// TODO decide weather to check if xp is a valid number here
 		JTextField txtStartingXP = new JTextField(this.player.getData(Character.XP));
-		this.contentPanel.add(txtStartingXP, "cell 1 1,growx");
+		this.contentPanel.add(txtStartingXP, "cell 1 5,growx");
 		this.labelMap.put("xpText", txtStartingXP);
 		
 		JTextField txtMoney = new JTextField(this.player.getData(Character.MONEY));
-		this.contentPanel.add(txtMoney, "cell 1 2,growx");
+		this.contentPanel.add(txtMoney, "cell 1 6,growx");
 		txtMoney.setColumns(10);
 		this.labelMap.put("moneyText", txtMoney);
 		
 		JTextField txtClass = new JTextField(this.player.getData(Character.CLASS));
-		this.contentPanel.add(txtClass, "cell 1 3,growx");
+		this.contentPanel.add(txtClass, "cell 1 1,growx");
 		txtClass.setColumns(10);
 		this.labelMap.put("classText", txtClass);
 		
-		JTextField txtRank = new JTextField(this.player.getData(Character.RANK));
-		this.contentPanel.add(txtRank, "cell 1 4,growx");
-		txtRank.setColumns(10);
-		this.labelMap.put("rankText", txtRank);
+		JTextField txtVaraint = new JTextField(this.player.getData(Character.VARIANT));
+		this.contentPanel.add(txtVaraint, "cell 1 3,growx");
+		txtVaraint.setColumns(10);
+		this.labelMap.put("variantText", txtVaraint);
 		
 		JTextField txtSpecies = new JTextField(this.player.getData(Character.SPECIES));
-		this.contentPanel.add(txtSpecies, "cell 1 5,growx");
+		this.contentPanel.add(txtSpecies, "cell 1 2,growx");
 		txtSpecies.setColumns(10);
 		this.labelMap.put("speciesText", txtSpecies);
 				
-		JTextField txtVariant = new JTextField(this.player.getData(Character.VARIANT));
-		this.contentPanel.add(txtVariant, "cell 1 6,growx");
-		txtVariant.setColumns(10);
-		this.labelMap.put("variantText", txtVariant);
+		JTextField txtAge = new JTextField(this.player.getData(Character.AGE));
+		this.contentPanel.add(txtAge, "cell 1 4,growx");
+		txtAge.setColumns(10);
+		this.labelMap.put("ageText", txtAge);
 		
-		JTextField txtAgentnum = new JTextField(this.player.getData(Character.AGENTNUM));
-		this.contentPanel.add(txtAgentnum, "cell 1 7,growx");
-		txtAgentnum.setColumns(10);
-		this.labelMap.put("agentNumberText", txtAgentnum);
+		JTextField txtStatus = new JTextField(this.player.getData(Character.STATUS));
+		this.contentPanel.add(txtStatus, "cell 1 7,growx");
+		txtStatus.setColumns(10);
+		this.labelMap.put("statusText", txtStatus);
 		
-//		this.fieldList.addAll(Arrays.asList(txtCharacterinput, txtStartingXP, txtMoney, txtClass, txtRank, txtSpecies, txtVariant, txtAgentnum));
 	}
 	
 	/**
@@ -503,10 +512,10 @@ public class CharacterWindow{
 		data.put("name", this.labelMap.get("nameText").getText());
 		data.put("money", this.labelMap.get("moneyText").getText());
 		data.put("class", this.labelMap.get("classText").getText());
-		data.put("rank", this.labelMap.get("rankText").getText());
+		data.put(Character.VARIANT, this.labelMap.get("variantText").getText());
 		data.put("species", this.labelMap.get("speciesText").getText());
-		data.put("variant", this.labelMap.get("variantText").getText());
-		data.put("agentNumber", this.labelMap.get("agentNumberText").getText());
+		data.put(Character.AGE, this.labelMap.get("ageText").getText());
+		data.put(Character.STATUS, this.labelMap.get("statusText").getText());
 		data.put("xp", this.labelMap.get("xpText").getText());
 		if(this.newCharacter){
 			data.put("speed", "");
@@ -544,9 +553,5 @@ public class CharacterWindow{
 		this.window.dispose();
 		
 	}
-	
-//	public Character getPlayer(){
-//		return this.player;
-//	}
 
 }

@@ -32,7 +32,7 @@ public class XpListener implements DocumentListener {
 			try {
 				this.player.setLevel(textBox.getText());
 			}catch (NumberFormatException e1){
-				this.player.setLevel("10000000");
+				this.player.setLevel("0");
 			}
 			
 			labelToModify.setText("Level: " + this.player.getLevel());
@@ -48,7 +48,7 @@ public class XpListener implements DocumentListener {
 			try {
 				this.player.setLevel(textBox.getText());
 			}catch (NumberFormatException e1){
-				this.player.setLevel("10000000");
+				this.player.setLevel("0");
 			}
 			
 			labelToModify.setText("Level: " + this.player.getLevel());

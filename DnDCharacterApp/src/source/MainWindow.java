@@ -87,8 +87,8 @@ public class MainWindow {
 		JLabel labelCharacterName = new JLabel("Character Name: " + this.player.getData(Character.NAME) );
 		headerPanel.add(labelCharacterName, "cell 0 0");
 		
-		JLabel lblRank = new JLabel("Rank: " + this.player.getData(Character.RANK));
-		headerPanel.add(lblRank, "cell 2 0,alignx center");
+		JLabel lblVariant = new JLabel("Variant: " + this.player.getData(Character.VARIANT));
+		headerPanel.add(lblVariant, "cell 2 0,alignx center");
 		
 		JLabel lblXp = new JLabel("XP: ");
 		headerPanel.add(lblXp, "flowx,cell 3 0,alignx center");
@@ -97,14 +97,13 @@ public class MainWindow {
 		headerPanel.add(lblMoney, "flowx,cell 0 1");
 
 		JLabel lblSpecies = new JLabel("Species: " + this.player.getData(Character.SPECIES));
-		
 		headerPanel.add(lblSpecies, "cell 1 1,alignx center");
 	
-		JLabel lblMutLvl = new JLabel("MUT LVL / HUM VARIANT: " + this.player.getData(Character.VARIANT));
-		headerPanel.add(lblMutLvl, "cell 2 1,alignx center");
+		JLabel lblAge = new JLabel("Age: " + this.player.getData(Character.AGE));
+		headerPanel.add(lblAge, "cell 2 1,alignx center");
 
-		JLabel lblAgentNumber = new JLabel("Agent Number: " + this.player.getData(Character.AGENTNUM) );
-		headerPanel.add(lblAgentNumber, "cell 3 1,alignx center");
+		JLabel lblStatus = new JLabel("Wanted Status: " + this.player.getData(Character.STATUS));
+		headerPanel.add(lblStatus, "cell 3 1,alignx center");
 		
 		JLabel lblAc = new JLabel("AC:");
 		headerPanel.add(lblAc, "flowx,cell 1 2,alignx center");
