@@ -2,7 +2,8 @@ package source;
 
 import java.awt.EventQueue;
 
-import javax.swing.JLabel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * This program was built in eclipse using Window Builder for the GUI. The program is a DnD app that lets you create characters to save and automate them.
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
  */
 public class Main {
 
+	private static JFrame topFrame;
 	/**
 	 * Launch the application.
 	 * @wbp.parser.entryPoint
@@ -21,9 +23,10 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ApplicationGUI window = new ApplicationGUI();
+					Application window = new Application();
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println(e);
+					JOptionPane.showMessageDialog(topFrame, "Critcal Error");
 				}
 			}
 		});

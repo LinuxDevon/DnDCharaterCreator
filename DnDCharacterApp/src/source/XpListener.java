@@ -1,27 +1,22 @@
 package source;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 
-import javax.swing.JFormattedTextField;
+
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class XpListener implements Serializable, DocumentListener {
+public class XpListener implements DocumentListener {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3398355866027620921L;
-	private JFormattedTextField textBox;
+	private JTextField textBox;
 	private JLabel labelToModify;
-	private ArrayList<Integer> lvlExp;
+	private Character player;
 
-	public XpListener(JFormattedTextField frmtdtxtfldXp, JLabel lblLevel, ArrayList<Integer> lvlExp){
-		this.textBox = frmtdtxtfldXp;
+	public XpListener(JTextField txtfldXp, JLabel lblLevel, Character player){
+		this.textBox = txtfldXp;
 		this.labelToModify = lblLevel;
-		this.lvlExp = lvlExp;
+		this.player = player;
 	}
 	
 	@Override
@@ -33,14 +28,14 @@ public class XpListener implements Serializable, DocumentListener {
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		if(!textBox.getText().equals("")){
-			int lvl;
+			
 			try {
-				lvl = lvlCalc(Integer.parseUnsignedInt(textBox.getText()));
+				this.player.setLevel(textBox.getText());
 			}catch (NumberFormatException e1){
-				lvl = 19;
+				this.player.setLevel("10000000");
 			}
 			
-			labelToModify.setText("Level: " + lvl);
+			labelToModify.setText("Level: " + this.player.getLevel());
 		}
 
 
@@ -49,31 +44,15 @@ public class XpListener implements Serializable, DocumentListener {
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		if(!textBox.getText().equals("")){
-			int lvl;
+			
 			try {
-				lvl = lvlCalc(Integer.parseUnsignedInt(textBox.getText()));
+				this.player.setLevel(textBox.getText());
 			}catch (NumberFormatException e1){
-				lvl = 19;
+				this.player.setLevel("10000000");
 			}
-			labelToModify.setText("Level: " + lvl);
+			
+			labelToModify.setText("Level: " + this.player.getLevel());
 		}
 
 	}
-	
-	public int lvlCalc(int xpAmount){
-		int lvl = 0;
-		
-		for(int i = 0; i <= this.lvlExp.size() - 1; i++){
-			if((i + 1) == 20){ // check the end
-				lvl = i;
-				return lvl;
-			}
-			if(xpAmount >= this.lvlExp.get(i) && xpAmount < this.lvlExp.get(i + 1)){
-				lvl = i + 1;
-				return lvl;
-			}
-		}
-		return lvl;
-	}
-
 }

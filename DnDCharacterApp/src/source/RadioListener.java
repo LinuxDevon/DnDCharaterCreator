@@ -2,90 +2,29 @@ package source;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.Serializable;
+import java.util.HashMap;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
-/**
- * This listener is used for buttons to modify the labels associated with the radio buttons and changes the value based on 
- * weather is is clicked or not.
- * 
- * @author Devon Adair
- * 
- *
- */
-public class RadioListener implements ActionListener, Serializable{
+public class RadioListener implements ActionListener {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6585677725460067454L;
-	
-	private JLabel label;
-	private JTextField bonus;
+	private HashMap<String, Integer> map;
+	private String key;
 	private JRadioButton button;
-	private JFrame frame;
 	
-	private int lastNum;
-	private boolean firstRun;
-	private int originalNumber;
-	
-	public RadioListener(){
-		
-	}
-	
-	public RadioListener(JLabel label, JTextField txtProficiencybonustextbox, JRadioButton rdbtnStrrad, JFrame frame){
-		this.label = label;
-		this.bonus = txtProficiencybonustextbox;
-		this.button = rdbtnStrrad;
-		this.frame = frame;
-		
-		this.firstRun = true;
-		this.originalNumber = 0;
-		
+	public RadioListener(JRadioButton radioButton, String key, HashMap<String, Integer> map){
+		this.map = map;
+		this.key = key;
+		this.button = radioButton;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// Parse the string to get the integer and recombine into a string
-		String txt = this.label.getText(); 
-		String num = txt.replaceAll("[\\D]", "");
-		if(txt.startsWith("-")){
-			num = "-" + num;
-		}
-		// The original string from the label w/out the number
-		String newTxt = txt.replaceAll(num, "");
-
-		// number from the label
-		int numberConverted = Integer.parseInt(num);
-		
-		if(firstRun){
-			this.originalNumber = numberConverted;
-			this.firstRun = false;
-		}
-		
-		// amount to add to the number in the label
-		int bonusNum; 
-
-		// check for nothing in the proficency text box
-		if(this.bonus.getText().equals("")){
-			bonusNum = 0; 	// set to 0 if empty otherwise get the number to add
-		}else{
-			bonusNum = Integer.parseInt(this.bonus.getText());
-		}
-
-		// check if button is selected and add if it is
 		if(this.button.isSelected()){
-			this.label.setText((numberConverted + bonusNum) + newTxt);
-		}else{
-			this.label.setText(this.originalNumber + newTxt);
+			this.map.put(key, 1);
+		} else {
+			this.map.put(key, 0);
 		}
-
-		// a defense to fix a bug
-		lastNum = bonusNum;
 
 	}
 

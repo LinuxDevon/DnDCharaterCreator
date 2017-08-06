@@ -1,1 +1,0 @@
-java.io.NotSerializableException: source.Character
