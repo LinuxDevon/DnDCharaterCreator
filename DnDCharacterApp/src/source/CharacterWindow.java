@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -49,6 +50,8 @@ public class CharacterWindow{
 						new ArrayList<String>(Arrays.asList(
 								"Strength", "Dexterity", "Constitution", "Intelligence",
 								"Wisdom","Interfacing","Charaisma"));
+	
+	private static final String[] statusComboChoices = {"Redacted", "Undercover", "Clear"};
 
 	private JPanel contentPanel;
 	private JPanel buttonPane;
@@ -65,6 +68,7 @@ public class CharacterWindow{
 	private Application application;
 	
 	private boolean newCharacter;
+	private JComboBox cmbStatus;
 	
 	
 	// Variables to load when loading character to edit.
@@ -431,10 +435,23 @@ public class CharacterWindow{
 		txtAge.setColumns(10);
 		this.labelMap.put("ageText", txtAge);
 		
-		JTextField txtStatus = new JTextField(this.player.getData(Character.STATUS));
-		this.contentPanel.add(txtStatus, "cell 1 7,growx");
-		txtStatus.setColumns(10);
-		this.labelMap.put("statusText", txtStatus);
+		// old and replaced with combo box below for now.
+//		JTextField txtStatus = new JTextField(this.player.getData(Character.STATUS));
+//		this.contentPanel.add(txtStatus, "cell 1 7,growx");
+//		txtStatus.setColumns(10);
+//		this.labelMap.put("statusText", txtStatus);
+		
+		cmbStatus = new JComboBox(this.statusComboChoices);
+		int index;
+		if(this.player.getData(Character.STATUS).equals("Redacted")){
+			index = 0;
+		} else if(this.player.getData(Character.STATUS).equals("Undercover")){
+			index = 1;
+		} else {
+			index = 2;
+		}
+		cmbStatus.setSelectedIndex(index);
+		this.contentPanel.add(cmbStatus, "cell 1 7,growx");
 		
 	}
 	
@@ -515,7 +532,7 @@ public class CharacterWindow{
 		data.put(Character.VARIANT, this.labelMap.get("variantText").getText());
 		data.put("species", this.labelMap.get("speciesText").getText());
 		data.put(Character.AGE, this.labelMap.get("ageText").getText());
-		data.put(Character.STATUS, this.labelMap.get("statusText").getText());
+		data.put(Character.STATUS, this.statusComboChoices[this.cmbStatus.getSelectedIndex()]);
 		data.put("xp", this.labelMap.get("xpText").getText());
 		if(this.newCharacter){
 			data.put("speed", "");

@@ -517,6 +517,22 @@ public class Application {
 				}	
 				
 			}});
+		
+//		JMenu mnCalculator = new JMenu("Calculator");
+//		menuBar.add(mnCalculator);
+//		
+//		mnCalculator.addActionListener(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				try {
+//					Runtime.getRuntime().exec("calc");
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				
+//			}});
 	}
 	
 }

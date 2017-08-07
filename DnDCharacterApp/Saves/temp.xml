@@ -186,16 +186,16 @@
         </entry>
         <entry>
             <key>status</key>
-            <value></value>
+            <value>Redacted</value>
         </entry>
     </dataList>
     <buttonList>
         <entry>
-            <key>Dexterity</key>
+            <key>Investigation (INT)</key>
             <value>0</value>
         </entry>
         <entry>
-            <key>Investigation (INT)</key>
+            <key>Dexterity</key>
             <value>0</value>
         </entry>
         <entry>
@@ -223,11 +223,11 @@
             <value>0</value>
         </entry>
         <entry>
-            <key>Wisdom</key>
+            <key>Insight (WIS)</key>
             <value>0</value>
         </entry>
         <entry>
-            <key>Insight (WIS)</key>
+            <key>Wisdom</key>
             <value>0</value>
         </entry>
         <entry>
@@ -239,11 +239,11 @@
             <value>0</value>
         </entry>
         <entry>
-            <key>Charaisma</key>
+            <key>History (INT)</key>
             <value>0</value>
         </entry>
         <entry>
-            <key>History (INT)</key>
+            <key>Charaisma</key>
             <value>0</value>
         </entry>
         <entry>
@@ -275,11 +275,11 @@
             <value>0</value>
         </entry>
         <entry>
-            <key>Interfacing</key>
+            <key>Vehicle Handling (INF)</key>
             <value>0</value>
         </entry>
         <entry>
-            <key>Vehicle Handling (INF)</key>
+            <key>Interfacing</key>
             <value>0</value>
         </entry>
         <entry>
