@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class Application {
 	
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "1.0.1";
 	public static final String AUTHOR  = "Devon Adair";
 	private static final String CONTACT = "If you need to report a bug or want to request a feature"
 										+ " please send an email to: adairdg@rose-hulman.edu. In the "
@@ -419,7 +419,7 @@ public class Application {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			try {
+			try { 
 				Desktop.getDesktop().browse(new URL("http://thebombzen.github.io/grimoire/").toURI());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -492,7 +492,7 @@ public class Application {
 		JMenu mnSpells = new JMenu("Spells Window");
 		menuBar.add(mnSpells);
 		
-		JMenuItem spellWindow = new JMenuItem("spells");
+		JMenuItem spellWindow = new JMenuItem("Spells");
 		mnSpells.add(spellWindow);
 		
 		spellWindow.addActionListener(new ActionListener(){
@@ -503,36 +503,42 @@ public class Application {
 				
 			}});
 		
+		JMenu mnCalculator = new JMenu("Calculator");
+		menuBar.add(mnCalculator);
+		
+		JMenuItem calculatorApp = new JMenuItem("Calc App");
+		mnCalculator.add(calculatorApp);
+		
+		calculatorApp.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Runtime.getRuntime().exec("calc");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}});
+		
 		JMenu mnDonate = new JMenu("Donate");
 		menuBar.add(mnDonate);
 		
-		mnDonate.addActionListener(new ActionListener(){
+		JMenuItem donateButton = new JMenuItem("Donate");
+		mnDonate.add(donateButton);
+		
+		donateButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-//					Desktop.getDesktop().browse(new URL("http://thebombzen.github.io/grimoire/").toURI());
+					Desktop.getDesktop().browse(new URL("https://www.paypal.me/DevonAdair").toURI());
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(frame, "Can't open window.");
 				}	
 				
 			}});
-		
-//		JMenu mnCalculator = new JMenu("Calculator");
-//		menuBar.add(mnCalculator);
-//		
-//		mnCalculator.addActionListener(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				try {
-//					Runtime.getRuntime().exec("calc");
-//				} catch (IOException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				
-//			}});
 	}
 	
 }
