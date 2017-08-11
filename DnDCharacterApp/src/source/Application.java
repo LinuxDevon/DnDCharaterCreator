@@ -36,6 +36,8 @@ public class Application {
 											+ "Character Creation App v" + VERSION
 											+ " By - " + AUTHOR;
 	
+	private static final String UPDATE_HISTORY = "Version " + VERSION + " changes: \n\n"
+												+ "1. Made a folder checker to verify that the folders exsist.";
 	private JFrame frame;
 	
 	private MainWindow mainWindow;
@@ -139,6 +141,7 @@ public class Application {
 		
 		this.spellFrame = new SpellWindow(this.player);
 		
+		this.fileManager.fileChecker();
 		this.fileManager.saveTemp();
 	}
 
@@ -158,6 +161,7 @@ public class Application {
 		
 		this.spellFrame = new SpellWindow(character);
 		
+		this.fileManager.fileChecker();
 		this.fileManager.saveTemp();
 	}
 
@@ -488,6 +492,17 @@ public class Application {
 				JOptionPane.showMessageDialog(frame, Application.CONTACT);
 				
 			}});
+		
+		JMenuItem updateHistory = new JMenuItem("Update History");
+		mnUpdate.add(updateHistory);
+		
+		updateHistory.addActionListener(new ActionListener(){
+		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(frame, Application.UPDATE_HISTORY);
+		
+		}});
 		
 		JMenu mnSpells = new JMenu("Spells Window");
 		menuBar.add(mnSpells);

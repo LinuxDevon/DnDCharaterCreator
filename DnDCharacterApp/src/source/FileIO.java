@@ -22,8 +22,8 @@ import javax.xml.bind.Unmarshaller;
  */
 public class FileIO {
 
-	private static final String TESTFILE = "C:/Users/dachi/OneDrive/Documents/test.xml";
-	private static final String FILTERLIST = "xml";
+	private static final String TESTFILE = "C:/Users/dachi/OneDrive/Documents/test.char";
+	private static final String FILTERLIST = "char";
 	
 	private JFrame frame;
 	private Application application;
@@ -42,8 +42,40 @@ public class FileIO {
 		this.application = application;
 		this.currentDirectory = getCurrentDirectory();
 		
-		this.defaultTemp = this.currentDirectory + "/Saves/temp.xml";
+		this.defaultTemp = this.currentDirectory + "/Saves/temp.char";
 		this.fileName = this.defaultTemp;
+	}
+	
+	/**
+	 * Verifies that the folders exists. Doesn't check the files
+	 * that need to be in the folders though.
+	 * 
+	 * TODO figure out how to check the files and replace them.
+	 */
+	public void fileChecker(){
+		checkFolderExists("Saves");
+		checkFolderExists("Images");
+		checkFolderExists("References");
+	}
+	
+	/**
+	 * Checks the given folder at the default directory and then creates 
+	 * the folder if it isn't there.
+	 * 	
+	 * @param folderName - name of the folder in the current directory to check
+	 */
+	private void checkFolderExists(String folderName){
+		File fileToCheck = new File(this.currentDirectory + "/" + folderName);
+		if (!fileToCheck.exists()){
+			new File(this.currentDirectory + "/" + folderName);
+		}
+	}
+	
+	/**
+	 * updates the files such as the main program and the dnd handbook.
+	 */
+	private void update(){
+		
 	}
 	
 	/**
@@ -52,19 +84,37 @@ public class FileIO {
 	 * the special extension to ensure that the file is valid.
 	 * @throws Exception 
 	 */
-	public void fileChooser() throws Exception{
+	public void fileChooser(boolean save) throws Exception {
 		JFileChooser chooser = new JFileChooser(this.currentDirectory + "/Saves");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
-		        						"xml files", FILTERLIST);
+		        						"char files", FILTERLIST);
 		chooser.setFileFilter(filter);
-		// TODO add in the check for .char file
+		// TODO this can probably be simplified.
 		int returnVal = chooser.showOpenDialog(this.frame);
 		if(returnVal == JFileChooser.APPROVE_OPTION) {
-		       this.fileName = chooser.getSelectedFile().getAbsolutePath();
+			
+			String fileName = chooser.getSelectedFile().getName();
+			String[] fileNameSplit = fileName.split("\\.");
+			System.out.println(fileName);
+			if(fileNameSplit.length > 1){ // there is already an extension.
+				String ext = fileNameSplit[1];
+				System.out.println(fileNameSplit[1]);
+				if(!ext.equals("char")){
+					if(!save){
+						JOptionPane.showMessageDialog(this.frame, "Invalid file name please choose a .char file.");
+						throw new Exception("invalid file extension loaded");
+					}
+					this.fileName = this.currentDirectory + "/Saves/" + fileNameSplit[0] + ".char";
+					return;
+				}
+			} else if(fileNameSplit.length == 1){ // no extension found
+				this.fileName = this.currentDirectory + "/Saves/" + fileNameSplit[0] + ".char";
+				return;
+			}
+			
+			this.fileName = chooser.getSelectedFile().getAbsolutePath();
 //				JOptionPane.showMessageDialog(this.frame, this.fileName);
-		 } else{
-			 throw new Exception("Invalid choice");
-		 }
+		 } 
 	}
 	
 	/**
@@ -73,10 +123,12 @@ public class FileIO {
 	public void save(){
 		if(this.fileName.equals(this.defaultTemp)){
 			try {
-				fileChooser();
+				fileChooser(true);
 			} catch (Exception e) {
-				return;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			 
 		}
 		try {
 			File file = new File(this.fileName);
@@ -124,13 +176,15 @@ public class FileIO {
 	/**
 	 * This method loads the file that user as selected.
 	 */
-	public void load() {
+	public void load(){
 		try {
-			fileChooser();
+			fileChooser(false);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+			// TODO fix exception eating
+			e1.printStackTrace();
 			return;
 		}
+		
 		this.frame.dispose();
 		try {
 
@@ -155,11 +209,12 @@ public class FileIO {
 
 	public void saveAs() {
 		try {
-			fileChooser();
+			fileChooser(true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			return;
+			e.printStackTrace();
 		}
+		
 		save();
 		
 	}
@@ -169,10 +224,6 @@ public class FileIO {
 		String s = currentRelativePath.toAbsolutePath().toString();
 //		JOptionPane.showMessageDialog(this.frame, s);
 		return s;
-	}
-	
-	private void update(){
-		
 	}
 	
 	private String parseFileVersion(String fileName){
