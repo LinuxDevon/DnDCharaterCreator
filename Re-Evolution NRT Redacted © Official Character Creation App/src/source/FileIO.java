@@ -1,8 +1,16 @@
 package source;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -12,6 +20,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
+import org.omg.CORBA.portable.InputStream;
 
 /**
  * This class is used to open and read the files that is used to save
@@ -34,6 +44,7 @@ public class FileIO {
 	private String currentDirectory;
 	
 	private String defaultTemp;
+	private Path currentRelativePath;
 	
 	// TODO add in the file checker
 	public FileIO(Character player, JFrame frame, Application application){
@@ -74,8 +85,41 @@ public class FileIO {
 	/**
 	 * updates the files such as the main program and the dnd handbook.
 	 */
-	private void update(){
+	public void update(){
+		URL website;
+		try {
+			website = new URL("http://www.website.com/information.asp");
+			InputStream in = null;
+			try {
+				in = (InputStream) website.openStream();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				Files.copy(in, this.currentRelativePath , StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
+		try {
+			Scanner scan = new Scanner(new FileReader(this.currentDirectory + "/Update/UPDATE.cfg"));
+			while(scan.hasNextLine()){
+				String nextLine = scan.nextLine();
+				if(nextLine.equals("appVersion")){
+					String[] lineSplit = nextLine.split("=");
+					String updatedVersion = lineSplit[1];
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -220,7 +264,7 @@ public class FileIO {
 	}
 	
 	private String getCurrentDirectory(){
-		Path currentRelativePath = Paths.get("");
+		currentRelativePath = Paths.get("");
 		String s = currentRelativePath.toAbsolutePath().toString();
 //		JOptionPane.showMessageDialog(this.frame, s);
 		return s;

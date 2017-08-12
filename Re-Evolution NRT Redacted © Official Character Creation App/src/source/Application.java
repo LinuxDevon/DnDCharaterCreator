@@ -493,6 +493,17 @@ public class Application {
 				
 			}});
 		
+		JMenuItem update = new JMenuItem("Update");
+		mnUpdate.add(update);
+		
+		update.addActionListener(new ActionListener(){
+		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileManager.update();
+		
+		}});
+		
 		JMenuItem updateHistory = new JMenuItem("Update History");
 		mnUpdate.add(updateHistory);
 		
