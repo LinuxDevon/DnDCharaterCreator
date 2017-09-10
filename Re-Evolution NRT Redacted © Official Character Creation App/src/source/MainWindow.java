@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -49,6 +52,8 @@ public class MainWindow {
 
 	private HashMap<JLabel, String> checkedButtonList;
 
+	private JPanel bottomLogoPanel;
+
 
 	public MainWindow(JFrame frame, Character character){
 		
@@ -64,6 +69,7 @@ public class MainWindow {
 	private void init(){
 		
 		createPanels();
+	
 		createLabels();
 		
 		createRadioLayout(CharacterWindow.savingThrowList, 4, 2);
@@ -73,6 +79,7 @@ public class MainWindow {
 		createSpecialElements();
 		
 		createTextFields();
+		
 	}
 	
 	/**
@@ -247,10 +254,15 @@ public class MainWindow {
 		headerPanel.add(textFieldMoney, "cell 0 1,alignx center");
 		
 		JTextField textFieldXp = new JTextField(this.player.getData(Character.XP));
+		System.out.println("\nstarting = " + this.player.getData(Character.XP));
 		textFieldXp.setPreferredSize(new Dimension(100, 20));
 		headerPanel.add(textFieldXp, "cell 3 0");
 		
 		// Dependent on the XP text field
+		if (this.player.getData(Character.XP).equals("")){
+			this.player.saveVariable(this.player.XP, "0");
+		}
+		this.player.setLevel(this.player.getData(Character.XP));
 		JLabel lblLevel = new JLabel("Level: " + this.player.getData(Character.LEVEL));
 		headerPanel.add(lblLevel, "cell 3 0");
 		
@@ -360,6 +372,42 @@ public class MainWindow {
 		txtProficiencybonustextbox.setColumns(10);
 		abilityPanel.add(txtProficiencybonustextbox, "flowx,cell 4 1,alignx right");
 		
+		String bonus = txtProficiencybonustextbox.getText();
+		
+		System.out.println(bonus);
+
+		for(JLabel key: checkedButtonList.keySet()){			
+			int bonusNum;
+			
+			try{
+				bonusNum = Integer.parseInt(bonus);
+				// Still need to save 
+				player.saveVariable(Character.PROFICIENCY, String.valueOf(bonusNum));
+				
+				String modKey = checkedButtonList.get(key);
+				String modifier = player.getData(modKey);
+				
+				int total = bonusNum + Integer.parseInt(modifier);
+				String totalString = String.valueOf(total);
+				
+//				player.saveVariable(key, totalString);
+				
+				JLabel label = key;
+				
+				label.setText(totalString);
+				
+//				this.lastNumber = bonusNum;
+			}catch(NumberFormatException exp){
+				JLabel label = key;
+				String modKey = checkedButtonList.get(key);
+				String modifier = player.getData(modKey);
+				label.setText(modifier);
+//				JOptionPane.showMessageDialog(frame, "Please make sure that the Proficency Bonus text box is a valid int! \n"
+//												+ " Saving this value as 0 for now.");
+			}
+
+		}
+		
 		JTextField txtStaminaPoints = new JTextField(this.player.getData(Character.CURSTAMPNTS));
 		txtStaminaPoints.getDocument().addDocumentListener(new SavingJTextFieldListener(Character.CURSTAMPNTS, txtStaminaPoints, this.player));
 		txtStaminaPoints.setColumns(10);
@@ -410,7 +458,10 @@ public class MainWindow {
 		
 		JTextArea textPane1 = new JTextArea(this.player.getData(Character.TEXTAREA1));
 		textPane1.getDocument().addDocumentListener(new SavingJTextAreaListener(Character.TEXTAREA1, textPane1, this.player));
+		
+		
 		textPane1.setLineWrap(true);
+		textPane1.setWrapStyleWord(true);
 		scrollPaneTextPane1.setViewportView(textPane1);
 		
 		JScrollPane scrollPaneTextPane2 = new JScrollPane();
@@ -419,6 +470,7 @@ public class MainWindow {
 		JTextArea textPane2 = new JTextArea(this.player.getData(Character.TEXTAREA2));
 		textPane2.getDocument().addDocumentListener(new SavingJTextAreaListener(Character.TEXTAREA2, textPane2, this.player));
 		textPane2.setLineWrap(true);
+		textPane2.setWrapStyleWord(true);
 		scrollPaneTextPane2.setViewportView(textPane2);
 		
 		JScrollPane scrollPaneTextPane3 = new JScrollPane();
@@ -486,6 +538,14 @@ public class MainWindow {
 			bottomPanel.add(rdbtnSuccess, "cell 4 1");
 			bottomPanel.add(rdbtnFailure, "cell 4 2,alignx trailing");
 		}
+		JPanel test = new JPanel();
+		ImageIcon imageIcon = new ImageIcon("Images/AppLogo.jpg"); // load the image to a imageIcon
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(225, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		
+		JLabel lblImage = new JLabel(imageIcon, SwingConstants.LEFT);
+		this.bottomLogoPanel.add(lblImage);
 	}
 	
 	private void createTable(){
@@ -506,6 +566,9 @@ public class MainWindow {
 		
 		this.tablePanel.add(tableScrollPanel, "cell 0 0,grow");
 		tableScrollPanel.setViewportView(mainTable);
+		
+		tableScrollPanel.setPreferredSize(new Dimension(500, 160));
+		tableScrollPanel.setMinimumSize(new Dimension(400, 160));
 
 		DefaultCellEditor dce = (DefaultCellEditor)mainTable.getDefaultEditor(Object.class);
 		JTextField editor = (JTextField)dce.getComponent();
@@ -521,7 +584,10 @@ public class MainWindow {
 		headerPanel.setLayout(new MigLayout("", "[144px,grow][75px,grow][150px,grow][100px,grow][]", "[30px][30px][30px]"));
 		
 		bottomPanel = new JPanel();
-		bottomPanel.setLayout(new MigLayout("", "[60px][200px][][250px][100px][25px][25px][25px]", "[40px][40px][40px][40px][40px]"));
+		bottomPanel.setPreferredSize(new Dimension(100,250));
+		bottomPanel.setLayout(new MigLayout("", "[60px][250px][][250px][100px][25px][25px][25px]", "[40px][40px][40px][40px][40px]"));
+		
+		bottomLogoPanel = new JPanel();
 		
 		abilityPanel = new JPanel();
 		frame.getContentPane().add(abilityPanel, BorderLayout.WEST);
@@ -530,11 +596,12 @@ public class MainWindow {
 		abilityPanel.setLayout(layout);
 		
 		bottomMainPanel = new JPanel();
-		bottomMainPanel.setPreferredSize(new Dimension(100,250));
+		bottomMainPanel.setPreferredSize(new Dimension(150,250));
 		frame.getContentPane().add(bottomMainPanel, BorderLayout.SOUTH);
 		bottomMainPanel.setLayout(new MigLayout("", "[:10px:300px,grow,left][grow]", "[][grow]"));
 		
 		bottomMainPanel.add(bottomPanel, "cell 1 1,grow");
+		bottomMainPanel.add(bottomLogoPanel, "cell 2 1,grow");
 		
 		tablePanel = new JPanel();
 		this.frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
@@ -554,6 +621,7 @@ public class MainWindow {
 	private void createRadioLayout(ArrayList<String> list, int startingColumn, int startingRow){
 		int index = startingRow;
 		boolean select = false;
+		System.out.print(list.size());
 		for(String labelName: list){
 			JRadioButton radioButton = new JRadioButton();
 			if(this.player.getRadioButton(labelName) == 1){

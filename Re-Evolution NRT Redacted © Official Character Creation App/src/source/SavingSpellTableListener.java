@@ -30,8 +30,10 @@ public class SavingSpellTableListener implements DocumentListener {
 		int column = this.table.getEditingColumn();
 		int row = this.table.getEditingRow();
 
-//		System.out.println("" + column + row);
 		String text = this.editor.getText();
+		if( column == -1 || row == -1 ) {
+			return;
+		}
 		this.player.setSpellTable(index, column, row, text);
 	}
 
@@ -41,6 +43,9 @@ public class SavingSpellTableListener implements DocumentListener {
 		int row = this.table.getEditingRow();
 
 		String text = this.editor.getText();
+		if( column == -1 || row == -1 ) {
+			return;
+		}
 		this.player.setSpellTable(index, column, row, text);
 		
 	}

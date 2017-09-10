@@ -24,12 +24,12 @@ import javax.swing.JOptionPane;
  */
 public class Application {
 	
-	public static final String VERSION = "1.0.1";
+	public static final String VERSION = "1.0.5";
 	public static final String AUTHOR  = "Devon Adair";
 	private static final String CONTACT = "If you need to report a bug or want to request a feature"
-										+ " please send an email to: adairdg@rose-hulman.edu. In the "
-										+ "email include a description of the bug or feature. Include"
-										+ " screenshots if possible. Thanks from your friendly neighbor"
+										+ " please send an email to: adairdg@rose-hulman.edu. \nIn the "
+										+ "email include a description of the bug or feature. \nInclude"
+										+ " screenshots if possible.\nThanks from your friendly neighbor"
 										+ "hood programmer";
 
 	private static final String TITLE = "Re-Evolution: NRT Redacted © Official "
@@ -37,7 +37,7 @@ public class Application {
 											+ " By - " + AUTHOR;
 	
 	private static final String UPDATE_HISTORY = "Version " + VERSION + " changes: \n\n"
-												+ "1. Made a folder checker to verify that the folders exsist.";
+												+ "1. Fixed the text areas expanding on top of the weapons table.\n";
 	private JFrame frame;
 	
 	private MainWindow mainWindow;
@@ -111,19 +111,14 @@ public class Application {
 							JOptionPane.YES_NO_OPTION);
 		if(choice == 0){
 			initMenu();
-
 			intializeNewCharacter();
-			
 		}else{
 			this.player = new Character();
-
 			initialize(this.player);
-
 		}
 		
 	}
 	
-
 	public void initializeCharacter(Character player, JFrame frame){
 		this.frame = frame;
 		this.frame.setBounds(100, 100, 1547, 1027);
@@ -143,6 +138,8 @@ public class Application {
 		
 		this.fileManager.fileChecker();
 		this.fileManager.saveTemp();
+		
+		this.frame.setLocationRelativeTo(null); // center the window in the middle of the screen
 	}
 
 	/**
@@ -158,11 +155,14 @@ public class Application {
 		
 		this.fileManager = new FileIO(character, this.frame, this);
 		this.frame.setVisible(true);
+		this.frame.setTitle(TITLE);
 		
 		this.spellFrame = new SpellWindow(character);
 		
 		this.fileManager.fileChecker();
 		this.fileManager.saveTemp();
+		
+		this.frame.setLocationRelativeTo(null); // center the window in the middle of the screen
 	}
 
 	/**
@@ -392,13 +392,13 @@ public class Application {
 		JMenuItem spellBook = new JMenuItem("Spell Book Website");
 		mnReference.add(spellBook);
 		
-		JMenuItem dndBook = new JMenuItem("Player Manual");
+		JMenuItem dndBook = new JMenuItem("D&D 5E Base Handbook");
 		mnReference.add(dndBook);
 		
-		JMenuItem playerHandGuide = new JMenuItem("Re-evolution Manual");
+		JMenuItem playerHandGuide = new JMenuItem("Re-Evolution Player Handbook");
 		mnReference.add(playerHandGuide);
 		
-		JMenuItem characterSheet = new JMenuItem("Character Sheet");
+		JMenuItem characterSheet = new JMenuItem("Reference Page");
 		mnReference.add(characterSheet);
 		
 		characterSheet.addActionListener(new ActionListener(){
@@ -456,7 +456,7 @@ public class Application {
 		public void actionPerformed(ActionEvent e) {
 			if (Desktop.isDesktopSupported()) {
 				try {
-					File myFile = new File("References/Re-Evolution Players Handbook (1st Edition) v1.2.1.pdf");
+					File myFile = new File("References/Re-Evolution Players Handbook.pdf");
 					Desktop.getDesktop().open(myFile);
 				} catch (IOException ex) {
 					// no application registered for PDFs
@@ -493,10 +493,10 @@ public class Application {
 				
 			}});
 		
-		JMenuItem update = new JMenuItem("Update");
-		mnUpdate.add(update);
+		JMenuItem manualUpdate = new JMenuItem("Manual Update");
+		mnUpdate.add(manualUpdate);
 		
-		update.addActionListener(new ActionListener(){
+		manualUpdate.addActionListener(new ActionListener(){
 		
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -551,10 +551,10 @@ public class Application {
 		JMenu mnDonate = new JMenu("Donate");
 		menuBar.add(mnDonate);
 		
-		JMenuItem donateButton = new JMenuItem("Donate");
-		mnDonate.add(donateButton);
+		JMenuItem donatePaypalButton = new JMenuItem("Donate via Paypal");
+		mnDonate.add(donatePaypalButton);
 		
-		donateButton.addActionListener(new ActionListener(){
+		donatePaypalButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -565,6 +565,22 @@ public class Application {
 				}	
 				
 			}});
+		
+		JMenuItem donateVenmoButton = new JMenuItem("Donate via Venmo (no fee)");
+		mnDonate.add(donateVenmoButton);
+		
+		donateVenmoButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Desktop.getDesktop().browse(new URL("https://www.venmo.com/Devon-Adair").toURI());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(frame, "Can't open window.");
+				}	
+				
+			}});
+
 	}
 	
 }

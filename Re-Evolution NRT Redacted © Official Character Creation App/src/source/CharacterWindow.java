@@ -49,7 +49,7 @@ public class CharacterWindow{
 	public static final ArrayList<String> savingThrowList = 
 						new ArrayList<String>(Arrays.asList(
 								"Strength", "Dexterity", "Constitution", "Intelligence",
-								"Wisdom","Interfacing","Charaisma"));
+								"Wisdom","Interfacing","Charisma"));
 	
 	private static final String[] statusComboChoices = {"Redacted", "Undercover", "Clear"};
 
@@ -93,6 +93,7 @@ public class CharacterWindow{
 		
 		init();
 		
+		this.window.setLocationRelativeTo(null); // center the window in the middle of the screen
 	}
 	
 	private void init(){
@@ -211,6 +212,7 @@ public class CharacterWindow{
 		this.contentPanel.add(lblModifier, "cell 2 9,alignx center");
 
 		JLabel lblStrength = new JLabel("Strength:");
+//		lblStrength.setToolTipText("This is the tool tip");
 		this.contentPanel.add(lblStrength, "cell 0 10,alignx trailing");
 		
 		JLabel lblStrscr = new JLabel(this.player.getData(Character.STRABILITY));

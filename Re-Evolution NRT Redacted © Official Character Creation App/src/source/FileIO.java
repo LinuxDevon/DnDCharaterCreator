@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -16,11 +17,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.Document;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.jsoup.Jsoup;
 import org.omg.CORBA.portable.InputStream;
 
 /**
@@ -46,14 +49,13 @@ public class FileIO {
 	private String defaultTemp;
 	private Path currentRelativePath;
 	
-	// TODO add in the file checker
 	public FileIO(Character player, JFrame frame, Application application){
 		this.player = player;
 		this.frame = frame;
 		this.application = application;
 		this.currentDirectory = getCurrentDirectory();
 		
-		this.defaultTemp = this.currentDirectory + "/Saves/temp.char";
+		this.defaultTemp = this.currentDirectory + "\\Saves\\temp.char";
 		this.fileName = this.defaultTemp;
 	}
 	
@@ -76,9 +78,9 @@ public class FileIO {
 	 * @param folderName - name of the folder in the current directory to check
 	 */
 	private void checkFolderExists(String folderName){
-		File fileToCheck = new File(this.currentDirectory + "/" + folderName);
+		File fileToCheck = new File(this.currentDirectory + "\\" + folderName);
 		if (!fileToCheck.exists()){
-			new File(this.currentDirectory + "/" + folderName);
+			new File(this.currentDirectory + "\\" + folderName);
 		}
 	}
 	
@@ -86,37 +88,59 @@ public class FileIO {
 	 * updates the files such as the main program and the dnd handbook.
 	 */
 	public void update(){
-		URL website;
-		try {
-			website = new URL("http://www.website.com/information.asp");
-			InputStream in = null;
-			try {
-				in = (InputStream) website.openStream();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			try {
-				Files.copy(in, this.currentRelativePath , StandardCopyOption.REPLACE_EXISTING);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		// scrapped for now.
+//		URL website;
+//		try {
+//			website = new URL("https://downloads.sourceforge.net/projects/re-evolution-creation-app/files/Re-Evolution%20NRT%20Redacted%20_%20Official%20Character%20Creation%20App.exe?use_mirror=autoselect");
+//			InputStream in = null;
+//			try {
+//				in = (InputStream) website.openStream();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			try {
+//				Files.copy(in, this.currentRelativePath , StandardCopyOption.REPLACE_EXISTING);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		} catch (MalformedURLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		
+//		try {
+//			Document doc = (Document) Jsoup.connect("").get();
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		 
+//		try {
+//			Scanner scan = new Scanner(new FileReader(this.currentDirectory + "/Update/UPDATE.cfg"));
+//			while(scan.hasNextLine()){
+//				String nextLine = scan.nextLine();
+//				if(nextLine.equals("appVersion")){
+//					String[] lineSplit = nextLine.split("=");
+//					String updatedVersion = lineSplit[1];
+//				}
+//			}
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		try {
-			Scanner scan = new Scanner(new FileReader(this.currentDirectory + "/Update/UPDATE.cfg"));
-			while(scan.hasNextLine()){
-				String nextLine = scan.nextLine();
-				if(nextLine.equals("appVersion")){
-					String[] lineSplit = nextLine.split("=");
-					String updatedVersion = lineSplit[1];
-				}
-			}
-		} catch (FileNotFoundException e) {
+			File file = new File(this.currentDirectory + "\\References\\Re-Evolution Players Handbook.pdf");
+			Runtime.getRuntime().exec("explorer.exe /select," + file.getAbsolutePath());
+			file = new File(this.currentDirectory);
+			Runtime.getRuntime().exec("explorer.exe /select," + file.getAbsolutePath());
+			
+			JOptionPane.showMessageDialog(this.frame, "Please rename the player handbook to the same name as before if you have not already. \n"
+															+ "Replace the players handbook with the new copy to update and replace the jar file with the one \n"
+															+ "that you downloaded.");
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -129,7 +153,7 @@ public class FileIO {
 	 * @throws Exception 
 	 */
 	public void fileChooser(boolean save) throws Exception {
-		JFileChooser chooser = new JFileChooser(this.currentDirectory + "/Saves");
+		JFileChooser chooser = new JFileChooser(this.currentDirectory + "\\Saves");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 		        						"char files", FILTERLIST);
 		chooser.setFileFilter(filter);
@@ -139,26 +163,30 @@ public class FileIO {
 			
 			String fileName = chooser.getSelectedFile().getName();
 			String[] fileNameSplit = fileName.split("\\.");
-			System.out.println(fileName);
 			if(fileNameSplit.length > 1){ // there is already an extension.
 				String ext = fileNameSplit[1];
-				System.out.println(fileNameSplit[1]);
-				if(!ext.equals("char")){
+				if(!ext.equals("char") || ext.equals("")){
 					if(!save){
 						JOptionPane.showMessageDialog(this.frame, "Invalid file name please choose a .char file.");
 						throw new Exception("invalid file extension loaded");
 					}
-					this.fileName = this.currentDirectory + "/Saves/" + fileNameSplit[0] + ".char";
+					this.fileName = this.currentDirectory + "\\Saves\\" + fileNameSplit[0] + ".char";
 					return;
 				}
 			} else if(fileNameSplit.length == 1){ // no extension found
-				this.fileName = this.currentDirectory + "/Saves/" + fileNameSplit[0] + ".char";
+				if(!save){
+					JOptionPane.showMessageDialog(this.frame, "Invalid file name please choose a .char file.");
+					throw new Exception("invalid file extension loaded");
+				}
+				this.fileName = this.currentDirectory + "\\Saves\\" + fileNameSplit[0] + ".char";
 				return;
 			}
 			
 			this.fileName = chooser.getSelectedFile().getAbsolutePath();
 //				JOptionPane.showMessageDialog(this.frame, this.fileName);
-		 } 
+		 } else if (returnVal == JFileChooser.CANCEL_OPTION){
+			 throw new Exception("" + JFileChooser.CANCEL_OPTION);
+		 }
 	}
 	
 	/**
@@ -169,8 +197,12 @@ public class FileIO {
 			try {
 				fileChooser(true);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				if(e.equals(JFileChooser.CANCEL_OPTION)) {
+					return;
+				} else {
+//					JOptionPane.showMessageDialog(this.frame, e);
+					return;
+				}
 			}
 			 
 		}
@@ -186,11 +218,20 @@ public class FileIO {
 			jaxbMarshaller.marshal(this.player, file);
 //			jaxbMarshaller.marshal(this.player, System.out);
 
-//			JOptionPane.showMessageDialog(this.frame, this.fileName + " has saved "
-//											+ "successfully!");
+			JOptionPane.showMessageDialog(this.frame, this.fileName + " has saved "
+											+ "successfully!");
+			
 		} catch (JAXBException e) {
-			//TODO fix exception eating
-			e.printStackTrace();
+//			PrintWriter out;
+//			try {
+//				out = new PrintWriter(this.currentDirectory + "\\Debug.txt");
+//				out.println(e);
+//				out.close();
+//			} catch (FileNotFoundException e2) {
+//				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(this.frame, "Unable to save...");
+//			}
+
 		}
 
 			
@@ -225,11 +266,14 @@ public class FileIO {
 			fileChooser(false);
 		} catch (Exception e1) {
 			// TODO fix exception eating
-			e1.printStackTrace();
-			return;
+			if(e1.equals(JFileChooser.CANCEL_OPTION)) {
+				return;
+			} else {
+//				JOptionPane.showMessageDialog(this.frame, e1);
+				return;
+			}
 		}
 		
-		this.frame.dispose();
 		try {
 
 			File file = new File(this.fileName);
@@ -238,6 +282,9 @@ public class FileIO {
 
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			Character newCharacter = (Character) jaxbUnmarshaller.unmarshal(file);
+			
+			this.frame.dispose();
+			
 			JFrame newFrame = new JFrame();
 			this.application.initializeCharacter(newCharacter, newFrame);
 			this.frame = newFrame;
@@ -246,7 +293,7 @@ public class FileIO {
 //			JOptionPane.showMessageDialog(this.frame, this.fileName + " has loaded "
 //					+ "successfully!");
 		} catch (JAXBException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this.frame, "File is corrupted or in an incorrect format!");
 		}
 		
 	}
@@ -255,8 +302,12 @@ public class FileIO {
 		try {
 			fileChooser(true);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(e.equals(JFileChooser.CANCEL_OPTION)) {
+				return;
+			} else {
+				JOptionPane.showMessageDialog(this.frame, "Unable to open file!");
+				return;
+			}
 		}
 		
 		save();

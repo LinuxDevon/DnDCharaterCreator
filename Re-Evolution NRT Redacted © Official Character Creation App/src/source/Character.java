@@ -302,6 +302,7 @@ public class Character {
 	}
 
 	public void setMainData(int column, int row, String data) {
+		System.out.println(column + ":" + row);
 		this.mainData[row][column] = data;
 
 	}

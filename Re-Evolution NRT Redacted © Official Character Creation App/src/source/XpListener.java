@@ -29,10 +29,14 @@ public class XpListener implements DocumentListener {
 	public void insertUpdate(DocumentEvent e) {
 		if(!textBox.getText().equals("")){
 			
+			
 			try {
 				this.player.setLevel(textBox.getText());
+				this.player.saveVariable(Character.XP, textBox.getText());
+				System.out.println("\n insert = " + textBox.getText());
 			}catch (NumberFormatException e1){
 				this.player.setLevel("0");
+				System.out.println("here");
 			}
 			
 			labelToModify.setText("Level: " + this.player.getLevel());
@@ -47,8 +51,11 @@ public class XpListener implements DocumentListener {
 			
 			try {
 				this.player.setLevel(textBox.getText());
+				this.player.saveVariable(Character.XP, textBox.getText());
+				System.out.println("\n removed = " + textBox.getText());
 			}catch (NumberFormatException e1){
 				this.player.setLevel("0");
+				System.out.println("here");
 			}
 			
 			labelToModify.setText("Level: " + this.player.getLevel());
