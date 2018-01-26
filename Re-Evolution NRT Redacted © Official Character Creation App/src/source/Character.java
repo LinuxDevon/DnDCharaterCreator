@@ -29,6 +29,7 @@ public class Character {
 	public static final String XP = "xp";
 	public static final String SPEED = "speed";
 	public static final String AC = "ac";
+	public static final String TOTALPOINTS = "total";
 	public static final String INSPIRATION = "inspiraton";
 	public static final String PROFICIENCY = "proficiency";
 	public static final String TITLE1 = "title1";
@@ -70,6 +71,9 @@ public class Character {
 
 	private static final ArrayList<String> savingThrowBaseModifierList = new ArrayList<>(
 			Arrays.asList(STRMOD, DEXMOD, CONMOD, INTELMOD, WISMOD, INTERMOD, CHAMOD));
+	
+	private static final ArrayList<String> abilityScoreList = new ArrayList<>(
+			Arrays.asList(STRABILITY, DEXABILITY, CONABILITY, INTELABILITY, WISABILITY, INTERABILITY, CHAABILITY));
 
 	private static final ArrayList<String> skillLabelBasModifierList = new ArrayList<>(
 			Arrays.asList(DEXMOD, WISMOD, STRMOD, CHAMOD, INTELMOD, WISMOD, CHAMOD, INTELMOD, INTERMOD, WISMOD,
@@ -141,6 +145,8 @@ public class Character {
 		data.put("interfacingAbility", "8");
 		data.put("charismaAbility", "8");
 
+		data.put(Character.TOTALPOINTS, "31");
+		
 		data.put("strengthMod", "-1");
 		data.put("dexterityMod", "-1");
 		data.put("constitutionMod", "-1");
@@ -367,6 +373,27 @@ public class Character {
 			}
 		}
 		return String.valueOf(lvl);
+	}
+
+	public void calcTotalPoints() {
+		int total = 31;
+		for(String ability: this.abilityScoreList){
+			int score = Integer.parseInt(this.getData(ability));
+			
+			if(score >= 14){
+				total -= (2*score -21);
+			} else if(score >= 8){
+				total -= (score - 8);
+			} else if(score < 8){
+				total += (8 - score);
+			}
+			System.out.println("total = " + total + " score = "+ score);
+			
+			
+		}
+		
+		this.saveVariable(this.TOTALPOINTS, String.valueOf(total));
+		
 	}
 	
 }

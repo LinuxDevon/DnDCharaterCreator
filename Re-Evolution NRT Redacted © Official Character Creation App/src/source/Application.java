@@ -1,5 +1,6 @@
 package source;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +25,15 @@ import javax.swing.JOptionPane;
  */
 public class Application {
 	
-	public static final String VERSION = "1.0.5";
+	public static final String VERSION = "1.1.0";
+	public static final int FIRST_VERSION_NUMBER = 1;
+	public static final int SECOND_VERSION_NUMBER = 0;
+	public static final int THIRD_VERSION_NUMBER = 7;
+	
+	public static final int FIRST_BOOK_NUMBER = 1;
+	public static final int SECOND_BOOK_NUMBER = 0;
+	public static final int THIRD_BOOK_NUMBER = 0;
+	
 	public static final String AUTHOR  = "Devon Adair";
 	private static final String CONTACT = "If you need to report a bug or want to request a feature"
 										+ " please send an email to: adairdg@rose-hulman.edu. \nIn the "
@@ -37,7 +46,9 @@ public class Application {
 											+ " By - " + AUTHOR;
 	
 	private static final String UPDATE_HISTORY = "Version " + VERSION + " changes: \n\n"
-												+ "1. Fixed the text areas expanding on top of the weapons table.\n";
+												+ "1. Fixed the text areas expanding on top of the weapons table.\n"
+												+ "2. Fixed the interfacing ability score to be correct.\n"
+												+ "3. Fixed the total score when running edit character. \n";
 	private JFrame frame;
 	
 	private MainWindow mainWindow;
@@ -46,6 +57,7 @@ public class Application {
 	private Character player;
 	private CharacterWindow newCharacterWindow;
 	private SpellWindow spellFrame;
+	private DiceRoller diceRollerFrame;
 
 	/**
 	 * Create the application and decide if to create a new character or not.
@@ -74,6 +86,8 @@ public class Application {
 				frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//					spellFrame.closeWindow();
+//					diceRollerFrame.closeWindow();
 					frame.dispose();
 				}
 				
@@ -102,6 +116,8 @@ public class Application {
 		});
 		
 		this.mainWindow = null;
+		
+//		this.frame.setBackground(Color.RED);
 		
 		// Decide if they want a new character or not. 
 		// 0 = yes, 1 = no
@@ -134,12 +150,13 @@ public class Application {
 		this.fileManager = new FileIO(this.player, frame, this);
 		this.frame.setVisible(true);
 		
-		this.spellFrame = new SpellWindow(this.player);
+		this.spellFrame = new SpellWindow(this.player, this.frame);
 		
 		this.fileManager.fileChecker();
 		this.fileManager.saveTemp();
 		
 		this.frame.setLocationRelativeTo(null); // center the window in the middle of the screen
+		
 	}
 
 	/**
@@ -157,7 +174,8 @@ public class Application {
 		this.frame.setVisible(true);
 		this.frame.setTitle(TITLE);
 		
-		this.spellFrame = new SpellWindow(character);
+		this.spellFrame = new SpellWindow(character,this.frame);
+		this.diceRollerFrame = new DiceRoller(this.frame);
 		
 		this.fileManager.fileChecker();
 		this.fileManager.saveTemp();
@@ -231,7 +249,10 @@ public class Application {
 					public void windowClosing(WindowEvent arg0) {
 						frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 						if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+							fileManager.saveTemp();
 							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//							spellFrame.closeWindow();
+//							diceRollerFrame.closeWindow();
 							frame.dispose();
 						}
 						
@@ -269,6 +290,10 @@ public class Application {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				if(JOptionPane.showConfirmDialog(frame, "Did you remeber to save your character?","Confirm", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
+					return;
+				}
+				
 				player = new Character();
 				intializeNewCharacter();
 				frame.dispose();
@@ -293,6 +318,8 @@ public class Application {
 						frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 						if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//							spellFrame.closeWindow();
+//							diceRollerFrame.closeWindow();
 							frame.dispose();
 						}
 						
@@ -357,6 +384,7 @@ public class Application {
 						if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 							spellFrame.closeWindow();
+							diceRollerFrame.closeWindow();
 							frame.dispose();
 						}
 						
@@ -466,6 +494,17 @@ public class Application {
 		}});
 		JMenu mnSettings = new JMenu("Settings");
 		menuBar.add(mnSettings);
+		
+//		JMenuItem serverSettings = new JMenuItem("Server Settings");
+//		mnSettings.add(serverSettings);
+//		
+//		mnSettings.addActionListener(new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				ServerSettingsWindow serverWindow = new ServerSettingsWindow(frame);
+//				
+//			}});
 	
 		
 		JMenu mnUpdate = new JMenu("Update");
@@ -500,7 +539,7 @@ public class Application {
 		
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				fileManager.update();
+				fileManager.manualUpdate();
 		
 		}});
 		
@@ -514,6 +553,18 @@ public class Application {
 				JOptionPane.showMessageDialog(frame, Application.UPDATE_HISTORY);
 		
 		}});
+		
+		JMenuItem checkUpdate = new JMenuItem("Check for Updates");
+		mnUpdate.add(checkUpdate);
+		
+		checkUpdate.addActionListener(new ActionListener(){
+		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				fileManager.update();
+		
+		}});
+		
 		
 		JMenu mnSpells = new JMenu("Spells Window");
 		menuBar.add(mnSpells);
@@ -529,11 +580,11 @@ public class Application {
 				
 			}});
 		
-		JMenu mnCalculator = new JMenu("Calculator");
-		menuBar.add(mnCalculator);
+		JMenu mnTool = new JMenu("Tools");
+		menuBar.add(mnTool);
 		
 		JMenuItem calculatorApp = new JMenuItem("Calc App");
-		mnCalculator.add(calculatorApp);
+		mnTool.add(calculatorApp);
 		
 		calculatorApp.addActionListener(new ActionListener(){
 
@@ -545,6 +596,17 @@ public class Application {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+			}});
+		
+		JMenuItem diceWindow = new JMenuItem("Dice Roller");
+		mnTool.add(diceWindow);
+		
+		diceWindow.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				diceRollerFrame.display();
 				
 			}});
 		

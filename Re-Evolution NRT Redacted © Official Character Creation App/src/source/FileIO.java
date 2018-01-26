@@ -48,6 +48,7 @@ public class FileIO {
 	
 	private String defaultTemp;
 	private Path currentRelativePath;
+	private String updatePath;
 	
 	public FileIO(Character player, JFrame frame, Application application){
 		this.player = player;
@@ -56,6 +57,7 @@ public class FileIO {
 		this.currentDirectory = getCurrentDirectory();
 		
 		this.defaultTemp = this.currentDirectory + "\\Saves\\temp.char";
+		this.updatePath = this.currentDirectory + "\\Update";
 		this.fileName = this.defaultTemp;
 	}
 	
@@ -88,62 +90,9 @@ public class FileIO {
 	 * updates the files such as the main program and the dnd handbook.
 	 */
 	public void update(){
-		// scrapped for now.
-//		URL website;
-//		try {
-//			website = new URL("https://downloads.sourceforge.net/projects/re-evolution-creation-app/files/Re-Evolution%20NRT%20Redacted%20_%20Official%20Character%20Creation%20App.exe?use_mirror=autoselect");
-//			InputStream in = null;
-//			try {
-//				in = (InputStream) website.openStream();
-//			} catch (IOException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//			try {
-//				Files.copy(in, this.currentRelativePath , StandardCopyOption.REPLACE_EXISTING);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		} catch (MalformedURLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+		Updater updateApp = new Updater(frame, updatePath);
+		updateApp.update();
 		
-//		try {
-//			Document doc = (Document) Jsoup.connect("").get();
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		 
-//		try {
-//			Scanner scan = new Scanner(new FileReader(this.currentDirectory + "/Update/UPDATE.cfg"));
-//			while(scan.hasNextLine()){
-//				String nextLine = scan.nextLine();
-//				if(nextLine.equals("appVersion")){
-//					String[] lineSplit = nextLine.split("=");
-//					String updatedVersion = lineSplit[1];
-//				}
-//			}
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		try {
-			File file = new File(this.currentDirectory + "\\References\\Re-Evolution Players Handbook.pdf");
-			Runtime.getRuntime().exec("explorer.exe /select," + file.getAbsolutePath());
-			file = new File(this.currentDirectory);
-			Runtime.getRuntime().exec("explorer.exe /select," + file.getAbsolutePath());
-			
-			JOptionPane.showMessageDialog(this.frame, "Please rename the player handbook to the same name as before if you have not already. \n"
-															+ "Replace the players handbook with the new copy to update and replace the jar file with the one \n"
-															+ "that you downloaded.");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	/**
@@ -290,6 +239,10 @@ public class FileIO {
 			this.frame = newFrame;
 			this.player = newCharacter;
 
+//			System.out.println(this.player.getData(Character.TOTALPOINTS));
+			if(this.player.getData(Character.TOTALPOINTS) == null){
+				this.player.calcTotalPoints();
+			}
 //			JOptionPane.showMessageDialog(this.frame, this.fileName + " has loaded "
 //					+ "successfully!");
 		} catch (JAXBException e) {
@@ -324,5 +277,22 @@ public class FileIO {
 	private String parseFileVersion(String fileName){
 		
 		return null;
+	}
+
+	public void manualUpdate() {
+		try {
+			File file = new File(this.currentDirectory + "\\References\\Re-Evolution Players Handbook.pdf");
+			Runtime.getRuntime().exec("explorer.exe /select," + file.getAbsolutePath());
+			file = new File(this.currentDirectory);
+			Runtime.getRuntime().exec("explorer.exe /select," + file.getAbsolutePath());
+			
+			JOptionPane.showMessageDialog(this.frame, "Please rename the player handbook to the same name as before if you have not already. \n"
+															+ "Replace the players handbook with the new copy to update and replace the jar file with the one \n"
+															+ "that you downloaded.");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

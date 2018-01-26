@@ -1,9 +1,15 @@
 package source;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class SavingSpellTableListener implements DocumentListener {
 
@@ -34,6 +40,7 @@ public class SavingSpellTableListener implements DocumentListener {
 		if( column == -1 || row == -1 ) {
 			return;
 		}
+		
 		this.player.setSpellTable(index, column, row, text);
 	}
 

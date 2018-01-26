@@ -290,7 +290,7 @@ public class CharacterWindow{
 		this.contentPanel.add(lblChamod, "cell 2 16,alignx center");
 		modLabelList.add(lblChamod);
 		
-		lblTotalPoints = new JLabel("31");
+		lblTotalPoints = new JLabel(this.player.getData(Character.TOTALPOINTS));
 		this.contentPanel.add(lblTotalPoints, "cell 1 17");
 
 		JLabel lblTotalRemaining = new JLabel("Total Remaining:");
@@ -536,6 +536,9 @@ public class CharacterWindow{
 		data.put(Character.AGE, this.labelMap.get("ageText").getText());
 		data.put(Character.STATUS, this.statusComboChoices[this.cmbStatus.getSelectedIndex()]);
 		data.put("xp", this.labelMap.get("xpText").getText());
+		
+		data.put(Character.TOTALPOINTS, this.lblTotalPoints.getText());
+		
 		if(this.newCharacter){
 			data.put("speed", "");
 			data.put("ac", "");

@@ -176,7 +176,7 @@ public class MainWindow {
 		JLabel lblInterfacing = new JLabel("Interfacing:");
 		abilityPanel.add(lblInterfacing, "cell 0 6");
 		
-		JLabel lblInterscr = new JLabel(this.player.getData(Character.INTELABILITY));
+		JLabel lblInterscr = new JLabel(this.player.getData(Character.INTERABILITY));
 		abilityPanel.add(lblInterscr, "cell 1 6");
 		
 		JLabel lblIntermod = new JLabel(this.player.getData(Character.INTELMOD));
@@ -254,7 +254,7 @@ public class MainWindow {
 		headerPanel.add(textFieldMoney, "cell 0 1,alignx center");
 		
 		JTextField textFieldXp = new JTextField(this.player.getData(Character.XP));
-		System.out.println("\nstarting = " + this.player.getData(Character.XP));
+//		System.out.println("\nstarting = " + this.player.getData(Character.XP));
 		textFieldXp.setPreferredSize(new Dimension(100, 20));
 		headerPanel.add(textFieldXp, "cell 3 0");
 		
@@ -374,7 +374,7 @@ public class MainWindow {
 		
 		String bonus = txtProficiencybonustextbox.getText();
 		
-		System.out.println(bonus);
+//		System.out.println(bonus);
 
 		for(JLabel key: checkedButtonList.keySet()){			
 			int bonusNum;
