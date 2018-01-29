@@ -110,8 +110,8 @@ public class MainWindow {
 		JLabel lblAge = new JLabel("Age: " + this.player.getData(Character.AGE));
 		headerPanel.add(lblAge, "cell 2 1,alignx center");
 
-		JLabel lblStatus = new JLabel("Wanted Status: " + this.player.getData(Character.STATUS));
-		headerPanel.add(lblStatus, "cell 3 1,alignx center");
+//		JLabel lblStatus = new JLabel("Wanted Status: " + this.player.getData(Character.STATUS));
+//		headerPanel.add(lblStatus, "cell 3 1,alignx center");
 		
 		JLabel lblAc = new JLabel("AC:");
 		headerPanel.add(lblAc, "flowx,cell 1 2,alignx center");
@@ -179,7 +179,7 @@ public class MainWindow {
 		JLabel lblInterscr = new JLabel(this.player.getData(Character.INTERABILITY));
 		abilityPanel.add(lblInterscr, "cell 1 6");
 		
-		JLabel lblIntermod = new JLabel(this.player.getData(Character.INTELMOD));
+		JLabel lblIntermod = new JLabel(this.player.getData(Character.INTERMOD));
 		abilityPanel.add(lblIntermod, "cell 2 6");
 		
 		JLabel lblCharisma = new JLabel("Charisma:");

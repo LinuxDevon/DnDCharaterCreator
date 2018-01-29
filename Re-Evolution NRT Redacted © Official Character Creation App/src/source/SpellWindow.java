@@ -271,10 +271,12 @@ public class SpellWindow {
 		if (code == 200) {
 			// means found web page
 			try {
-				Desktop.getDesktop().browse(new URL("http://thebombzen.github.io/grimoire/spells/" + input).toURI());
+				Desktop.getDesktop().browse(new URL("http://thebombzen.github.io/grimoire/spells/" + input).toURI());	
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else {
+			JOptionPane.showMessageDialog(frame, "Spell not found on Grimorie. Please check spelling and spacing.");			
 		}
 
 	}
@@ -289,6 +291,8 @@ public class SpellWindow {
 	}
 
 	private String makeLinkable(String input) {
+		// add in the char to trim the text
+		input = input.replaceAll("[*-]", "");
 		input = input.toLowerCase();
 		input = input.replaceAll(" ", "-");
 		return input;

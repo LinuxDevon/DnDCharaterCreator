@@ -196,8 +196,8 @@ public class CharacterWindow{
 		JLabel lblStartingxp = new JLabel("Starting XP:");
 		this.contentPanel.add(lblStartingxp, "cell 0 5,alignx trailing");
 
-		JLabel lblStatus = new JLabel("Wanted Status:");
-		this.contentPanel.add(lblStatus, "cell 0 7,alignx trailing");
+//		JLabel lblStatus = new JLabel("Wanted Status:");
+//		this.contentPanel.add(lblStatus, "cell 0 7,alignx trailing");
 		
 		JLabel labelSpacer1 = new JLabel("---------------------------");
 		this.contentPanel.add(labelSpacer1, "cell 0 8");
@@ -443,17 +443,17 @@ public class CharacterWindow{
 //		txtStatus.setColumns(10);
 //		this.labelMap.put("statusText", txtStatus);
 		
-		cmbStatus = new JComboBox(this.statusComboChoices);
-		int index;
-		if(this.player.getData(Character.STATUS).equals("Redacted")){
-			index = 0;
-		} else if(this.player.getData(Character.STATUS).equals("Undercover")){
-			index = 1;
-		} else {
-			index = 2;
-		}
-		cmbStatus.setSelectedIndex(index);
-		this.contentPanel.add(cmbStatus, "cell 1 7,growx");
+//		cmbStatus = new JComboBox(this.statusComboChoices);
+//		int index;
+//		if(this.player.getData(Character.STATUS).equals("Redacted")){
+//			index = 0;
+//		} else if(this.player.getData(Character.STATUS).equals("Undercover")){
+//			index = 1;
+//		} else {
+//			index = 2;
+//		}
+//		cmbStatus.setSelectedIndex(index);
+//		this.contentPanel.add(cmbStatus, "cell 1 7,growx");
 		
 	}
 	
@@ -534,7 +534,7 @@ public class CharacterWindow{
 		data.put(Character.VARIANT, this.labelMap.get("variantText").getText());
 		data.put("species", this.labelMap.get("speciesText").getText());
 		data.put(Character.AGE, this.labelMap.get("ageText").getText());
-		data.put(Character.STATUS, this.statusComboChoices[this.cmbStatus.getSelectedIndex()]);
+//		data.put(Character.STATUS, this.statusComboChoices[this.cmbStatus.getSelectedIndex()]);
 		data.put("xp", this.labelMap.get("xpText").getText());
 		
 		data.put(Character.TOTALPOINTS, this.lblTotalPoints.getText());

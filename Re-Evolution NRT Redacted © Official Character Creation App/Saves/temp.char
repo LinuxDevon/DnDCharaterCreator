@@ -34,11 +34,11 @@
     <dataList>
         <entry>
             <key>wisdomMod</key>
-            <value>-1</value>
+            <value>2</value>
         </entry>
         <entry>
             <key>spellCastingAbility</key>
-            <value></value>
+            <value>INF</value>
         </entry>
         <entry>
             <key>inspiration</key>
@@ -46,55 +46,55 @@
         </entry>
         <entry>
             <key>revoAbilityAttackMod</key>
-            <value></value>
+            <value>10</value>
         </entry>
         <entry>
             <key>intelligenceMod</key>
-            <value>-1</value>
+            <value>0</value>
         </entry>
         <entry>
             <key>wisdomAbility</key>
-            <value>8</value>
+            <value>14</value>
         </entry>
         <entry>
             <key>speed</key>
-            <value></value>
+            <value>30</value>
         </entry>
         <entry>
             <key>proficiency</key>
-            <value></value>
+            <value>5</value>
         </entry>
         <entry>
             <key>dexterityAbility</key>
-            <value>8</value>
+            <value>15</value>
         </entry>
         <entry>
             <key>interfacingMod</key>
-            <value>-1</value>
-        </entry>
-        <entry>
-            <key>total</key>
-            <value>31</value>
+            <value>5</value>
         </entry>
         <entry>
             <key>currentStaminaPoints</key>
-            <value></value>
+            <value>74</value>
         </entry>
         <entry>
             <key>maxStaminaPoints</key>
-            <value></value>
+            <value>83</value>
+        </entry>
+        <entry>
+            <key>total</key>
+            <value>-16</value>
         </entry>
         <entry>
             <key>revoAbilitySaveDC</key>
-            <value></value>
+            <value>18</value>
         </entry>
         <entry>
             <key>interfacingAbility</key>
-            <value>8</value>
+            <value>20</value>
         </entry>
         <entry>
             <key>strengthMod</key>
-            <value>-1</value>
+            <value>1</value>
         </entry>
         <entry>
             <key>textArea1</key>
@@ -102,11 +102,23 @@
         </entry>
         <entry>
             <key>variant</key>
-            <value></value>
+            <value>Hidden</value>
         </entry>
         <entry>
             <key>textArea2</key>
-            <value></value>
+            <value>Tech Metal w/ Body Plates
+scrap
+knife
+Trainman's Timekeep
+lighter
+rebreather
+WD-40
+Duct Tape
+handcuffs
+playing card monacle
+playing cards
+32 spells, 19 on-board
+NAV Gear watch</value>
         </entry>
         <entry>
             <key>textArea3</key>
@@ -118,79 +130,83 @@
         </entry>
         <entry>
             <key>constitutionAbility</key>
-            <value>8</value>
+            <value>12</value>
         </entry>
         <entry>
             <key>intelligenceAbility</key>
-            <value>8</value>
+            <value>11</value>
         </entry>
         <entry>
             <key>class</key>
-            <value></value>
+            <value>Augment</value>
         </entry>
         <entry>
             <key>strengthAbility</key>
-            <value>8</value>
+            <value>12</value>
         </entry>
         <entry>
             <key>constitutionMod</key>
-            <value>-1</value>
-        </entry>
-        <entry>
-            <key>ac</key>
-            <value></value>
-        </entry>
-        <entry>
-            <key>maxHitPoints</key>
-            <value></value>
-        </entry>
-        <entry>
-            <key>level</key>
             <value>1</value>
         </entry>
         <entry>
+            <key>ac</key>
+            <value>17</value>
+        </entry>
+        <entry>
+            <key>maxHitPoints</key>
+            <value>71</value>
+        </entry>
+        <entry>
+            <key>level</key>
+            <value>14</value>
+        </entry>
+        <entry>
             <key>charismaAbility</key>
-            <value>8</value>
+            <value>9</value>
         </entry>
         <entry>
             <key>title1</key>
-            <value>Changeable Title</value>
+            <value>Notes</value>
         </entry>
         <entry>
             <key>title2</key>
-            <value>Changeable Title</value>
+            <value>Inventory</value>
         </entry>
         <entry>
             <key>dexterityMod</key>
-            <value>-1</value>
+            <value>2</value>
         </entry>
         <entry>
             <key>currentHitPoints</key>
-            <value></value>
+            <value>71</value>
         </entry>
         <entry>
             <key>money</key>
-            <value></value>
+            <value>169</value>
+        </entry>
+        <entry>
+            <key>inspiraton</key>
+            <value>4</value>
         </entry>
         <entry>
             <key>species</key>
-            <value></value>
+            <value>REVO</value>
         </entry>
         <entry>
             <key>name</key>
-            <value></value>
+            <value>Jeffery Donovan (Michael Westen)</value>
         </entry>
         <entry>
             <key>xp</key>
-            <value>0</value>
+            <value>140000</value>
         </entry>
         <entry>
             <key>age</key>
-            <value></value>
+            <value>48</value>
         </entry>
         <entry>
             <key>status</key>
-            <value></value>
+            <value>Undercover</value>
         </entry>
     </dataList>
     <buttonList>
@@ -199,16 +215,16 @@
             <value>0</value>
         </entry>
         <entry>
-            <key>Dexterity</key>
-            <value>0</value>
-        </entry>
-        <entry>
             <key>Investigation (INT)</key>
             <value>0</value>
         </entry>
         <entry>
-            <key>Intelligence</key>
+            <key>Dexterity</key>
             <value>0</value>
+        </entry>
+        <entry>
+            <key>Intelligence</key>
+            <value>1</value>
         </entry>
         <entry>
             <key>Religion (INT)</key>
@@ -220,7 +236,7 @@
         </entry>
         <entry>
             <key>Mechanics (INF)</key>
-            <value>0</value>
+            <value>1</value>
         </entry>
         <entry>
             <key>Perception (WIS)</key>
@@ -231,11 +247,11 @@
             <value>0</value>
         </entry>
         <entry>
-            <key>Wisdom</key>
+            <key>Insight (WIS)</key>
             <value>0</value>
         </entry>
         <entry>
-            <key>Insight (WIS)</key>
+            <key>Wisdom</key>
             <value>0</value>
         </entry>
         <entry>
@@ -244,7 +260,7 @@
         </entry>
         <entry>
             <key>Programming (INF)</key>
-            <value>0</value>
+            <value>1</value>
         </entry>
         <entry>
             <key>History (INT)</key>
@@ -256,7 +272,7 @@
         </entry>
         <entry>
             <key> Deception (CHA)</key>
-            <value>0</value>
+            <value>1</value>
         </entry>
         <entry>
             <key>Constitution</key>
@@ -272,19 +288,19 @@
         </entry>
         <entry>
             <key>Sleight of Hand (DEX)</key>
-            <value>0</value>
+            <value>1</value>
         </entry>
         <entry>
             <key>Nature (INT)</key>
             <value>0</value>
         </entry>
         <entry>
-            <key>Interfacing</key>
-            <value>0</value>
+            <key>Vehicle Handling (INF)</key>
+            <value>1</value>
         </entry>
         <entry>
-            <key>Vehicle Handling (INF)</key>
-            <value>0</value>
+            <key>Interfacing</key>
+            <value>1</value>
         </entry>
         <entry>
             <key>Medicine (WIS)</key>
@@ -304,28 +320,28 @@
         </entry>
     </buttonList>
     <mainTable>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>Ultimate Magnetic Slingshot</item>
+        <item>7</item>
+        <item>1d6</item>
+        <item>3</item>
+        <item>Any</item>
+        <item>Piercing/Bludgeoning</item>
     </mainTable>
     <mainTable>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>AR15 w/ ACOG</item>
+        <item>5</item>
+        <item>1d8</item>
+        <item>2</item>
+        <item>Bullets</item>
+        <item>Piercing</item>
     </mainTable>
     <mainTable>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>Rune Enhanced Assault Rifle</item>
+        <item>7</item>
+        <item>2d8</item>
+        <item>4</item>
+        <item>none</item>
+        <item>Piercing</item>
     </mainTable>
     <mainTable>
         <item></item>
@@ -399,19 +415,19 @@
             <key>0</key>
             <value>
                 <item>
-                    <item></item>
+                    <item>Database Scan (inactive)</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Poison Spray</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Shocking Grasp</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Friends</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Frost bite</item>
                 </item>
                 <item>
                     <item></item>
@@ -434,28 +450,28 @@
             <key>1</key>
             <value>
                 <item>
-                    <item></item>
+                    <item>Silent Image *</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Thermal *</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Magic Missile--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Tasha's Hideous Laughter</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Shield</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Alarm</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Comprehend Languages</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Burning Hands--</item>
                 </item>
                 <item>
                     <item></item>
@@ -469,25 +485,25 @@
             <key>2</key>
             <value>
                 <item>
-                    <item></item>
+                    <item>Locate Object--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Blindness/Deafness</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Aganazzar's Scorcher--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Arcane Lock</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Melf's Acid Arrow</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Scorching Ray--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Shatter--</item>
                 </item>
                 <item>
                     <item></item>
@@ -504,16 +520,16 @@
             <key>3</key>
             <value>
                 <item>
-                    <item></item>
+                    <item>Fireball--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Haste--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Lightning Bolt--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Water Breathing--</item>
                 </item>
                 <item>
                     <item></item>
@@ -539,13 +555,13 @@
             <key>4</key>
             <value>
                 <item>
-                    <item></item>
+                    <item>Confusion--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Vitriolic Sphere--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Wall of Fire--</item>
                 </item>
                 <item>
                     <item></item>
@@ -574,13 +590,13 @@
             <key>5</key>
             <value>
                 <item>
-                    <item></item>
+                    <item>Hold Monster--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Immolation--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Passwall</item>
                 </item>
                 <item>
                     <item></item>
@@ -609,13 +625,13 @@
             <key>6</key>
             <value>
                 <item>
-                    <item></item>
+                    <item>Chain Lightning--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Disintegrate--</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Investiture of Stone--</item>
                 </item>
                 <item>
                     <item></item>
@@ -644,10 +660,10 @@
             <key>7</key>
             <value>
                 <item>
-                    <item></item>
+                    <item>Delayed Blast Fireball</item>
                 </item>
                 <item>
-                    <item></item>
+                    <item>Prismatic Spray--</item>
                 </item>
                 <item>
                     <item></item>

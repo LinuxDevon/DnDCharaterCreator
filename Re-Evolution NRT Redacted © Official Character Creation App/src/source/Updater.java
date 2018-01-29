@@ -1,6 +1,7 @@
 package source;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,8 +22,8 @@ import javax.swing.JOptionPane;
 
 public class Updater {
 	private static final String VERSION_PATH = "https://raw.githubusercontent.com/LinuxDevon/Re-Evolution-NRT-Redacted-Official-Character-Creation-App/masterNew/VERSION.txt";
-	private static final String JAVA_PATH = "";
-	private static final String BATCH_PATH = "";
+	private static final String JAVA_PATH = "https://github.com/LinuxDevon/Re-Evolution-NRT-Redacted-Official-Character-Creation-App/raw/masterNew/Re-Evolution%20NRT%20Redacted%20%C2%A9%20Official%20Character%20Creation%20App/Update/update.jar";
+	private static final String BATCH_PATH = "https://raw.githubusercontent.com/LinuxDevon/Re-Evolution-NRT-Redacted-Official-Character-Creation-App/masterNew/Re-Evolution%20NRT%20Redacted%20%C2%A9%20Official%20Character%20Creation%20App/Update/update.bat";
 	private static final String VERSION_FILE = "VERSION.txt";
 	private static final String APP_FILE_NAME = "Re-Evolution NRT Redacted Official Character Creation App v";
 //	 + Application.FIRST_VERSION_NUMBER
@@ -31,10 +32,15 @@ public class Updater {
 	private static final String UPDATE_FILE_NAME = "DnDupdate.txt";
 	private static final String UPDATE_SCRIPT_NAME = "update.bat";
 	private static final String UPDATE_JAVA_NAME = "update.jar";
+	private static final String BOOK_VERSION = "bookVersion.txt";
 	
 	private JFrame mainFrame;
 	private String tempDir;
 	private String updatePath;
+	private JFrame frame;
+	private int bookCurrentThree;
+	private int bookCurrentTwo;
+	private int bookCurrentOne;
 	
 	public Updater(JFrame frame, String updatePath) {
 		this.mainFrame = frame;
@@ -43,6 +49,9 @@ public class Updater {
 	}
 
 	public void update(){
+		frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.checkFiles();
 		Scanner sc = this.downloadFile(tempDir + "/" + VERSION_FILE, VERSION_PATH);
 		this.checkVersion(sc);
 	}
@@ -77,6 +86,19 @@ public class Updater {
     		}
     		i++;
     	}
+    	
+    	
+    	try {
+    		File file = new File(this.updatePath + "\\" + BOOK_VERSION);
+			sc = new Scanner(file);
+
+			bookCurrentOne = Integer.parseInt(sc.findInLine("\\d+"));
+			bookCurrentTwo = Integer.parseInt(sc.findInLine("\\d+"));
+			bookCurrentThree = Integer.parseInt(sc.findInLine("\\d+"));
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
     	checkBook(bookVersionOne, bookVersionTwo, bookVersionThree, bookLocation[1]); 	
     	checkApp(appVersionOne, appVersionTwo, appVersionThree, appLocation[1]);
 	}
@@ -87,8 +109,6 @@ public class Updater {
 		Scanner sc = null;
 		
 //	    String outputPath = tempDir + "/" + VERSION_FILE;
-	    
-	    this.checkFiles(); // verifies that the update script and jar file are downloaded
 	    
 	    try {
 	    	URL url = new URL(urlPath);
@@ -110,14 +130,16 @@ public class Updater {
     	
 	    } catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String error = e.getMessage();
+			JOptionPane.showMessageDialog(frame, error);
 		} finally {
 	    	if (in != null) {
 	    		try {
 					in.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					String error = e.getMessage();
+					JOptionPane.showMessageDialog(frame, error);
 				}
 	    	}
 	    	if (fos != null) {
@@ -125,17 +147,19 @@ public class Updater {
 					fos.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					String error = e.getMessage();
+					JOptionPane.showMessageDialog(frame, error);
 				}
 	    	}
 	    }
+	    
 	    return sc;
 	}
 	private boolean checkApp(int first, int second, int third, String appLocation){
 		if(first > Application.FIRST_VERSION_NUMBER || 
 			second > Application.SECOND_VERSION_NUMBER ||
 			third > Application.THIRD_VERSION_NUMBER) {
-			if (JOptionPane.showConfirmDialog(this.mainFrame, "UPDATE NEEDED! Have you saved your"
+			if (JOptionPane.showConfirmDialog(this.frame, "UPDATE NEEDED! Have you saved your"
 					+ " character? Once you click yes the app will close and update.","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				this.mainFrame.dispose();
 				try {
@@ -150,10 +174,10 @@ public class Updater {
 					
 //					System.out.println("runas /profile /user:Administrator " + "java -jar \"" + currentDirectory + "\\Update\\update.jar" + "\"");
 //					System.out.println("runas /profile /user:Administrator " + "\"" + currentDirectory + "\\Update\\update.jar" + "\"");
-					
+					System.out.println("HERE");
 					InputStream in = appLink.openStream();
 					Files.copy(in, appFile, StandardCopyOption.REPLACE_EXISTING);
-
+					System.out.println("HERE");
 					FileWriter write = new FileWriter(this.tempDir +  UPDATE_FILE_NAME, false);
 					PrintWriter print_line = new PrintWriter(write);
 					print_line.println(oldName);
@@ -168,7 +192,8 @@ public class Updater {
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					String error = e.getMessage();
+					JOptionPane.showMessageDialog(frame, "ERROR: " + error);
 				}
 				
 			}
@@ -177,10 +202,11 @@ public class Updater {
 	}
 	
 	private boolean checkBook(int first, int second, int third, String bookLocation){
-		if(first > Application.FIRST_BOOK_NUMBER|| 
-			second > Application.SECOND_BOOK_NUMBER ||
-			third > Application.THIRD_BOOK_NUMBER) {
-			if (JOptionPane.showConfirmDialog(this.mainFrame, "Book needs updated! Please confirm that the book"
+		
+		if(first > this.bookCurrentOne|| 
+			second > this.bookCurrentTwo ||
+			third > this.bookCurrentThree) {
+			if (JOptionPane.showConfirmDialog(this.frame, "Book needs updated! Please confirm that the book"
 					+ " is not open in any other application.","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				try {
 					URL appLink = new URL(bookLocation);
@@ -192,12 +218,20 @@ public class Updater {
 					    Files.copy(in, appFile, StandardCopyOption.REPLACE_EXISTING);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						String error = e.getMessage();
+						JOptionPane.showMessageDialog(frame, error);
 					}
+//					FileOutputStream fos = new FileOutputStream(this.updatePath + "\\" + BOOK_VERSION);
+//		    		File file = new File(this.updatePath + "\\" + BOOK_VERSION);
+		    		FileWriter fileWriter = new FileWriter(this.updatePath + "\\" + BOOK_VERSION, false);
+		    		PrintWriter printer = new PrintWriter(fileWriter);
+		    		printer.println("bookVersion: " + first + "." + second + "." + third);
+		    		printer.close();
 					System.out.println(appName);
-				} catch (MalformedURLException e) {
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					String error = e.getMessage();
+					JOptionPane.showMessageDialog(frame, error);
 				}
 			}
 		}
@@ -215,6 +249,20 @@ public class Updater {
 		fileToCheck = new File(batchFile);
 		if (!fileToCheck.exists()){
 			this.downloadFile(batchFile, BATCH_PATH);
+		}
+		
+		fileToCheck = new File(this.updatePath + "\\" + BOOK_VERSION);
+		if (!fileToCheck.exists()){
+    		FileWriter fileWriter;
+			try {
+				fileWriter = new FileWriter(this.updatePath + "\\" + BOOK_VERSION, false);
+	    		PrintWriter printer = new PrintWriter(fileWriter);
+	    		printer.println("bookVersion: 0.0.0");
+	    		printer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

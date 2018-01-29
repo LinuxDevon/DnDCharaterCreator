@@ -25,14 +25,16 @@ import javax.swing.JOptionPane;
  */
 public class Application {
 	
-	public static final String VERSION = "1.1.0";
 	public static final int FIRST_VERSION_NUMBER = 1;
 	public static final int SECOND_VERSION_NUMBER = 0;
 	public static final int THIRD_VERSION_NUMBER = 7;
+	public static final String VERSION = FIRST_VERSION_NUMBER + "." + 
+										SECOND_VERSION_NUMBER + "." +
+										THIRD_VERSION_NUMBER;
 	
-	public static final int FIRST_BOOK_NUMBER = 1;
-	public static final int SECOND_BOOK_NUMBER = 0;
-	public static final int THIRD_BOOK_NUMBER = 0;
+//	public static final int FIRST_BOOK_NUMBER = 1;
+//	public static final int SECOND_BOOK_NUMBER = 0;
+//	public static final int THIRD_BOOK_NUMBER = 0;
 	
 	public static final String AUTHOR  = "Devon Adair";
 	private static final String CONTACT = "If you need to report a bug or want to request a feature"
@@ -46,9 +48,10 @@ public class Application {
 											+ " By - " + AUTHOR;
 	
 	private static final String UPDATE_HISTORY = "Version " + VERSION + " changes: \n\n"
-												+ "1. Fixed the text areas expanding on top of the weapons table.\n"
-												+ "2. Fixed the interfacing ability score to be correct.\n"
-												+ "3. Fixed the total score when running edit character. \n";
+												+ "1. Interfacing mod score fixed.\n"
+												+ "2. Added a dice roller in the tools tab.\n"
+												+ "3. Added auto updating by clicking the check for updates.\n"
+												+ "4. Added clickable spells to navigate to grimore website. ctrl + right click\n";
 	private JFrame frame;
 	
 	private MainWindow mainWindow;
