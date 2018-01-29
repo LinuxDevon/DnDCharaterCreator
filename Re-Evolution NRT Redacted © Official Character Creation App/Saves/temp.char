@@ -34,11 +34,11 @@
     <dataList>
         <entry>
             <key>wisdomMod</key>
-            <value>2</value>
+            <value>-1</value>
         </entry>
         <entry>
             <key>spellCastingAbility</key>
-            <value>INF</value>
+            <value></value>
         </entry>
         <entry>
             <key>inspiration</key>
@@ -46,55 +46,55 @@
         </entry>
         <entry>
             <key>revoAbilityAttackMod</key>
-            <value>10</value>
+            <value></value>
         </entry>
         <entry>
             <key>intelligenceMod</key>
-            <value>0</value>
+            <value>-1</value>
         </entry>
         <entry>
             <key>wisdomAbility</key>
-            <value>14</value>
+            <value>8</value>
         </entry>
         <entry>
             <key>speed</key>
-            <value>30</value>
+            <value></value>
         </entry>
         <entry>
             <key>proficiency</key>
-            <value>5</value>
+            <value></value>
         </entry>
         <entry>
             <key>dexterityAbility</key>
-            <value>15</value>
+            <value>8</value>
         </entry>
         <entry>
             <key>interfacingMod</key>
-            <value>5</value>
-        </entry>
-        <entry>
-            <key>currentStaminaPoints</key>
-            <value>74</value>
-        </entry>
-        <entry>
-            <key>maxStaminaPoints</key>
-            <value>83</value>
+            <value>-1</value>
         </entry>
         <entry>
             <key>total</key>
-            <value>-16</value>
+            <value>31</value>
+        </entry>
+        <entry>
+            <key>currentStaminaPoints</key>
+            <value></value>
+        </entry>
+        <entry>
+            <key>maxStaminaPoints</key>
+            <value></value>
         </entry>
         <entry>
             <key>revoAbilitySaveDC</key>
-            <value>18</value>
+            <value></value>
         </entry>
         <entry>
             <key>interfacingAbility</key>
-            <value>20</value>
+            <value>8</value>
         </entry>
         <entry>
             <key>strengthMod</key>
-            <value>1</value>
+            <value>-1</value>
         </entry>
         <entry>
             <key>textArea1</key>
@@ -102,23 +102,11 @@
         </entry>
         <entry>
             <key>variant</key>
-            <value>Hidden</value>
+            <value></value>
         </entry>
         <entry>
             <key>textArea2</key>
-            <value>Tech Metal w/ Body Plates
-scrap
-knife
-Trainman's Timekeep
-lighter
-rebreather
-WD-40
-Duct Tape
-handcuffs
-playing card monacle
-playing cards
-32 spells, 19 on-board
-NAV Gear watch</value>
+            <value></value>
         </entry>
         <entry>
             <key>textArea3</key>
@@ -130,83 +118,79 @@ NAV Gear watch</value>
         </entry>
         <entry>
             <key>constitutionAbility</key>
-            <value>12</value>
+            <value>8</value>
         </entry>
         <entry>
             <key>intelligenceAbility</key>
-            <value>11</value>
+            <value>8</value>
         </entry>
         <entry>
             <key>class</key>
-            <value>Augment</value>
+            <value></value>
         </entry>
         <entry>
             <key>strengthAbility</key>
-            <value>12</value>
+            <value>8</value>
         </entry>
         <entry>
             <key>constitutionMod</key>
-            <value>1</value>
+            <value>-1</value>
         </entry>
         <entry>
             <key>ac</key>
-            <value>17</value>
+            <value></value>
         </entry>
         <entry>
             <key>maxHitPoints</key>
-            <value>71</value>
+            <value></value>
         </entry>
         <entry>
             <key>level</key>
-            <value>14</value>
+            <value>1</value>
         </entry>
         <entry>
             <key>charismaAbility</key>
-            <value>9</value>
+            <value>8</value>
         </entry>
         <entry>
             <key>title1</key>
-            <value>Notes</value>
+            <value>Changeable Title</value>
         </entry>
         <entry>
             <key>title2</key>
-            <value>Inventory</value>
+            <value>Changeable Title</value>
         </entry>
         <entry>
             <key>dexterityMod</key>
-            <value>2</value>
+            <value>-1</value>
         </entry>
         <entry>
             <key>currentHitPoints</key>
-            <value>71</value>
+            <value></value>
         </entry>
         <entry>
             <key>money</key>
-            <value>169</value>
-        </entry>
-        <entry>
-            <key>inspiraton</key>
-            <value>4</value>
+            <value></value>
         </entry>
         <entry>
             <key>species</key>
-            <value>REVO</value>
+            <value></value>
         </entry>
         <entry>
             <key>name</key>
-            <value>Jeffery Donovan (Michael Westen)</value>
+            <value></value>
         </entry>
         <entry>
             <key>xp</key>
-            <value>140000</value>
+            <value>0</value>
         </entry>
         <entry>
             <key>age</key>
-            <value>48</value>
+            <value></value>
         </entry>
         <entry>
             <key>status</key>
-            <value>Undercover</value>
+            <value></value>
         </entry>
     </dataList>
     <buttonList>
@@ -215,16 +199,16 @@ NAV Gear watch</value>
             <value>0</value>
         </entry>
         <entry>
-            <key>Investigation (INT)</key>
-            <value>0</value>
-        </entry>
-        <entry>
             <key>Dexterity</key>
             <value>0</value>
         </entry>
         <entry>
+            <key>Investigation (INT)</key>
+            <value>0</value>
+        </entry>
+        <entry>
             <key>Intelligence</key>
-            <value>1</value>
+            <value>0</value>
         </entry>
         <entry>
             <key>Religion (INT)</key>
@@ -236,7 +220,7 @@ NAV Gear watch</value>
         </entry>
         <entry>
             <key>Mechanics (INF)</key>
-            <value>1</value>
+            <value>0</value>
         </entry>
         <entry>
             <key>Perception (WIS)</key>
@@ -247,11 +231,11 @@ NAV Gear watch</value>
             <value>0</value>
         </entry>
         <entry>
-            <key>Insight (WIS)</key>
+            <key>Wisdom</key>
             <value>0</value>
         </entry>
         <entry>
-            <key>Wisdom</key>
+            <key>Insight (WIS)</key>
             <value>0</value>
         </entry>
         <entry>
@@ -260,7 +244,7 @@ NAV Gear watch</value>
         </entry>
         <entry>
             <key>Programming (INF)</key>
-            <value>1</value>
+            <value>0</value>
         </entry>
         <entry>
             <key>History (INT)</key>
@@ -272,7 +256,7 @@ NAV Gear watch</value>
         </entry>
         <entry>
             <key> Deception (CHA)</key>
-            <value>1</value>
+            <value>0</value>
         </entry>
         <entry>
             <key>Constitution</key>
@@ -288,19 +272,19 @@ NAV Gear watch</value>
         </entry>
         <entry>
             <key>Sleight of Hand (DEX)</key>
-            <value>1</value>
+            <value>0</value>
         </entry>
         <entry>
             <key>Nature (INT)</key>
             <value>0</value>
         </entry>
         <entry>
-            <key>Vehicle Handling (INF)</key>
-            <value>1</value>
+            <key>Interfacing</key>
+            <value>0</value>
         </entry>
         <entry>
-            <key>Interfacing</key>
-            <value>1</value>
+            <key>Vehicle Handling (INF)</key>
+            <value>0</value>
         </entry>
         <entry>
             <key>Medicine (WIS)</key>
@@ -320,28 +304,28 @@ NAV Gear watch</value>
         </entry>
     </buttonList>
     <mainTable>
-        <item>Ultimate Magnetic Slingshot</item>
-        <item>7</item>
-        <item>1d6</item>
-        <item>3</item>
-        <item>Any</item>
-        <item>Piercing/Bludgeoning</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
     </mainTable>
     <mainTable>
-        <item>AR15 w/ ACOG</item>
-        <item>5</item>
-        <item>1d8</item>
-        <item>2</item>
-        <item>Bullets</item>
-        <item>Piercing</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
     </mainTable>
     <mainTable>
-        <item>Rune Enhanced Assault Rifle</item>
-        <item>7</item>
-        <item>2d8</item>
-        <item>4</item>
-        <item>none</item>
-        <item>Piercing</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
     </mainTable>
     <mainTable>
         <item></item>
@@ -415,19 +399,19 @@ NAV Gear watch</value>
             <key>0</key>
             <value>
                 <item>
-                    <item>Database Scan (inactive)</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Poison Spray</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Shocking Grasp</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Friends</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Frost bite</item>
+                    <item></item>
                 </item>
                 <item>
                     <item></item>
@@ -450,28 +434,28 @@ NAV Gear watch</value>
             <key>1</key>
             <value>
                 <item>
-                    <item>Silent Image *</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Thermal *</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Magic Missile--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Tasha's Hideous Laughter</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Shield</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Alarm</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Comprehend Languages</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Burning Hands--</item>
+                    <item></item>
                 </item>
                 <item>
                     <item></item>
@@ -485,25 +469,25 @@ NAV Gear watch</value>
             <key>2</key>
             <value>
                 <item>
-                    <item>Locate Object--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Blindness/Deafness</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Aganazzar's Scorcher--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Arcane Lock</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Melf's Acid Arrow</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Scorching Ray--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Shatter--</item>
+                    <item></item>
                 </item>
                 <item>
                     <item></item>
@@ -520,16 +504,16 @@ NAV Gear watch</value>
             <key>3</key>
             <value>
                 <item>
-                    <item>Fireball--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Haste--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Lightning Bolt--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Water Breathing--</item>
+                    <item></item>
                 </item>
                 <item>
                     <item></item>
@@ -555,13 +539,13 @@ NAV Gear watch</value>
             <key>4</key>
             <value>
                 <item>
-                    <item>Confusion--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Vitriolic Sphere--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Wall of Fire--</item>
+                    <item></item>
                 </item>
                 <item>
                     <item></item>
@@ -590,13 +574,13 @@ NAV Gear watch</value>
             <key>5</key>
             <value>
                 <item>
-                    <item>Hold Monster--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Immolation--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Passwall</item>
+                    <item></item>
                 </item>
                 <item>
                     <item></item>
@@ -625,13 +609,13 @@ NAV Gear watch</value>
             <key>6</key>
             <value>
                 <item>
-                    <item>Chain Lightning--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Disintegrate--</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Investiture of Stone--</item>
+                    <item></item>
                 </item>
                 <item>
                     <item></item>
@@ -660,10 +644,10 @@ NAV Gear watch</value>
             <key>7</key>
             <value>
                 <item>
-                    <item>Delayed Blast Fireball</item>
+                    <item></item>
                 </item>
                 <item>
-                    <item>Prismatic Spray--</item>
+                    <item></item>
                 </item>
                 <item>
                     <item></item>
