@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -37,7 +38,7 @@ public class Updater {
 	private JFrame mainFrame;
 	private String tempDir;
 	private String updatePath;
-	private JFrame frame;
+	private JDialog frame;
 	private int bookCurrentThree;
 	private int bookCurrentTwo;
 	private int bookCurrentOne;
@@ -49,7 +50,7 @@ public class Updater {
 	}
 
 	public void update(){
-		frame = new JFrame();
+		frame = new JDialog(this.mainFrame);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.checkFiles();
 		Scanner sc = this.downloadFile(tempDir + "/" + VERSION_FILE, VERSION_PATH);

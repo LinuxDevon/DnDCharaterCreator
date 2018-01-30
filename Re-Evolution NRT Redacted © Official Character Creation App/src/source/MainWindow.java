@@ -541,7 +541,7 @@ public class MainWindow {
 		JPanel test = new JPanel();
 		ImageIcon imageIcon = new ImageIcon("Images/AppLogo.jpg"); // load the image to a imageIcon
 		Image image = imageIcon.getImage(); // transform it 
-		Image newimg = image.getScaledInstance(225, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		Image newimg = image.getScaledInstance(355, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);  // transform it back
 		
 		JLabel lblImage = new JLabel(imageIcon, SwingConstants.LEFT);
