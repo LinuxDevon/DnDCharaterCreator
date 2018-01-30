@@ -26,8 +26,8 @@ import javax.swing.JOptionPane;
 public class Application {
 	
 	public static final int FIRST_VERSION_NUMBER = 1;
-	public static final int SECOND_VERSION_NUMBER = 0;
-	public static final int THIRD_VERSION_NUMBER = 7;
+	public static final int SECOND_VERSION_NUMBER = 1;
+	public static final int THIRD_VERSION_NUMBER = 0;
 	public static final String VERSION = FIRST_VERSION_NUMBER + "." + 
 										SECOND_VERSION_NUMBER + "." +
 										THIRD_VERSION_NUMBER;
@@ -89,6 +89,7 @@ public class Application {
 				frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					
 //					spellFrame.closeWindow();
 //					diceRollerFrame.closeWindow();
 					frame.dispose();

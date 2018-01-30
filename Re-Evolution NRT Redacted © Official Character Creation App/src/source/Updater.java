@@ -101,6 +101,8 @@ public class Updater {
 		}
     	checkBook(bookVersionOne, bookVersionTwo, bookVersionThree, bookLocation[1]); 	
     	checkApp(appVersionOne, appVersionTwo, appVersionThree, appLocation[1]);
+    	
+    	JOptionPane.showMessageDialog(frame, "Update check complete!");
 	}
 	
 	private Scanner downloadFile(String outputPath, String urlPath) {

@@ -86,6 +86,7 @@ public class SpellWindow {
 	 */
 	public SpellWindow(Character player, JFrame mainFrame) {
 
+//		frame = new JDialog();
 		frame = new JDialog(mainFrame);
 		frame.setTitle("Spell Window");
 		frame.setBounds(100, 100, 944, 928);
