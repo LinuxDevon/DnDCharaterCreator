@@ -17,7 +17,12 @@ Install:
 
 # How to update the program.
 
-Update:
+Auto Update:
+
+1. Go to the app and click on the update->Check for updates
+2. It will update the player handbook and the app if it is out of date.
+
+Manual Update:
 
 1. Navigate to source forge to my repo. (https://sourceforge.net/projects/re-evolution-creation-app/)
 2. Go to the Files tab next to summary.
