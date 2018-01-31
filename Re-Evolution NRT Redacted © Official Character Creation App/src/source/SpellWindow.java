@@ -96,32 +96,27 @@ public class SpellWindow {
 		frame.setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[grow][grow][grow]", "[grow][grow][grow][grow]"));
 
-		ImageIcon imageIcon = new ImageIcon("Images/Stamina Cost Table.jpg"); // load
-																				// the
-																				// image
-																				// to
-																				// a
-																				// imageIcon
+		ImageIcon imageIcon = new ImageIcon("Images/Stamina Cost Table.jpg"); 
 		Image image = imageIcon.getImage(); // transform it
-		Image newimg = image.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH); // scale
-																						// it
-																						// the
-																						// smooth
-																						// way
+		Image newimg = image.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH); 
 		imageIcon = new ImageIcon(newimg); // transform it back
 
-		JButton btnClose = new JButton("Close");
-		contentPane.add(btnClose, "cell 0 3,alignx center,aligny bottom");
-		btnClose.addActionListener(new ActionListener() {
+//		JButton btnClose = new JButton("Close");
+////		contentPane.add(btnClose, "cell 0 3,alignx center,aligny bottom");
+//		contentPane.add(btnClose, "cell 0 3,aligny bottom");
+//		btnClose.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// frame.setVisible(false);
+//				frame.dispose();
+//
+//			}
+//		});
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// frame.setVisible(false);
-				frame.dispose();
-
-			}
-		});
-
+		JLabel linkInstructions = new JLabel("CTRL + Right Click on spell to open webpage.");
+		contentPane.add(linkInstructions, "cell 0 3,alignx center,aligny center");
+		
 		JLabel lblImage = new JLabel(imageIcon);
 		contentPane.add(lblImage, "cell 1 3,alignx center");
 
