@@ -499,6 +499,17 @@ public class Application {
 		JMenu mnSettings = new JMenu("Settings");
 		menuBar.add(mnSettings);
 		
+		JMenuItem spellWindowSettings = new JMenuItem("Spell Window Settings");
+		mnSettings.add(spellWindowSettings);
+		
+		spellWindowSettings.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				ServerSettingsWindow serverWindow = new ServerSettingsWindow(frame);
+				
+			}});
+		
 //		JMenuItem serverSettings = new JMenuItem("Server Settings");
 //		mnSettings.add(serverSettings);
 //		
