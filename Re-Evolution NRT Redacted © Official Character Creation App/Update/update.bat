@@ -28,5 +28,4 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 	echo Running Update Script!
 	java -jar "update.jar"
-	pause
 :--------------------------------------

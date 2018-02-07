@@ -100,10 +100,10 @@ public class Updater {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-    	checkBook(bookVersionOne, bookVersionTwo, bookVersionThree, bookLocation[1]); 	
-    	checkApp(appVersionOne, appVersionTwo, appVersionThree, appLocation[1]);
-    	
-    	JOptionPane.showMessageDialog(frame, "Update check complete!");
+
+    	if (!checkApp(appVersionOne, appVersionTwo, appVersionThree, appLocation[1]) && checkBook(bookVersionOne, bookVersionTwo, bookVersionThree, bookLocation[1])) {
+    		JOptionPane.showMessageDialog(frame, "Update check complete!");
+    	}
 	}
 	
 	private Scanner downloadFile(String outputPath, String urlPath) {
@@ -198,7 +198,7 @@ public class Updater {
 					String error = e.getMessage();
 					JOptionPane.showMessageDialog(frame, "ERROR: " + error);
 				}
-				
+				return true;
 			}
 		}
 		return false;
@@ -236,6 +236,7 @@ public class Updater {
 					String error = e.getMessage();
 					JOptionPane.showMessageDialog(frame, error);
 				}
+				return true;
 			}
 		}
 		return false;
