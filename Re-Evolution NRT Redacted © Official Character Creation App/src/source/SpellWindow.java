@@ -75,7 +75,7 @@ public class SpellWindow {
 
 	private String[][] data;
 
-	private JDialog frame;
+	private JFrame frame;
 
 	public SpellWindow() {
 
@@ -87,7 +87,8 @@ public class SpellWindow {
 	public SpellWindow(Character player, JFrame mainFrame) {
 
 //		frame = new JDialog();
-		frame = new JDialog(mainFrame);
+//		frame = new JDialog(mainFrame);
+		frame = new JFrame();
 		frame.setTitle("Spell Window");
 		frame.setBounds(100, 100, 944, 928);
 		frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -261,6 +262,10 @@ public class SpellWindow {
 
 	}
 
+	public boolean checkAlive() {
+		return this.frame.isVisible();
+	}
+	
 	private void tryOpenLink(String input) {
 		input = makeLinkable(input);
 		int code = checkURL(input);

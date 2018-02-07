@@ -27,7 +27,7 @@ public class Application {
 	
 	public static final int FIRST_VERSION_NUMBER = 1;
 	public static final int SECOND_VERSION_NUMBER = 1;
-	public static final int THIRD_VERSION_NUMBER = 0;
+	public static final int THIRD_VERSION_NUMBER = 1;
 	public static final String VERSION = FIRST_VERSION_NUMBER + "." + 
 										SECOND_VERSION_NUMBER + "." +
 										THIRD_VERSION_NUMBER;
@@ -51,7 +51,8 @@ public class Application {
 												+ "1. Interfacing mod score fixed.\n"
 												+ "2. Added a dice roller in the tools tab.\n"
 												+ "3. Added auto updating by clicking the check for updates.\n"
-												+ "4. Added clickable spells to navigate to grimore website. ctrl + right click\n";
+												+ "4. Added clickable spells to navigate to grimore website. ctrl + right click\n"
+												+ "5. Fixed the spell window not going half screen.\n";
 	private JFrame frame;
 	
 	private MainWindow mainWindow;
@@ -87,6 +88,10 @@ public class Application {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				if(spellFrame.checkAlive()){
+					JOptionPane.showMessageDialog(frame, "Please close spell window before preceding!");
+					return;
+				}
 				if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					
@@ -252,6 +257,11 @@ public class Application {
 					@Override
 					public void windowClosing(WindowEvent arg0) {
 						frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+						if(spellFrame.checkAlive()){
+							JOptionPane.showMessageDialog(frame, "Please close spell window before preceding!");
+							return;
+						}
+						
 						if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 							fileManager.saveTemp();
 							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -320,6 +330,10 @@ public class Application {
 					@Override
 					public void windowClosing(WindowEvent arg0) {
 						frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+						if(spellFrame.checkAlive()){
+							JOptionPane.showMessageDialog(frame, "Please close spell window before preceding!");
+							return;
+						}
 						if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 //							spellFrame.closeWindow();
@@ -385,6 +399,10 @@ public class Application {
 					@Override
 					public void windowClosing(WindowEvent arg0) {
 						frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+						if(spellFrame.checkAlive()){
+							JOptionPane.showMessageDialog(frame, "Please close spell window before preceding!");
+							return;
+						}
 						if(JOptionPane.showConfirmDialog(frame, "Are you sure you want to close?","Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 							frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 							spellFrame.closeWindow();
