@@ -103,6 +103,8 @@ public class Updater {
 
     	if (!checkApp(appVersionOne, appVersionTwo, appVersionThree, appLocation[1]) && checkBook(bookVersionOne, bookVersionTwo, bookVersionThree, bookLocation[1])) {
     		JOptionPane.showMessageDialog(frame, "Update check complete!");
+    	} else {
+    		JOptionPane.showMessageDialog(frame, "No update found!");
     	}
 	}
 	
