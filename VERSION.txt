@@ -1,4 +1,4 @@
-APP_VERSION: 1.1.0
+APP_VERSION: 1.1.1
 BOOK_VERSION: 1.0.0
-APP_UPDATE_LOCATION: https://github.com/LinuxDevon/Re-Evolution-NRT-Redacted-Official-Character-Creation-App/raw/masterNew/Re-Evolution%20NRT%20Redacted%20%C2%A9%20Official%20Character%20Creation%20App/WorkingJar/Re-Evolution%20NRT%20Redacted%20Official%20Character%20Creation%20App%20v1.1.0.jar
+APP_UPDATE_LOCATION: https://github.com/LinuxDevon/Re-Evolution-NRT-Redacted-Official-Character-Creation-App/raw/masterNew/Re-Evolution%20NRT%20Redacted%20%C2%A9%20Official%20Character%20Creation%20App/WorkingJar/Re-Evolution%20NRT%20Redacted%20Official%20Character%20Creation%20App%20v1.1.1.jar
 BOOK_UPDATE_LOCATION: https://github.com/LinuxDevon/Re-Evolution-NRT-Redacted-Official-Character-Creation-App/raw/masterNew/Re-Evolution%20NRT%20Redacted%20%C2%A9%20Official%20Character%20Creation%20App/References/Re-Evolution%20Players%20Handbook.pdf
